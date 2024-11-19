@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Yangxin Wu/Personal Homepage"
+title                    : "Yangxin Wu's Personal Homepage"
 title_separator          : "-"
 name                     : &name "Yangxin Wu"
 description              : &description "Computer science undergraduate student at Harbin Institute of Technology, Shenzhen"
@@ -23,7 +23,7 @@ author:
   # Biographic information
   avatar           : "profile.png"
   name             : "Yangxin Wu"
-  pronouns         : "he/his"  
+  pronouns         : # "he/his"  
   bio              : "Computer science undergraduate student at Harbin Institute of Technology, Shenzhen"
   location         : "Earth"
   employer         : "Harbin Institute of Technology, Shenzhen"
@@ -72,7 +72,7 @@ author:
   wikipedia        : # Username
   xing             : # Username
   youtube          : # Username
-  zhihu            : "william-sheeran-51"
+  zhihu            : # Username
 
 # Publication Category - The following the list of publication categories and their headings
 publication_category:
