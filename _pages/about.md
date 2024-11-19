@@ -7,6 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I'm a second year undergraduate student in [Harbin Institute of Technology, Shenzhen](https://www.hitsz.edu.cn/). My research interest includes machine learning, data mining and reinforcement learning.
+I'm a second year undergraduate student in [Harbin Institute of Technology, Shenzhen](https://www.hitsz.edu.cn/). 
+My research interest includes machine learning, data mining and reinforcement learning.
 
 [Email](2023311526@hit.edu.cn) / [Github](https://github.com/WilliamWuuu)
