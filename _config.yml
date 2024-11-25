@@ -21,7 +21,7 @@ repository               : "WilliamWuuu/WilliamWuuu.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "pic.png"
   name             : "Yangxin Wu"
   pronouns         : # "he/his"  
   bio              : "Computer science undergraduate student at Harbin Institute of Technology, Shenzhen"
