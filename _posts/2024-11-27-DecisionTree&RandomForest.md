@@ -1,4 +1,4 @@
- ---
+---
 title: 'Decision Tree & Random Forest'
 date: 2024-11-27
 permalink: /posts/2024/1/Decision Tree & Random Forest/
