@@ -299,12 +299,14 @@ $$a_*=\arg\limits_{a\in A}\min Gini\_ index(D,a)$$
 
 - Minimum Error Pruning (最小误差剪枝，MEP)
 	
-	一棵树的好坏用如下狮子衡量：
+	一棵树的好坏用如下式子衡量：
+
 	$$W_{\alpha}(T)=W(T)+\alpha C(T)$$
+
 	其中 $W(T)$ 表示该树误差的衡量； $C(T)$ 表示对树大小的衡量(可以用树的终端节点个数代表)； $\alpha$ 表示两者的平衡系数，其值越大树越小，反之树越大。
 	
 	为了利用该准则来进行剪枝主要有如下两个步骤：
 		
-	$\rightarrow$ 找到完整树的一些子树{ $T_i|i=1,2,3,\dots,m$ }
+	$\rightarrow$ 找到完整树的一些子树{ $T_i \vert i=1,2,3,\dots,m$ }
 		
 	$\rightarrow$ 分别计算出每棵树的 $W_{\alpha}(T_i)$，选择书中具有最小的 $W_{\alpha}(T_i)$ 的树。
