@@ -1,13 +1,13 @@
 ---
 title: 'Decision Tree & Random Forest'
 date: 2024-11-27
-permalink: /posts/2024/1/Decision Tree & Random Forest/
+permalink: /posts/2024/11/Decision Tree & Random Forest/
 tags:
   - Machine Learning
   - Decision Tree
 ---
 
-This is a blog about my learning notes about decision tree and random forest. Enjoy! ^_^
+This is a blog of my learning notes about decision tree and random forest. Enjoy! ^_^
 
 # Overview
 
