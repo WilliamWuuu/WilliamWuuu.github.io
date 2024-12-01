@@ -72,7 +72,9 @@ This is a blog about my learning notes about decision tree and random forest. En
   
 	在决策树的切分里，事件 $x_i$ 可以认为是在样本中出现某个标签/决策。于是 $P(x_i)$ 可以用所有样本中某个标签出现的频率来代替。但我们求熵是为了决定采用哪一个维度进行切分，因此有一个新的概念条件熵：
 
-  	$$H(X \vert Y)=\sum\limits _{y\in Y}p(y)H(x \vert Y=y)$$ 
+	\[
+	H(X \vert Y)=\sum\limits _{y\in Y}p(y)H(x \vert Y=y)
+	\]
 
 	这里我们认为 $Y$ 就是用某个维度进行切分，那么 $y$ 就是切成的某个子集合于是 $H(X \vert Y=y)$ 就是这个子集的熵。因此可以认为条件熵是每个子集合的熵的一个加权平均/期望。
 
