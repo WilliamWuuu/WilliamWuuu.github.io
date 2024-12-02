@@ -17,4 +17,4 @@ Github Repositories
 > About fine-tuning pre-trained general large language models (LLMs) on a smaller dataset of labeled data specific to a particular task allows the models to learn the specific features that are important for that task, thus improving its performance.
 
 [MathematicalModelsExplained](https://github.com/WilliamWuuu/MathematicalModelsExplained)
-> A collection for mathematical models and machine learning algorithms.
+> A collection of mathematical models and machine learning algorithms.
