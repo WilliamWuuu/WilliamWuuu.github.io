@@ -1,16 +1,14 @@
 ---
-title: 'Gaussian Discriminant Analysis vs Logistic Regression'
+title: 'Gaussian Discriminant Analysis Versus Logistic Regression'
 date: 2024-12-4
-permalink: /posts/2024/12/Gaussian Discriminant Analysis vs Logistic Regression/
+permalink: /posts/2024/12/Gaussian Discriminant Analysis Versus Logistic Regression/
 tags:
   - Machine Learning
   - Gaussian Discriminant Analysis
   - Logistic Regression
----
+--- 
 
 This is a blog of probability theory course essay. Enjoy! ^_^
-
-
 
 # 高斯判别分析和逻辑回归：概率论视角的对比
 
