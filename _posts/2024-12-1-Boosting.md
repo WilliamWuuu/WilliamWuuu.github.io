@@ -6,8 +6,9 @@ tags:
   - Machine Learning
   - Boosting
 ---
-
 This is a blog of my learning notes boosting algorithms. Check it out! ^_^
+
+<!--more-->
 
 # Overview
 Boosting是一种可将弱学习器提升为强学习器的算法，其理论依据是 Michael Kearns 和 Leslie Valiant 首先提出了”强可学习 (strongly learnable)”和“弱可学习 (weakly learnable)”的概念。他们指出：
