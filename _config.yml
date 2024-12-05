@@ -313,6 +313,7 @@ tag_archive:
 #   permalinks:
 #     category: /categories/:name/
 #     tag: /tags/:name/
+excerpt_separator: <!--more-->
 
 
 # HTML Compression
