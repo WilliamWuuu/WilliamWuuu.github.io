@@ -14,7 +14,7 @@ My research interest includes machine learning, data mining and reinforcement le
 Github Repositories
 ======
 [Auto_Standard_Generator](https://github.com/WilliamWuuu/Auto_Standard_Generator)
-> About fine-tuning pre-trained general large language models (LLMs) on a smaller dataset of labeled data specific to a particular task allows the models to learn the specific features that are important for that task, thus improving its performance.
+> About fine-tuning pre-trained general large language models (LLMs) on a smaller dataset of labeled data specific to a particular task, which allows the models to learn the specific features that are important for that task, thus improving its performance.
 
 [Mathematical_Models_Explained](https://github.com/WilliamWuuu/Mathematical_Models_Explained)
 > A collection of mathematical models and machine learning algorithms.
