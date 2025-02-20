@@ -6,12 +6,12 @@ tags:
   - Machine Learning
   - Boosting
 ---
-This is a blog of my learning notes boosting algorithms. Check it out! ^_^
+Boosting 是一种可将弱学习器提升为强学习器的算法：通过多次迭代训练一系列弱学习器，并逐步调整样本权重，使得每个新的学习器更加关注前一轮错误的样本，从而提高模型的整体预测性能。
 
 <!--more-->
 
 # Overview
-Boosting是一种可将弱学习器提升为强学习器的算法，其理论依据是 Michael Kearns 和 Leslie Valiant 首先提出了”强可学习 (strongly learnable)”和“弱可学习 (weakly learnable)”的概念。他们指出：
+Boosting 是一种可将弱学习器提升为强学习器的算法，其理论依据是 Michael Kearns 和 Leslie Valiant 首先提出了”强可学习 (strongly learnable)”和“弱可学习 (weakly learnable)”的概念。他们指出：
 
 1. 一个概念(一个类，label)，如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；
 
