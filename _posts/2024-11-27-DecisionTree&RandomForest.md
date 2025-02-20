@@ -6,7 +6,7 @@ tags:
   - Machine Learning
   - Decision Tree
 ---
-This is a blog of my learning notes about decision tree and random forest. Enjoy! ^_^
+决策树是一种通过将数据集递归分割成子集来进行分类或回归的模型，而随机森林是由多个决策树组成的集成学习方法，通过投票或平均来提高模型的准确性和鲁棒性。
 
 <!--more-->
 
