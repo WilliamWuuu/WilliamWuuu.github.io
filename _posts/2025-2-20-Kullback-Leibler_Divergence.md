@@ -18,14 +18,14 @@ This is a blog of my learning notes about Kullback-Leibler Divergence. Enjoy! ^_
 假设对随机变量 $\xi$，存在两个概率分布 $P,Q$。如果为离散随机变量，定义从 $P$ 到 $Q$ 的 KL 散度为: 
 
 $$
-\mathbb{D}_{\text{KL}}(P\parallel Q)=\sum\limits_i P(i)\ln(\frac{P(i)}{Q(i)})
+\mathbb{D}_ {\text{KL}}(P\parallel Q)=\sum\limits_i P(i)\ln(\frac{P(i)}{Q(i)})
 \tag{1.1}
 $$
 
-如果 $\xi$ 为连续随机变量，则定义从 $P$ 到 $Q$ 的KL散度为: 
+如果 $\xi$ 为连续随机变量，则定义从 $P$ 到 $Q$ 的 KL 散度为: 
 
 $$
-\mathbb{D}_{\text{KL}}(P\parallel Q)
+\mathbb{D}_ {\text{KL}}(P\parallel Q)
 =\int_{-\infty}^{\infty}p(\mathbf{x})\ln(\frac{p(\mathbf{x})}{q(\mathbf{x})})\text{d}\mathbf{x}
 \tag{1.2}
 $$
@@ -54,7 +54,7 @@ $$
 
 取等号时当且仅当对于任意 $i$，$Q(i)=P(i)$ ，此时 $P=Q$。
 
-上述不等式也被称为 **Gibbs' inequality**：若 $\sum\limits_{i=1}^{n}p_i=\sum\limits_{i=1}^{n}q_i$，且 $p_i,q_i\in (0,1]$，则有
+上述不等式也被称为 **Gibbs' inequality**：若 $\sum\limits_{i=1}^{n}p_i=\sum\limits_{i=1}^{n}q_i$ ，且 $p_i,q_i\in (0,1]$，则有
 
 $$
 -\sum\limits_{i=1}^{n}p_i\log p_i\leq -\sum\limits_{i=1}^{n}p_i\log q_i
@@ -64,13 +64,14 @@ $$
 等号成立当且仅当 $p_i=q_i\forall i$。
 
 ### 仿射变换不变性
-假设 $\mathbf{y}=a\mathbf{x}+b$，那么：$\mathbb{D}_{\text{KL}}(P(\mathbf{x})\parallel Q(\mathbf{x}))=\mathbb{D}_{\text{KL}}(P(\mathbf{y})\parallel Q(\mathbf{y}))$
+假设 $\mathbf{y}=a\mathbf{x}+b$，那么：
+$\mathbb{D}_ {\text{KL}}(P(\mathbf{x})\parallel Q(\mathbf{x}))=\mathbb{D}_ {\text{KL}}(P(\mathbf{y})\parallel Q(\mathbf{y}))$
 
 $proof:$
 
 $$
 \begin{aligned}
-\mathbb{D}_{\text{KL}}(P(\mathbf{y})\parallel Q(\mathbf{y}))
+\mathbb{D}_ {\text{KL}}(P(\mathbf{y})\parallel Q(\mathbf{y}))
 &=\int P(\mathbf{y})\log(\frac{P(\mathbf{y})}{Q(\mathbf{y})}) \\
 &=\int P(\mathbf{x})\log(\frac{P(\mathbf{x})}{Q(\mathbf{x})}) \\
 &=\mathbb{D}_{\text{KL}}(P(\mathbf{x})\parallel Q(\mathbf{x}))
@@ -79,7 +80,7 @@ $$
 $$
 
 ### 非对异性
-$\mathbb{D}_{\text{KL}}(P\parallel Q)\neq \mathbb{D}_{\text{KL}}(Q\parallel P)$
+$\mathbb{D}_ {\text{KL}}(P\parallel Q)\neq \mathbb{D}_{\text{KL}}(Q\parallel P)$
 
 ### 值域
 $\mathbb{D}_{\text{KL}}(P\parallel Q)$ 在一定条件下可以趋向于无穷。
@@ -109,7 +110,7 @@ $$
 
 注意到 $\frac{n+1}{c_j+1}$ 服从伯努利大数定律，它将收敛到随机变量 $\xi$ 取值为 $j$ 的真实概率 $p_j$。
 
-当我们进行无数次观测（即 $n\rightarrow \infty$），如果 $p_j=\lim\limits_{n\rightarrow \infty}\frac{c_j+1}{n+1}\rightarrow q_j$，那么 $L^n$ 会收敛($n\rightarrow \infty$)，此时代表分布 $Q$ 可以很好估计真实分布 $P$，而其它情况则可能会发散。
+当我们进行无数次观测（即 $n\rightarrow \infty$），如果 $p_j = \lim\limits_ {n \rightarrow \infty} \frac{c_j+1}{n+1} \rightarrow q_j$，那么 $L^n$ 会收敛($n\rightarrow \infty$)，此时代表分布 $Q$ 可以很好估计真实分布 $P$，而其它情况则可能会发散。
 
 为了描述进行一次观测的平均概率，我们对 $n$ 次观测采用几何平均数，记作 $\bar{L}$: 
 
@@ -118,7 +119,13 @@ $$
 \tag{3.3}
 $$
 
-用 $P$ 来描述 $\xi$ 的真实分布，如果 $\frac{c_i}{n}\rightarrow p_i=q_i$，那么 $n\rightarrow \infty$，$\bar{L}\rightarrow1$。如果 $p_i\neq q_i$，那么 $\bar{L}$ 则可能不会收敛。令 $n\rightarrow \infty$，此时我们有: 
+用 $P$ 来描述 $\xi$ 的真实分布，如果 $\frac{c_i}{n} \rightarrow p_i = q_i $，那么 $n\rightarrow \infty$ ， $\bar{L}\rightarrow 1$ 。如果
+$p_i\neq q_i$
+，那么 
+$\bar{L}$
+则可能不会收敛。令
+$n\rightarrow \infty$
+，此时我们有: 
 
 $$
 \log_{2}(\overline{L})
@@ -173,7 +180,7 @@ $$
 \tag{3.6}
 $$
 
-综上所述，当 $P,Q$ 两个分布的概率密度函数几乎处处相等的时候，有 $\bar{L}=1$，由式 $(2.6)$ 可知 $\mathbb{D}_{KL}=0$；当两个分布相差太大的时候，有 $\bar{L}\rightarrow 0$，可知 $\mathbb{D}_{KL}=\infty$。KL 散度度量了在对随机变量 $\xi$ 的采样过程中，$\xi$ 的真实分布 $P$ 与我们的假设分布 $Q$ 的符合程度。
+综上所述，当 $P,Q$ 两个分布的概率密度函数几乎处处相等的时候，有 $\bar{L}=1$ ，由式 $(2.6)$ 可知 $\mathbb{D}_ {KL}=0$ ；当两个分布相差太大的时候，有 $\bar{L}\rightarrow 0$ ，可知 $\mathbb{D}_ {KL}=\infty$ 。KL 散度度量了在对随机变量 $\xi$ 的采样过程中， $\xi$ 的真实分布 $P$ 与我们的假设分布 $Q$ 的符合程度。
 
 ## KL散度的应用：独立性度量
 我们可以用 KL 散度来度量两个随机变量 $\mathbf{x},\mathbf{y}$ 的独立性：
@@ -247,7 +254,7 @@ $$
 D(P_1\parallel P_2)
 &= \sum\limits_i P_1(i)\log\frac{P_1(i)}{P_2(i)} \\
 &= E_{P_1}\left(\log P_1-\log P_2\right) \\
-&= \frac{1}{2}E_{P_1}\left[-\log\det(\Sigma_1)+\log\det(\Sigma_2)-(\mathbf{x} - \mathbf{u}_1)^T \Sigma_1^{-1} (\mathbf{x} - \mathbf{u}_1)+(\mathbf{x} - \mathbf{u}_2)^T \Sigma_2^{-1} (\mathbf{x} - \mathbf{u}_2)\right] \\
+&= \frac{1}{2} E_{P_1}\left[ - \log\det (\Sigma_ 1) + \log\det (\Sigma_ 2) - (\mathbf{x} - \mathbf{u}_ 1)^ T \Sigma_ 1^ {-1} (\mathbf{x} - \mathbf{u}_ 1) + (\mathbf{x} - \mathbf{u}_ 2)^ T \Sigma_ 2^{-1} (\mathbf{x} - \mathbf{u}_2)\right] \\
 &= \frac{1}{2}\log\frac{\det(\Sigma_2)}{\det(\Sigma_1)}+\frac{1}{2}E_{P_1}\left[(\mathbf{x} - \mathbf{u}_2)^T \Sigma_2^{-1} (\mathbf{x} - \mathbf{u}_2)-(\mathbf{x} - \mathbf{u}_1)^T \Sigma_1^{-1} (\mathbf{x} - \mathbf{u}_1)\right] \\
 &= \frac{1}{2}\log\frac{\det(\Sigma_2)}{\det(\Sigma_1)}+\frac{1}{2}E_{P_1}\left[\text{Tr}((\mathbf{x} - \mathbf{u}_2)^T \Sigma_2^{-1} (\mathbf{x} - \mathbf{u}_2))-\text{Tr}((\mathbf{x} - \mathbf{u}_1)^T \Sigma_1^{-1} (\mathbf{x} - \mathbf{u}_1))\right] \\
 &= \frac{1}{2}\log\frac{\det(\Sigma_2)}{\det(\Sigma_1)}+\frac{1}{2}E_{P_1}\left[\text{Tr}(\Sigma_2^{-1} (\mathbf{x} - \mathbf{u}_2)(\mathbf{x} - \mathbf{u}_2)^T )-\text{Tr}(\Sigma_1^{-1} (\mathbf{x} - \mathbf{u}_1)(\mathbf{x} - \mathbf{u}_1)^T )\right] 
@@ -259,7 +266,8 @@ $$
 
 $$
 \begin{aligned}
-(\mathbf{x} - \mathbf{u}_1)(\mathbf{x} - \mathbf{u}_1)^T = \Sigma_1 \\(\mathbf{x} - \mathbf{u}_2)(\mathbf{x} - \mathbf{u}_2)^T \neq \Sigma_2
+(\mathbf{x} - \mathbf{u}_1)(\mathbf{x} - \mathbf{u}_1)^T = \Sigma_1 \\
+(\mathbf{x} - \mathbf{u}_2)(\mathbf{x} - \mathbf{u}_2)^T \neq \Sigma_2
 \end{aligned}
 $$
 
