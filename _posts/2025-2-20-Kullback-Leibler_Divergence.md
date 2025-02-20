@@ -7,11 +7,9 @@ tags:
   - Information Theory
   - KL Divergence
 ---
-This is a blog of my learning notes about Kullback-Leibler Divergence. Enjoy! ^_^
+Kullback-Leibler Divergence (KL 散度) 是用来度量两个概率分布相似度的指标，它作为经典损失函数被广泛地用于聚类分析与参数估计等机器学习任务中。
 
 <!--more-->
-
-**Kullback-Leibler Divergence (KL 散度)** 是用来度量两个概率分布相似度的指标，它作为经典损失函数被广泛地用于聚类分析与参数估计等机器学习任务中。
 
 ## 定义
 假设对随机变量 $\xi$，存在两个概率分布 $P,Q$。如果为离散随机变量，定义从 $P$ 到 $Q$ 的 KL 散度为: 
