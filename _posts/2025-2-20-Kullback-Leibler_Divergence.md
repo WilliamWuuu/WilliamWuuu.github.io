@@ -1,6 +1,6 @@
 ---
 title: 'Kullback-Leibler Divergence'
-date: 2024-2-20
+date: 2025-2-20
 permalink: /posts/2024/11/Kullback-Leibler Divergence/
 tags:
   - Machine Learning
@@ -11,7 +11,6 @@ This is a blog of my learning notes about Kullback-Leibler Divergence. Enjoy! ^_
 
 <!--more-->
 
-# Kullback-Leibler Divergence
 **Kullback-Leibler Divergence (KL 散度)** 是用来度量两个概率分布相似度的指标，它作为经典损失函数被广泛地用于聚类分析与参数估计等机器学习任务中。
 
 ## 定义
