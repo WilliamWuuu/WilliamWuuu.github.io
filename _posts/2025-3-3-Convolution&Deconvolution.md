@@ -1,5 +1,5 @@
 ---
-title: '卷积和反卷积'
+title: 'Convolution & Deconvolution'
 date: 2025-3-3
 permalink: /posts/2025/3/Convolution&Deconvolution/
 tags:
@@ -11,7 +11,7 @@ tags:
 
 <!--more-->
 
-## Introduction
+## 引入
 我们知道全连接网络 (Fully Connected Network, FCN) 是一种由输入层、一个或多个隐藏层以及输出层组成人工神经网络，其中每一层的神经元都会对前一层的所有神经元的输出进行加权求和，并通过激活函数进行非线性变换。
 
 当我们使用 FCN 处理图像这样的高维数据时，输入图片上的所有像素点会被展平 (flattern) 成一个向量再输入网络。这样往往会存在如下两个问题：
@@ -20,12 +20,13 @@ tags:
 
 我们引入卷积 (Convolution) 来对输入的图像进行特征提取。卷积的计算范围是在像素点的空间邻域内进行的，因此可以利用输入图像的空间信息；此外，由于卷积具有局部连接、权重共享等特性，卷积核参数的数目也远小于全连接层。
 
-## Convolution
+## 卷积运算
 - Kernel / Stride / Feature map
 
 卷积的运算操作其实就是对**卷积核 (kernel)** 中的元素与输入矩阵上对应位置的元素进行逐像素的乘积并求和 (矩阵内积，inner product)。然后使用卷积核在输入矩阵上根据设置的**步长 (stride)** 滑动，直到遍历完输入矩阵的所有位置。卷积滤波结果在卷积神经网络中被称为**特征图 (feature map)**。
 
 下图卷积运算的一个简单示意图：
+
 ![这是图片](../images/Convolution&Deconvolution/Convolution.png "卷积运算示意图")
 
 - Padding
@@ -44,14 +45,14 @@ tags:
 
 图像卷积计算实质上是对图像进行了**下采样 (down sampling)** 操作。对卷积得到的图像结果不断卷积滤波，则原始图像就会被层层抽象、层层约减。
 
-## Transposed Convolution
+## 转置卷积运算
 图像经过多层的卷积运算后，输出图像的尺寸会变得很小。而对于某些特定的任务 (图像分割、GAN 等)，我们需要将图像恢复到原来的尺寸再进行进一步的计算。这个恢复图像尺寸，实现图像由小分辨率到大分辨率映射 (mapping) 的操作称为**上采样 (up sampling)**。
 
 上采样有多种方式，常见的包括最近邻插值 (Nearest neighbor interpolation)、双线性插值 (Bi-Linear interpolation) 等，但是这些上采样方法都是基于人们的先验经验来设计的，对于很多场景效果并不理想。因此，我们引入**转置卷积 (Transpose Convolution)** ，有时也被称为**反卷积 (Deconvolution)** 的方法来让神经网络自己学习如何更好地进行插值。
 
 我们通过卷积核将输入图片中的一个区域中的一些值映射到 feature map 中的一个值，也就是说，我们可以认为卷积操作实际上建立了一个多对一的关系。而对于转置卷积，我们实际上是想建立一个卷积逆向操作，即建立一个一对多的关系。
 
-### Derivation
+### 推导
 定义 $4\times 4$ 的输入矩阵 $input$ 为:
 
 $$
