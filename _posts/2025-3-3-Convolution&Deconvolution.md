@@ -27,7 +27,7 @@ tags:
 
 下图卷积运算的一个简单示意图：
 
-![这是图片](../images/Convolution&Deconvolution/Convolution.png "卷积运算示意图")
+![这是图片](https://github.com/WilliamWuuu/WilliamWuuu.github.io/blob/master/images/Convolution%26Deconvolution/Convolution.png "卷积运算示意图")
 
 - Padding
 
