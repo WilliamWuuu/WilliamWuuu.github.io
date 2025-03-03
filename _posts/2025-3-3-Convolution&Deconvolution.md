@@ -25,10 +25,6 @@ tags:
 
 卷积的运算操作其实就是对**卷积核 (kernel)** 中的元素与输入矩阵上对应位置的元素进行逐像素的乘积并求和 (矩阵内积，inner product)。然后使用卷积核在输入矩阵上根据设置的**步长 (stride)** 滑动，直到遍历完输入矩阵的所有位置。卷积滤波结果在卷积神经网络中被称为**特征图 (feature map)**。
 
-下图卷积运算的一个简单示意图：
-
-![这是图片](https://github.com/WilliamWuuu/WilliamWuuu.github.io/blob/master/images/Convolution%26Deconvolution/Convolution.png "卷积运算示意图")
-
 - Padding
 
 当 stride 不为 1 时，可能存在卷积核在边缘像素点处部分滑出了输入矩阵的情况，这时我们进行**填充 (padding)** 操作，即在超出的部分补值。一般在边缘像素点周围填充 $0$ (即 0-padding)，使得输入图像的边缘像素也可以参与卷积计算。
