@@ -1,0 +1,20 @@
+---
+---
+
+@import "jekyll-theme-leap-day";
+
+@font-face {
+    font-family: "Bookerly";
+    src: url("/assets/fonts/bookerly/Bookerly.ttf");
+}
+
+@font-face {
+	font-family: "Songti SC";
+	src: url("/assets/fonts/Songti.ttc");
+}
+
+body {
+    font-family: "Songti SC", "Bookerly", "Times New Roman";  
+    font-size: 20px;  
+}
+
