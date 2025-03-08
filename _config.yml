@@ -6,6 +6,8 @@
 # `jekyll serve -l -H localhost`. If you change this file, please restart the 
 # server process.
 
+theme: jekyll-theme-leap-day
+
 # Basic Site Settings
 locale                   : "en-US"
 title                    : "Yangxin Wu's Personal Homepage"
