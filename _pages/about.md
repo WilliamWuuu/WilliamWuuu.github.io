@@ -14,7 +14,7 @@ My research interest includes **machine learning**, **generative modeling**, **A
 Github Repositories
 ======
 [Auto_Standard_Generator](https://github.com/WilliamWuuu/Auto_Standard_Generator)
-> About fine-tuning pre-trained general LLMs on a smaller dataset of labeled data specific to a particular task, thus improving its performance.
+> About fine-tuning pre-trained general LLMs on a smaller labeled dataset, thus improving its performance in downstream tasks.
 
 [Mathematical_Models_Explained](https://github.com/WilliamWuuu/Mathematical_Models_Explained)
 > A collection of mathematical models and machine learning algorithms.
