@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-introduction-to-boosting-algorithm",
+            },{id: "post-gaussian-discriminant-analysis-versus-logistic-regression",
+        
+          title: "Gaussian Discriminant Analysis Versus Logistic Regression",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/GDAvsLR/";
+          
+        },
+      },{id: "post-introduction-to-boosting-algorithm",
         
           title: "Introduction to Boosting Algorithm",
         
