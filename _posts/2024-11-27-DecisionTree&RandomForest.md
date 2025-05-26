@@ -1,7 +1,7 @@
 ---
-title: 'Decision Tree & Random Forest'
+layout: post
+title: Introduction to Decision Tree & Random Forest
 date: 2024-11-27
-permalink: /_posts/2024/11/Decision Tree & Random Forest/
 tags:
   - Machine Learning
   - Decision Tree
