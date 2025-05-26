@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-introduction-to-kullback-leibler-divergence",
+            },{id: "post-introduction-to-convolution-amp-deconvolution",
+        
+          title: "Introduction to Convolution &amp; Deconvolution",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/Convolution&Deconvolution/";
+          
+        },
+      },{id: "post-introduction-to-kullback-leibler-divergence",
         
           title: "Introduction to Kullback-Leibler Divergence",
         
