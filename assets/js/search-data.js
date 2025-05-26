@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-introduction-to-decision-tree-amp-random-forest",
+            },{id: "post-introduction-to-boosting-algorithm",
+        
+          title: "Introduction to Boosting Algorithm",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2024/Boosting/";
+          
+        },
+      },{id: "post-introduction-to-decision-tree-amp-random-forest",
         
           title: "Introduction to Decision Tree &amp; Random Forest",
         
