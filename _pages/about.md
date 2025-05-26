@@ -6,7 +6,7 @@ subtitle: <em>Undergraduate student at HITSZ</em>
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: yangxin.png
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>Dorm</p>
