@@ -58,7 +58,18 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-gaussian-discriminant-analysis-versus-logistic-regression",
+            },{id: "post-introduction-to-kullback-leibler-divergence",
+        
+          title: "Introduction to Kullback-Leibler Divergence",
+        
+        description: "",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/Kullback-Leibler_Divergence/";
+          
+        },
+      },{id: "post-gaussian-discriminant-analysis-versus-logistic-regression",
         
           title: "Gaussian Discriminant Analysis Versus Logistic Regression",
         
