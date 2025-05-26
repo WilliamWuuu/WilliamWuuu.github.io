@@ -58,15 +58,15 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/blog/";
               },
-            },{id: "post-decision-tree-amp-random-forest",
+            },{id: "post-introduction-to-decision-tree-amp-random-forest",
         
-          title: "Decision Tree &amp; Random Forest",
+          title: "Introduction to Decision Tree &amp; Random Forest",
         
         description: "",
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/_posts/2024/11/Decision%20Tree%20&%20Random%20Forest/";
+            window.location.href = "/blog/2024/DecisionTree&RandomForest/";
           
         },
       },{id: "post-google-gemini-updates-flash-1-5-gemma-2-and-project-astra",
