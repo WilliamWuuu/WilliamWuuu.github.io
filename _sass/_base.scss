@@ -2,6 +2,13 @@
  * Styles for the base elements of the theme.
  ******************************************************************************/
 
+@font-face {
+  font-family: 'Bookerly'; /* 给你的字体起一个名字 */
+  src: url('assets/fonts/bookerly/Bookerly.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 // Typography
 
 p,
@@ -198,7 +205,7 @@ ul.task-list input[type="checkbox"] {
   .more-info {
     margin-bottom: 5px;
     margin-top: 5px;
-    font-family: monospace;
+    font-family: 'Bookerly', monospace;
 
     p {
       display: inline-block;
