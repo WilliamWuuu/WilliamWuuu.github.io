@@ -1,13 +1,10 @@
 ---
 # Display name
-title: 吳健雄
-
-# Name pronunciation (optional)
-name_pronunciation: Chien Shiung Wu
+title: Yangxin "William" Wu
 
 # Full name (for SEO)
-first_name: Shiung Wu
-last_name: Chien
+first_name: Yangxin
+last_name: Wu
 
 # Status emoji
 status:
@@ -17,35 +14,26 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Professor of Artificial Intelligence
+role: Sophomore at HITSZ
 
-# Organizations/Affiliations to show in About widget
+# Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: Stanford University
-    url: https://www.stanford.edu/
+  - name: Harbin Institute of Technology, Shenzhen
+    url: https://www.hitsz.edu.cn/
 
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
-# Social Networking
+# Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
 profiles:
   - icon: at-symbol
-    url: 'mailto:your-email@example.com'
+    url: 'mailto:william.yangxin.wu@gmail.com'
     label: E-mail Me
   - icon: brands/x
-    url: https://twitter.com/GetResearchDev
-  - icon: brands/instagram
-    url: https://www.instagram.com/
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/
-  # Link to a PDF of your resume/CV - upload it to `static/uploads/resume.pdf`
-  - icon: academicons/cv
-    url: uploads/resume.pdf
-    label: Download my resume
-  - icon: rss
-    url: ./post/index.xml
-    label: Subscribe to my blog via RSS feed
+    url: https://x.com/YangxinWu99753
+  - icon: brands/github
+    url: https://github.com/WilliamWuuu
 
 # Highlight the author in author lists? (true/false)
 highlight_name: true
@@ -54,6 +42,5 @@ highlight_name: true
 website: ""
 ---
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include
-distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops
-self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+I'm currently a sophomore at [Harbin Institute of Technology, Shenzhen](https://www.hitsz.edu.cn/) working with [Xiucheng Li](https://xiucheng.org/).
+I work on machine learning algorithms, in particular generative modeling, as well connections to mathematics and science ("AI for science"). 
