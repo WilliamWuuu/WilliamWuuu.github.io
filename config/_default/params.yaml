@@ -8,10 +8,6 @@ appearance:
   mode: system
   color: emerald
 
-math:
-  enable: true
-  renderer: 'katex'
-
 # SEO
 marketing:
   seo:
