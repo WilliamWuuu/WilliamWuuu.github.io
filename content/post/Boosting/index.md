@@ -3,7 +3,7 @@ title: Introduction to Boosting Algorithm
 
 summary: Boosting 是一种可将弱学习器提升为强学习器的算法：通过多次迭代训练一系列弱学习器，并逐步调整样本权重，使得每个新的学习器更加关注前一轮错误的样本，从而提高模型的整体预测性能。
 
-date: 2024-12-1
+date: 2024-12-01
 
 math: true
 
