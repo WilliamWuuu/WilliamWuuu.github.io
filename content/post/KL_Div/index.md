@@ -3,7 +3,7 @@ title: Introduction to Kullback-Leibler Divergence
 
 summary: KL 散度是用来度量两个概率分布相似度的指标，它作为经典损失函数被广泛地用于聚类分析与参数估计等机器学习任务中。
 
-date: 2025-2-20
+date: 2025-02-20
 
 math: true
 
