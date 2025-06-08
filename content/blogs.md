@@ -1,6 +1,6 @@
 ---
 title: 'Blogs'
-date: 2025-6-8T14:30:00+08:00
+date: 2025-06-08
 type: landing
 
 design:
