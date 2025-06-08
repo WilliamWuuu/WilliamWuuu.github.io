@@ -17,7 +17,6 @@ projects:
 
 # Overview
 Boosting 是一种可将弱学习器提升为强学习器的算法，其理论依据是 Michael Kearns 和 Leslie Valiant 首先提出了”强可学习 (strongly learnable)”和“弱可学习 (weakly learnable)”的概念。他们指出：
-
 1. 一个概念(一个类，label)，如果存在一个多项式的学习算法能够学习它，并且正确率很高，那么就称这个概念是强可学习的；
 
 2. 一个概念(一个类，label)，如果存在一个多项式的学习算法能够学习它，学习的正确率仅比随机猜测略好，那么就称这个概念是弱可学习的。
