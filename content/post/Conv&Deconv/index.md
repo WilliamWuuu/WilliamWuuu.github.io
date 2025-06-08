@@ -3,7 +3,7 @@ title: Introduction to Convolution and Deconvolution
 
 summary: 卷积用于提取局部特征，通过滑动窗口加权求和降低维度或增强特征；反卷积（转置卷积）用于恢复空间信息，通过可训练的权重进行上采样以还原高维特征。
 
-date: 2025-3-3
+date: 2025-03-03
 
 math: true
 
