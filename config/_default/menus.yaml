@@ -10,8 +10,8 @@ main:
   - name: Papers
     url: /#papers
     weight: 11
-  - name: Blogs
-    url: blogs/
+  - name: Blog
+    url: blog/
     weight: 20
   - name: Projects
     url: projects/
