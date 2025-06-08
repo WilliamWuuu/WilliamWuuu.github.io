@@ -16,16 +16,6 @@ projects:
   - GDAvsLR
 ---
 
----
-layout: post
-title: Gaussian Discriminant Analysis Versus Logistic Regression
-date: 2024-12-4
-tags:
-  - Machine Learning
-  - Gaussian Discriminant Analysis
-  - Logistic Regression
---- 
-
 Overview
 ======
 
