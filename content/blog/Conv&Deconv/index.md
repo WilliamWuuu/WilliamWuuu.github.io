@@ -15,15 +15,6 @@ tags:
 projects:
   - Conv&Deconv
 ---
----
-layout: post
-title: Introduction to Convolution & Deconvolution
-date: 2025-3-3
-tags:
-  - Machine Learning
-  - Convolution
-  - CNN
----
 
 ## 引入
 我们知道全连接网络 (Fully Connected Network, FCN) 是一种由输入层、一个或多个隐藏层以及输出层组成人工神经网络，其中每一层的神经元都会对前一层的所有神经元的输出进行加权求和，并通过激活函数进行非线性变换。
