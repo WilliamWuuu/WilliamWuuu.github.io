@@ -11,7 +11,7 @@ design:
 sections:
   - block: collection
     content:
-      title: Blog Space
+      title: Featured Blogs
       text: 记录思考，分享技术，沉淀成长。
       filters:
         folders:
