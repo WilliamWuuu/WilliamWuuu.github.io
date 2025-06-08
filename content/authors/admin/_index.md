@@ -1,6 +1,6 @@
 ---
 # Display name
-title: Yangxin "William" Wu
+title: Yangxin Wu
 
 # Full name (for SEO)
 first_name: Yangxin
