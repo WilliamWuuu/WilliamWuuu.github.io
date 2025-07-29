@@ -40,7 +40,7 @@ featured: true
 
 # Custom links (uncomment lines below)
 links:
-- name: 🔗
+- name: Link
   url: https://aclanthology.org/2025.iwslt-1.43/
 
 # url_pdf: ''
