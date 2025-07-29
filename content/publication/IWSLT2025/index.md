@@ -35,18 +35,18 @@ tags:
 featured: true
 
 # Custom links (uncomment lines below)
-# links:
-# - name: 🔗
-#   url: https://aclanthology.org/2025.iwslt-1.43/
+links:
+- name: 🔗
+  url: https://aclanthology.org/2025.iwslt-1.43/
 
-url_pdf: ''
-url_code: ''
-url_dataset: ''
-url_poster: ''
-url_project: ''
-url_slides: ''
-url_source: ''
-url_video: ''
+# url_pdf: ''
+# url_code: ''
+# url_dataset: ''
+# url_poster: ''
+# url_project: ''
+# url_slides: ''
+# url_source: ''
+# url_video: ''
 
 ---
 
