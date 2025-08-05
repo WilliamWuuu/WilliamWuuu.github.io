@@ -7,11 +7,11 @@ title: 'HITSZ’s End-To-End Speech Translation Systems Combining Sequence-to-Se
 authors:
   - Xuchen Wei
   - admin
-  - Zhang Yaoyin
-  - Liu Henglyu
-  - Chen Kehai
-  - Bai Xuefeng
-  - Zhang Min
+  - Yaoyin Zhang
+  - Henglyu Liu
+  - Kehai Chen
+  - Xuefeng Bai
+  - Min Zhang
 
 date: '2025-07-01T00:00:00Z'
 doi: ''
