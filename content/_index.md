@@ -35,9 +35,9 @@ sections:
       title: '📚 My Research'
       subtitle: ''
       text: |-  
-        - 🔭 Currently focused on **Molecule Generation** and **Neural PDE Solvers**.
+        - 🔭 Currently focused on **Neural PDE Solvers**.
         - 🌱 Learning advanced and novel generative models' architectures.
-        - 🤔 Interested in reinforcement learning.
+        - 🤔 Interested in molecule generation and reinforcement learning.
         - 🛠️ Tech Stack: Python, PyTorch.
         - 😃 Please reach out to collaborate if interested.
     design:
