@@ -17,7 +17,7 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Sophomore at HITSZ
+role: Junior at HITSZ
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
@@ -51,5 +51,5 @@ education:
 
 ## About Me
 
-I'm currently a sophomore at [Harbin Institute of Technology, Shenzhen](https://www.hitsz.edu.cn/) working with [Xiucheng Li](https://xiucheng.org/).
+I'm currently a junior at [Harbin Institute of Technology, Shenzhen](https://www.hitsz.edu.cn/) working with [Xiucheng Li](https://xiucheng.org/).
 I work on machine learning algorithms, in particular generative modeling, as well connections to mathematics and science ("AI for science"). 
