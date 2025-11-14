@@ -41,13 +41,19 @@ portrait_url: /assets/images/photos/portrait.jpg
 # portrait_caption: >-
 #   Photo by AdrianusWei in university dorm.
 
+experience:
+- name: Harbin Institute of Technology, Shenzhen
+  logo: /assets/images/badges/HIT_blue.png
+  position: B.S. in Computer Science
+  date: Sep. 2023 - Jul. 2027
+
 education:
 - name: Harbin Institute of Technology, Shenzhen
   logo: /assets/images/badges/HIT_blue.png
   position: B.S. in Computer Science
   date: Sep. 2023 - Jul. 2027
 
-# experience:
+# 
 # - name: Peking University
 #   logo: /assets/images/badges/PKU_red.png
 #   position: Research Intern
