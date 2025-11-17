@@ -301,7 +301,7 @@ code:not(.highlighter-rouge code) {
 
 /* Math formula styling */
 .katex-display {
-    margin: 1.5rem 0;
+    margin: 1rem 0;
     text-align: center;
     overflow-x: auto;
     overflow-y: hidden;
@@ -317,27 +317,29 @@ code:not(.highlighter-rouge code) {
     white-space: nowrap;
 }
 
+/* Hide KaTeX auto equation numbers */
+.katex-display .katex .tag,
+.katex-display .eqno {
+    display: none !important;
+}
+
 /* Fix for math formula containers */
 .katex-display {
     display: block;
     width: 100%;
-    position: relative;
-}
-
-.katex-display .tag {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    padding-left: 0.75rem;
-    font-size: 0.9em;
-    white-space: nowrap;
 }
 
 /* Ensure proper spacing around math formulas */
 .blog-content .katex-display {
-    margin: 2rem 0;
-    padding: 1rem 0;
+    margin: 1.25rem 0;
+    padding: 0.25rem 0;
+}
+
+/* Tighten spacing when math touches paragraphs */
+p + .katex-display,
+.katex-display + p {
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
 }
 
 /* Inline math styling */
