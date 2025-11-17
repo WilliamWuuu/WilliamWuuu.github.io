@@ -200,6 +200,17 @@ code:not(.highlighter-rouge code) {
     font-size: 1.25rem;
 }
 
+.blog-post-title {
+    font-size: 2.4rem;
+    line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+    .blog-post-title {
+        font-size: 2rem;
+    }
+}
+
 .blog-content p {
     margin-bottom: 1rem;
 }
