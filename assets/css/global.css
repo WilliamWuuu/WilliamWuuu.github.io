@@ -321,6 +321,17 @@ code:not(.highlighter-rouge code) {
 .katex-display {
     display: block;
     width: 100%;
+    position: relative;
+}
+
+.katex-display .tag {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 0.75rem;
+    font-size: 0.9em;
+    white-space: nowrap;
 }
 
 /* Ensure proper spacing around math formulas */
