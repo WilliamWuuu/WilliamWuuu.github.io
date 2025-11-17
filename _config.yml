@@ -27,6 +27,7 @@ kramdown:
     block:
       line_numbers: false
       start_line: 1
+
 plugins:
   - jekyll-email-protect
 
