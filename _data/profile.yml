@@ -9,7 +9,7 @@ positions:
 
 
 email: "2023311526@stu.hit.edu.cn"
-# cv_link: link-to-your-cv-file
+cv_link: /assets/files/CV.pdf  # Link to your CV file
 gscholar: k3GHIvMAAAAJ  # This is an example, replace it with your own Google Scholar ID
 github: WilliamWuuu
 twitter: YangxinWu99753  # Do not include the '@' symbol
