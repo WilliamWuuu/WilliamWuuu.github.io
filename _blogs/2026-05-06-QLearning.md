@@ -248,4 +248,4 @@ Q-learning therefore combines two ideas. The Bellman equation gives a recursive 
 
 [1] Watkins, C. J., Dayan, P. (1992). Technical Note: Q-learning. Machine learning, 8(3-4), 279-292.
 
-[2] Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola, et al. (2023). Dive into Deep Learning. Cambridge University Press.
+[2] Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola. (2023). Dive into Deep Learning. Cambridge University Press.
