@@ -243,3 +243,9 @@ $$
 where the hyperparameter $T$ is called the temperature. A larger $\epsilon$ in $\epsilon$-greedy exploration plays a similar role to a larger temperature $T$ in the softmax policy: both make the agent explore more.
 
 Q-learning therefore combines two ideas. The Bellman equation gives a recursive target for long-term reward, while exploration determines whether the agent collects enough varied experience for that target to become meaningful.
+
+## References
+
+[1] Watkins, C. J., Dayan, P. (1992). Technical Note: Q-learning. Machine learning, 8(3-4), 279-292.
+
+[2] Aston Zhang, Zachary C. Lipton, Mu Li, Alexander J. Smola, et al. (2023). Dive into Deep Learning. Cambridge University Press.
