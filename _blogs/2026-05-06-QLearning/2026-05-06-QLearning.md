@@ -3,6 +3,7 @@ layout: blog
 title: 'My Bizarre Adventure in RL: Q-Learning'
 date: 2026-05-06
 permalink: /posts/2026/5/Q-Learning/
+image_path: /blog-assets/2026-05-06-QLearning/img/
 tags:
   - Reinforcement Learning
 ---

@@ -229,6 +229,15 @@ code:not(.highlighter-rouge code) {
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     margin: 1rem 0;
 }
+
+.blog-content figure.blog-image {
+    margin: 1rem 0;
+}
+
+.blog-content figure.blog-image img {
+    margin: 0;
+}
+
 /* Multi-column image layouts */
 .blog-content .row img {
     margin: 0.5rem 0;
@@ -432,4 +441,3 @@ div.lazy {
 .email-text {
     font-family: Source Code Pro, monospace;
 }
-

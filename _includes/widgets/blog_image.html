@@ -1,0 +1,24 @@
+{% assign src = include.src | default: "" %}
+{% assign first_char = src | slice: 0 %}
+
+{% if src contains "://" or first_char == "/" %}
+    {% assign image_src = src %}
+{% else %}
+    {% assign current_file = page.relative_path | split: "/" | last %}
+    {% assign current_dir = page.relative_path | remove: current_file %}
+    {% assign blog_dir = current_dir | remove_first: "_blogs/" %}
+    {% assign default_image_path = "/blog-assets/" | append: blog_dir | append: "img/" %}
+    {% assign image_base = page.image_path | default: default_image_path %}
+    {% assign image_src = image_base | append: src %}
+{% endif %}
+
+<figure class="blog-image">
+    <img
+        src="{% if image_src contains '://' %}{{ image_src }}{% else %}{{ image_src | relative_url }}{% endif %}"
+        alt="{{ include.alt | default: '' }}"
+        class="{{ include.class | default: 'img-fluid' }}"
+    >
+    {% if include.caption %}
+        <figcaption class="text-muted small text-center mt-1">{{ include.caption }}</figcaption>
+    {% endif %}
+</figure>
