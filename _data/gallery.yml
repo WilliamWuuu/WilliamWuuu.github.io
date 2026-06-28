@@ -5,7 +5,7 @@ default:
     alt: "Cat 1"
   - src: "/assets/images/etc/cat2.jpg"
     alt: "Cat 2"
-  - src: "/assets/images/photos/portrait.jpg"
+  - src: "/assets/images/photos/portrait.png"
     alt: "Portrait"
 
 two_column:
