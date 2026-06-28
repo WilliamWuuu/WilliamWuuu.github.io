@@ -50,7 +50,7 @@ collections:
     output: true
   blogs:
     output: true
-    permalink: /blog-assets/:path
+    permalink: /posts/:year/:month/:title/
   news:
     output: true
   showcase:
