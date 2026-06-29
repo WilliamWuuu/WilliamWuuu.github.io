@@ -314,6 +314,7 @@ code:not(.highlighter-rouge code) {
     text-align: center;
     overflow-x: auto;
     overflow-y: hidden;
+    position: relative;
 }
 
 .katex {
@@ -326,10 +327,15 @@ code:not(.highlighter-rouge code) {
     white-space: nowrap;
 }
 
-/* Hide KaTeX auto equation numbers */
-.katex-display .katex .tag,
-.katex-display .eqno {
-    display: none !important;
+/* Equation numbering for \begin{equation} blocks */
+.katex-display > .katex {
+    display: inline;
+}
+.katex-display > .tag {
+    position: absolute;
+    right: 0;
+    font-size: 0.9em;
+    color: #555;
 }
 
 /* Fix for math formula containers */
@@ -441,3 +447,60 @@ div.lazy {
 .email-text {
     font-family: Source Code Pro, monospace;
 }
+
+/* Blog Table of Contents sidebar */
+.blog-toc {
+    top: 6rem;
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    padding: 1rem 0;
+    font-size: 0.875rem;
+    border-left: 2px solid #e9ecef;
+}
+
+.blog-toc-title {
+    font-weight: 700;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+}
+
+.blog-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.blog-toc-item {
+    margin: 0;
+}
+
+.blog-toc-link {
+    display: block;
+    padding: 0.25rem 1rem;
+    color: #6c757d;
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.15s ease;
+    word-break: break-word;
+}
+
+.blog-toc-link:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.blog-toc-link.active {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Indent nested heading levels */
+.blog-toc-level-2 > .blog-toc-link { padding-left: 1rem; }
+.blog-toc-level-3 > .blog-toc-link { padding-left: 2rem; }
+.blog-toc-level-4 > .blog-toc-link { padding-left: 3rem; }
+.blog-toc-level-5 > .blog-toc-link { padding-left: 4rem; }
+.blog-toc-level-6 > .blog-toc-link { padding-left: 5rem; }
