@@ -310,10 +310,10 @@ code:not(.highlighter-rouge code) {
 
 /* Math formula styling */
 .katex-display {
+    display: block;
+    width: 100%;
     margin: 1rem 0;
     text-align: center;
-    overflow-x: auto;
-    overflow-y: hidden;
     position: relative;
 }
 
@@ -331,23 +331,21 @@ code:not(.highlighter-rouge code) {
 .katex-display > .katex {
     display: inline;
 }
+.katex-display:has(> .tag) {
+    padding-right: 3em;
+}
 .katex-display > .tag {
     position: absolute;
-    right: 0;
+    right: 0.5em;
     font-size: 0.9em;
     color: #555;
-}
-
-/* Fix for math formula containers */
-.katex-display {
-    display: block;
-    width: 100%;
 }
 
 /* Ensure proper spacing around math formulas */
 .blog-content .katex-display {
     margin: 1.25rem 0;
-    padding: 0.25rem 0;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 /* Tighten spacing when math touches paragraphs */
