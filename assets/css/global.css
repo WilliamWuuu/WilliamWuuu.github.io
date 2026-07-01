@@ -226,16 +226,31 @@ code:not(.highlighter-rouge code) {
     max-width: 100%;
     height: auto;
     border-radius: 0.375rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     margin: 1rem 0;
 }
 
 .blog-content figure.blog-image {
-    margin: 1rem 0;
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.blog-content figure.blog-image:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .blog-content figure.blog-image img {
     margin: 0;
+    border-radius: 0.375rem;
+    box-shadow: none;
+}
+
+.blog-content figure.blog-image figcaption {
+    padding: 0.5rem 0.25rem 0.25rem;
 }
 
 /* Multi-column image layouts */
