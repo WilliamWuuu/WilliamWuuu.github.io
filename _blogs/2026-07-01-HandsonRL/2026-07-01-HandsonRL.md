@@ -99,7 +99,7 @@ Then we can move on to the whole policy loss. But before implementation, a trick
 
 Consider the case where the advantage is positive. When $\frac{\pi_\theta}{\pi_{old}}$ increases, loss tends to decrease, which is exactly the optimizer wants to see. Meanwhile, we want to control this ratio to prevent it from getting too large. The clip mechanism does a great job of achieving this.
 
-But let's look at the case when the advantage is negative.
+But let's look at the case when the advantage is negative. Increasing this probability ratio now increases the loss, so the optimizer is incentivized to reduce this ratio, i.e., decrease the probability of the sampled action. This is consistent with discouraging bad actions. However, an important subtlety is that this lower clipping does not symmetrically bound the magnitude of the loss when r grows large. In the region where the ratio is greater than $1+\epsilon$, the unclipped term dominates for $A<0$ and the loss continues to grow approximately linearly with the ratio. As a result, extremely large ratios combined with negative advantages can still produce disproportionately large loss contributions. So we need an extra bound to address this instability, which leads to the introduction of dual-clip.
 
 ```Python
 import verl.utils.torch_functional as verl_F
