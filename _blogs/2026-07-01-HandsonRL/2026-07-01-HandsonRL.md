@@ -215,6 +215,285 @@ def compute_entropy_loss(
     return entropy_loss
 ```
 
+Once all these key components are complete, we can look into building the  trainer for PPO.
+
+{% include widgets/blog_image.html src="design.png" caption="Picture 1" %}
+
+```Python
+class PPOTrainer:
+    def __init__(self, config, tokenizer, ...):
+        """Constructor of the trainer."""
+        
+        self.config = config
+        # ... (omitted)
+
+    def init_workers(self):
+        """Worker groups for each role (actor, critic, etc.)."""
+
+        self.critic_wg = all_wg["critic"]
+        self.critic_wg.init_model()
+
+        self.ref_policy_wg = all_wg["ref"]
+        self.ref_policy_wg.init_model()
+
+        self.rm_wg = all_wg["rm"]
+        self.rm_wg.init_model()
+
+        self.actor_rollout_wg = all_wg["actor_rollout"]
+        self.actor_rollout_wg.init_model()
+        # ... (omitted)
+
+    def fit(self):
+        """Minimal training loop."""
+
+        self.global_steps = 0
+
+        # Load checkpoint.
+        self._load_checkpoint()
+
+        for epoch in range(self.config.trainer.total_epochs):
+            for batch_dict in self.train_dataloader:
+                # DataProto 
+                ## A data structure that aims to provide a standard protocol for data exchange between functions.
+                ## Contains a batch (TensorDict) and a meta_info (Dict).
+                # TensorDict
+                ## Allows you to manipulate a dictionary of Tensors like a single Tensor. 
+                ## https://docs.pytorch.org/tensordict/stable/index.html
+                batch = DataProto.from_single_dict(batch_dict)
+                
+                # ===== rollout =====
+                gen_inputs = batch.pop(
+                    batch_keys=["input_ids", "attention_mask", "position_ids"],
+                    non_tensor_batch_keys=["raw_prompt_ids"],
+                )
+                rollout_output = self.actor_rollout_wg.generate_sequences(gen_inputs)
+                batch = batch.union(rollout_output)
+                
+                batch.batch["response_mask"] = compute_response_mask(batch)
+
+                # ===== reward =====
+                reward_tensor, _ = compute_reward(batch, self.reward_fn)
+                batch.batch["token_level_rewards"] = reward_tensor
+
+                # ===== reference policy KL penalty =====
+                ref_log_prob = self.ref_policy_wg.compute_ref_log_prob(batch)
+                batch = batch.union(ref_log_prob)
+                batch = apply_kl_penalty(batch, kl_ctrl=self.kl_ctrl_in_reward)
+
+                # ===== critic value =====
+                values = self.critic_wg.compute_values(batch)
+                batch = batch.union(values)
+
+                # ===== advantage estimation =====
+                batch = compute_advantage(
+                    batch,
+                    adv_estimator=self.config.algorithm.adv_estimator,
+                    gamma=self.config.algorithm.gamma,
+                    lam=self.config.algorithm.lam,
+                    num_repeat=self.config.actor_rollout_ref.rollout.n,
+                )
+
+                # ===== critic update =====
+                critic_out = self.critic_wg.update_critic(batch)
+
+                # ===== actor update =====
+                actor_out = self.actor_rollout_wg.update_actor(batch)
+
+                # ===== end of the loop =====
+                self.global_steps += 1
+                if self.global_steps >= self.total_training_steps:
+                    return
+```
+
+```Python
+class DataParallelPPOActor:
+    def __init__(
+        self, 
+        config, 
+        actor_module: nn.Module, 
+        actor_optimizer: torch.optim.Optimizer
+    ):
+        """Constructor of the actor model."""
+
+        self.config = config
+        self.actor_module = actor_module
+        self.actor_optimizer = actor_optimizer
+        # ... (omitted)
+
+    def compute_log_prob(self, data: DataProto):
+        # ... (omitted)
+
+    def update_policy(self, data: DataProto):
+        self.actor_module.train()
+        
+        metrics = {}
+
+        # ===== extract PPO training fields =====
+        batch = data.select(
+            batch_keys=[
+                "responses",
+                "attention_mask",
+                "old_log_probs",
+                "advantages",
+                "ref_log_prob"
+            ]
+        ).batch
+
+        multi_turn = data.meta_info.get("multi_turn", False)
+
+        # ===== minibatch split =====
+        mini_batches = batch.split(self.config.ppo_mini_batch_size)
+
+        for epoch in range(self.config.ppo_epochs):
+            for mini_batch in mini_batches:
+
+                micro_batches = mini_batch.split(self.config.ppo_micro_batch_size_per_gpu)
+
+                self.actor_optimizer.zero_grad()
+
+                for mb in micro_batches:
+                    mb = mb.to(get_torch_device().current_device())
+
+                    responses = mb["responses"]
+                    advantages = mb["advantages"]
+                    old_log_prob = mb["old_log_probs"]
+
+                    response_len = responses.size(1)
+
+                    # ===== response mask =====
+                    attention_mask = mb["attention_mask"]
+                    if multi_turn:
+                        response_mask = mb.get("loss_mask", attention_mask)[:, -response_len:]
+                    else:
+                        response_mask = attention_mask[:, -response_len:]
+
+                    # ===== forward policy =====
+                    _, log_prob = self._forward_micro_batch(mb)
+
+                    # ===== PPO clipped objective =====
+                    pg_loss, clipfrac, kl_est = compute_policy_loss(
+                        old_log_prob=old_log_prob,
+                        log_prob=log_prob,
+                        advantages=advantages,
+                        response_mask=response_mask,
+                        cliprange=self.config.clip_ratio,
+                        loss_agg_mode=self.config.loss_agg_mode,
+                    )
+
+                    loss = pg_loss
+
+                    # ===== entropy bonus =====
+                    if self.config.entropy_coeff > 0:
+                        entropy, _ = self._forward_micro_batch(
+                            mb,
+                            calculate_entropy=True
+                        )
+                        entropy_loss = agg_loss(
+                            entropy,
+                            response_mask,
+                            self.config.loss_agg_mode
+                        )
+                        loss -= self.config.entropy_coeff * entropy_loss
+
+                    # ===== KL penalty to reference policy =====
+                    if self.config.use_kl_loss:
+                        ref_log_prob = mb["ref_log_prob"]
+                        kl = kl_penalty(log_prob, ref_log_prob, self.config.kl_loss_type)
+                        kl_loss = agg_loss(kl, response_mask, self.config.loss_agg_mode)
+                        loss += self.config.kl_loss_coef * kl_loss
+                        metrics.setdefault("actor/kl_loss", []).append(kl_loss.item())
+
+                    loss = loss / len(micro_batches)
+                    loss.backward()
+
+                    metrics.setdefault("actor/pg_loss", []).append(pg_loss.item())
+                    metrics.setdefault("actor/clipfrac", []).append(clipfrac.item())
+                    metrics.setdefault("actor/kl_est", []).append(kl_est.item())
+
+                # ===== optimizer step =====
+                grad_norm = self._optimizer_step()
+                metrics.setdefault("actor/grad_norm", []).append(grad_norm.item())
+
+        self.actor_optimizer.zero_grad()
+        return metrics
+```
+
+```Python
+class PPOCritic:
+    def __init__(
+        self, 
+        config, 
+        critic_module: nn.Module, 
+        critic_optimizer: optim.Optimizer
+    ):
+        """Constructor of the critic model."""
+        
+        self.config = config
+        self.critic_module = critic_module
+        self.critic_optimizer = critic_optimizer
+        # ... (omitted)
+
+    def compute_values(self, data: DataProto) -> torch.Tensor:
+        # ... (omitted)
+
+    def update_critic(self, data: DataProto):
+        self.critic_module.train()
+        metrics = {}
+
+        # ===== extract training fields =====
+        batch = data.select(
+            batch_keys=["responses", "attention_mask", "values", "returns"]
+        ).batch
+
+        # ===== minibatch split =====
+        mini_batches = batch.split(self.config.ppo_mini_batch_size)
+
+        for epoch in range(self.config.ppo_epochs):
+            for mini_batch in mini_batches:
+
+                micro_batches = mini_batch.split(self.config.ppo_micro_batch_size_per_gpu)
+
+                self.critic_optimizer.zero_grad()
+
+                for mb in micro_batches:
+                    mb = mb.to(get_torch_device().current_device())
+
+                    responses = mb["responses"]
+                    attention_mask = mb["attention_mask"]
+                    values = mb["values"]
+                    returns = mb["returns"]
+
+                    response_mask = attention_mask[:, -responses.size(1):]
+
+                    # ===== forward value function =====
+                    vpreds = self._forward_micro_batch(mb)
+
+                    # ===== PPO value loss=====
+                    vf_loss, vf_clipfrac = core_algos.compute_value_loss(
+                        vpreds=vpreds,
+                        values=values,
+                        returns=returns,
+                        response_mask=response_mask,
+                        cliprange_value=self.config.cliprange_value,
+                        loss_agg_mode=self.config.loss_agg_mode,
+                    )
+
+                    loss = vf_loss / len(micro_batches)
+                    loss.backward()
+
+                    metrics.setdefault("critic/vf_loss", []).append(vf_loss.item())
+                    metrics.setdefault("critic/vf_clipfrac", []).append(vf_clipfrac.item())
+
+                # ===== optimizer step =====
+                grad_norm = self._optimizer_step()
+                metrics.setdefault("critic/grad_norm", []).append(grad_norm.item())
+
+        self.critic_optimizer.zero_grad()
+        return metrics
+```
+
+### GRPO
+
 ## Experiments
 
 All the experiments were conducted on a single NVIDIA H800 card with CUDA 12.4.
