@@ -219,15 +219,24 @@ Once all these key components are complete, we can look into building the  train
 
 {% include widgets/blog_image.html src="design.png" caption="Picture 1" %}
 
+All the engineering, distributed, asynchronous, logging, verification, and complex analysis components have been removed, and the following code only shows the core logic.
+
 ```Python
 class PPOTrainer:
-    def __init__(self, config, tokenizer, ...):
+    def __init__(self, config, ...):
         """Constructor of the trainer."""
         
         self.config = config
         # ... (omitted)
 
     def _load_checkpoint(self):
+        # ... (omitted)
+
+    def init_workers(self):
+        self.actor = ...
+        self.critic = ...
+        self.ref_policy = ...
+        self.reward_model = ...
         # ... (omitted)
 
     def fit(self):
@@ -259,7 +268,10 @@ class PPOTrainer:
                 batch.batch["response_mask"] = compute_response_mask(batch)
 
                 # ===== reward =====
-                reward_tensor, _ = compute_reward(batch, self.reward_fn)
+                reward_tensor = self.reward_model.compute_rm_score(batch)
+                batch = batch.union(reward_tensor)
+                
+                reward_tensor = compute_reward(batch, self.reward_fn)
                 batch.batch["token_level_rewards"] = reward_tensor
 
                 # ===== reference policy KL penalty =====
@@ -277,7 +289,6 @@ class PPOTrainer:
                     adv_estimator=self.config.algorithm.adv_estimator,
                     gamma=self.config.algorithm.gamma,
                     lam=self.config.algorithm.lam,
-                    num_repeat=self.config.actor_rollout_ref.rollout.n,
                 )
 
                 # ===== critic update =====
@@ -293,6 +304,166 @@ class PPOTrainer:
 ```
 
 ### GRPO
+
+Recall that the optimization objective of GRPO is formed as:
+
+$$
+\begin{equation}
+\begin{align*}
+\mathcal{J}_{GRPO} 
+= & \mathbb{E}_{q\sim P(Q), \{o_i\}_{i=1}^G\sim \pi_{old}(O\vert q)} 
+\frac{1}{G}\sum_{i=1}^G \frac{1}{\vert o_i\vert}\sum_{t=1}^{\vert o_{i}\vert} \\
+& \left\{
+\min\left[
+\frac{\pi_\theta(o_{i,t}\vert q, o_{i,<t})}{\pi_{\theta_{old}}(o_{i,t}\vert q, o_{i,<t})}\hat{A}_{i,t},
+\mathrm{clip}\left(
+\frac{\pi_\theta(o_{i,t}\vert q, o_{i,<t})}{\pi_{\theta_{old}}(o_{i,t}\vert q, o_{i,<t})}, 1-\varepsilon, 1+\varepsilon
+\right)
+\hat{A}_{i,t}
+\right]
+-\beta\mathbb{D}_{KL}\left[
+\pi_\theta\Vert\pi_{ref}
+\right]
+\right\}
+\end{align*}
+\end{equation}
+$$
+
+We can implement the advantage calculation as follow.
+
+```Python
+def compute_grpo_outcome_advantage(
+    token_level_rewards: torch.Tensor,
+    response_mask: torch.Tensor,
+    index: np.ndarray,  # Group ID per sample
+    epsilon: float = 1e-6,
+):
+    """Compute advantage for GRPO, operating only on outcome scalar reward."""
+
+    # Compute total reward for each response.
+    scores = token_level_rewards.sum(dim=-1)  # (B,T) -> (B,)
+
+    id2score = defaultdict(list)
+    id2mean = {}
+    id2std = {}
+
+    with torch.no_grad():
+        # Group by index.
+        bsz = scores.shape[0]
+        for i in range(bsz):
+            id2score[index[i]].append(scores[i])
+        
+        # Compute mean and std for each group.
+        for idx in id2score:
+            if len(id2score[idx]) == 1:
+                id2mean[idx] = torch.tensor(0.0)
+                id2std[idx] = torch.tensor(1.0)
+            elif len(id2score[idx]) > 1:
+                id2mean[idx] = torch.mean(torch.tensor(id2score[idx]))
+                id2std[idx] = torch.std(torch.tensor([id2score[idx]]))
+            else:
+                raise ValueError(f"no score in prompt index: {idx}")
+        
+        # Compute advantage for each response.
+        for i in range(bsz):
+            scores[i] = (scores[i] - id2mean[index[i]]) / (id2std[index[i]] + epsilon)
+        
+        # Broadcast scalar advantage to token-level.
+        scores = scores.unsqueeze(-1) * response_mask  # (B,) -> (B,T)
+
+    # Return identical advantages and returns.
+    return scores, scores
+```
+
+The implementation of computing policy loss is exactly the same with PPO, so let's directly jump into the training loop.
+
+```Python
+class GRPOTrainer(PPOTrainer):
+    def __init__(self, config, ...):
+        """Constructor of the trainer."""
+        
+        self.config = config
+        # ... (omitted)
+
+    def fit(self):
+        """Minimal training loop."""
+
+        self.global_steps = 0
+
+        # Load checkpoint.
+        self._load_checkpoint()
+
+        for epoch in range(self.config.trainer.total_epochs):
+            for batch_dict in self.train_dataloader:
+                if self.global_steps >= self.total_training_steps:
+                    return
+
+                # ===== build prompt batch =====
+                batch = DataProto.from_single_dict(batch_dict)
+
+                gen_inputs = batch.pop(
+                    batch_keys=["input_ids", "attention_mask", "position_ids"],
+                    non_tensor_batch_keys=["raw_prompt_ids"],
+                )
+
+                # ===== rollout: generate responses =====
+                gen_output = self.actor.generate_rollout_sequences(gen_batch)
+
+                # Generate multiple responses for each prompt.
+                batch.non_tensor_batch["uid"] = np.array(
+                    [str(uuid.uuid4()) for _ in range(len(batch.batch))],
+                    dtype=object,
+                )
+                batch = batch.repeat(
+                    repeat_times=self.config.actor_rollout_ref.rollout.n,
+                    interleave=True,
+                )
+                batch = batch.union(gen_output)
+
+                batch.batch["response_mask"] = compute_response_mask(batch)
+
+                # ===== compute reward =====
+                reward_tensor, reward_extra_infos = compute_reward(
+                    batch,
+                    self.reward_fn,
+                )
+
+                batch.batch["token_level_scores"] = reward_tensor
+
+                # Add token-level KL penalty.
+                batch, _ = apply_kl_penalty(
+                    batch,
+                    kl_ctrl=self.kl_ctrl_in_reward,
+                    kl_penalty=self.config.algorithm.kl_penalty,
+                )
+
+                # ===== compute old policy log probs =====
+                old_log_prob = self.actor.compute_log_prob(batch)
+                old_log_prob.batch.pop("entropys", None)
+                batch = batch.union(old_log_prob)
+
+                # ===== compute reference policy log probability =====
+                ref_log_prob = self.ref_policy.compute_ref_log_prob(batch)
+                batch = batch.union(ref_log_prob)
+
+                # ===== compute advantage =====
+                batch = compute_advantage(
+                    batch,
+                    adv_estimator=self.config.algorithm.adv_estimator,
+                    gamma=self.config.algorithm.gamma,
+                    lam=self.config.algorithm.lam,
+                    num_repeat=self.config.actor_rollout_ref.rollout.n,
+                )
+
+                # ===== update actor =====
+                if self.global_steps >= self.config.trainer.critic_warmup:
+                    batch.meta_info["multi_turn"] = (
+                        self.config.actor_rollout_ref.rollout.multi_turn.enable
+                    )
+                    self.actor.update_actor(batch)
+
+                self.global_steps += 1
+```
 
 ## Experiments
 
