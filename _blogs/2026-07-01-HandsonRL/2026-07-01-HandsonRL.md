@@ -4,6 +4,7 @@ title: 'My Bizarre Adventure in RL: Hands On'
 date: 2026-07-01
 permalink: /posts/2026/7/HandsonRL/
 image_path: /blog-assets/2026-07-01-HandsonRL/img/
+category: notes
 tags:
   - Reinforcement Learning
 ---
