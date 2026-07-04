@@ -13,9 +13,9 @@
             </h5>
             <div class="text-muted small mb-2">
                 {% if item.category == 'original' %}
-                    <span class="badge badge-warning mr-2">原创想法</span>
+                    <span class="badge badge-warning mr-2">Musings</span>
                 {% elsif item.category == 'notes' %}
-                    <span class="badge badge-info mr-2">学习笔记</span>
+                    <span class="badge badge-info mr-2">Learnings</span>
                 {% endif %}
                 <i class="fas fa-calendar-alt"></i> {{ item.date | date: "%B %d, %Y" }}
                 {% if item.tags %}
