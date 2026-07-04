@@ -3,7 +3,7 @@
 {% assign first = include.first %}
 {% assign last = include.last %}
 
-<div class="border-bottom border-gray p-3 {% if hide_bottom_border %}border-0{% endif %}">
+<div class="border-bottom border-gray p-3 {% if hide_bottom_border %}border-0{% endif %}" data-category="{{ item.category }}">
     <div class="row">
         <div class="col-12">
             <h5 class="mb-2">
@@ -12,6 +12,11 @@
                 </a>
             </h5>
             <div class="text-muted small mb-2">
+                {% if item.category == 'original' %}
+                    <span class="badge badge-warning mr-2">原创想法</span>
+                {% elsif item.category == 'notes' %}
+                    <span class="badge badge-info mr-2">学习笔记</span>
+                {% endif %}
                 <i class="fas fa-calendar-alt"></i> {{ item.date | date: "%B %d, %Y" }}
                 {% if item.tags %}
                     <span class="ml-3">
