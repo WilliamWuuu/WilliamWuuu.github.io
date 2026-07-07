@@ -111,6 +111,15 @@
                 hljs.highlightAll();
             }
 
+            // Add line numbers to code blocks
+            document.querySelectorAll('.blog-content pre code').forEach(function(block) {
+                var lines = block.innerHTML.split('\n');
+                if (lines[lines.length - 1].trim() === '') lines.pop();
+                block.innerHTML = lines.map(function(line) {
+                    return '<span class="code-line">' + line + '</span>';
+                }).join('\n');
+            });
+
             // Theme toggle
             var toggle = document.getElementById('theme-toggle');
             if (toggle) {

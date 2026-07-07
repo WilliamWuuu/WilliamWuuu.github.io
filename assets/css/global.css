@@ -660,6 +660,30 @@ div.lazy {
     background: rgba(22, 27, 34, 1);
 }
 
+/* ===== Code Line Numbers ===== */
+.blog-content pre code {
+    counter-reset: line;
+}
+
+.blog-content pre code .code-line {
+    counter-increment: line;
+    display: inline-block;
+    width: 100%;
+}
+
+.blog-content pre code .code-line::before {
+    content: counter(line);
+    display: inline-block;
+    width: 2.5em;
+    margin-right: 1em;
+    text-align: right;
+    color: var(--text-muted);
+    opacity: 0.5;
+    font-size: 0.8em;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 /* ===== Dark Mode Overrides ===== */
 [data-theme="dark"] .bg-light {
     background-color: var(--bg-primary) !important;
