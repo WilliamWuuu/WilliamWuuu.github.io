@@ -95,7 +95,7 @@ body.d-flex.flex-column.h-100 {
     background: transparent;
     border: none;
     padding: 0;
-    font-family: 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: 'Google Sans Code', 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.875rem;
     line-height: 1.5;
 }
@@ -218,7 +218,7 @@ body.d-flex.flex-column.h-100 {
     padding: 0;
     border: none;
     border-radius: 0;
-    font-family: 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: 'Google Sans Code', 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.875rem;
     line-height: 1.6;
     color: var(--code-token-name);
