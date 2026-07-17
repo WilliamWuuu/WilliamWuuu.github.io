@@ -4,49 +4,53 @@
 :root {
     --bg-primary: #f8f9fa;
     --bg-card: #ffffff;
-    --bg-code: #f8f9fa;
+    --bg-code: #fafafa;
     --text-primary: #212529;
     --text-muted: #6c757d;
     --border-color: #dee2e6;
     --border-light: #e9ecef;
+    --code-border: #e1e4e8;
     --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
     --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
     --link-color: #007bff;
     --inline-code-color: #e83e8c;
     --blockquote-color: #6c757d;
-    --code-token-comment: #6a737d;
-    --code-token-keyword: #d73a49;
-    --code-token-string: #032f62;
-    --code-token-number: #005cc5;
-    --code-token-name: #24292e;
-    --code-token-operator: #d73a49;
-    --code-token-entity: #6f42c1;
-    --code-token-tag: #22863a;
+    /* Atom One Light palette */
+    --code-token-comment: #a0a1a7;
+    --code-token-keyword: #a626a4;
+    --code-token-string: #50a14f;
+    --code-token-number: #b76b01;
+    --code-token-name: #383a42;
+    --code-token-operator: #0184bb;
+    --code-token-entity: #4078f2;
+    --code-token-tag: #e45649;
 }
 
 [data-theme="dark"] {
     --bg-primary: #0d1117;
     --bg-card: #161b22;
-    --bg-code: #161b22;
+    --bg-code: #282c34;
     --text-primary: #e6edf3;
     --text-muted: #8b949e;
     --border-color: #30363d;
     --border-light: #21262d;
+    --code-border: #3e4451;
     --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
     --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
     --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
     --link-color: #58a6ff;
     --inline-code-color: #ff7b72;
     --blockquote-color: #8b949e;
-    --code-token-comment: #8b949e;
-    --code-token-keyword: #ff7b72;
-    --code-token-string: #a5d6ff;
-    --code-token-number: #79c0ff;
-    --code-token-name: #e6edf3;
-    --code-token-operator: #ff7b72;
-    --code-token-entity: #d2a8ff;
-    --code-token-tag: #7ee787;
+    /* Atom One Dark palette */
+    --code-token-comment: #5c6370;
+    --code-token-keyword: #c678dd;
+    --code-token-string: #98c379;
+    --code-token-number: #d19a66;
+    --code-token-name: #abb2bf;
+    --code-token-operator: #56b6c2;
+    --code-token-entity: #61afef;
+    --code-token-tag: #e06c75;
 }
 
 body {
@@ -83,7 +87,7 @@ body.d-flex.flex-column.h-100 {
     padding: 1rem;
     margin: 1rem 0;
     overflow-x: auto;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--code-border);
     position: relative;
 }
 
@@ -205,7 +209,7 @@ body.d-flex.flex-column.h-100 {
     padding: 1rem;
     margin: 1rem 0;
     overflow-x: auto;
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--code-border);
     position: relative;
 }
 
@@ -217,7 +221,7 @@ body.d-flex.flex-column.h-100 {
     font-family: 'Source Code Pro', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: var(--text-primary);
+    color: var(--code-token-name);
 }
 
 /* Override highlight.js background to match our theme */
