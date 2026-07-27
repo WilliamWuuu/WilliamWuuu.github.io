@@ -14,7 +14,7 @@ So boom, here it goes!
 
 This post begins with the classic **Markov decision process (MDP)** formulation, moves through **value iteration**, and then uses those ideas to arrive at **Q-learning**.
 
-## Markov Decision Processes
+# Markov Decision Processes
 
 A Markov decision process models how a system changes state when different actions are applied. In its basic form, an MDP is defined by the tuple
 
@@ -60,7 +60,7 @@ $$
 
 Discounting makes rewards in the near future more important than rewards far away. It also encourages the agent to reach rewarding states in fewer steps, rather than treating all future rewards equally.
 
-## Value Iteration
+# Value Iteration
 
 To decide which action is good, the agent needs a rule for choosing actions. A stochastic policy, denoted by $\pi(a\vert s)$, is a conditional distribution over actions $a\in\mathcal{A}$ given a state $s\in\mathcal{S}$.
 
@@ -145,9 +145,9 @@ $$
 
 for all states $s\in\mathcal{S}$.
 
-## Q-Learning
+# Q-Learning
 
-### Action Values
+## Action Values
 
 Value iteration works with values of states. In practice, it is often more useful to work with values of state-action pairs. This quantity is called the **action-value function**, or the **Q-function**:
 
@@ -182,7 +182,7 @@ $$
 
 This is the value-iteration idea written in terms of action values. It also points directly toward Q-learning: instead of requiring full knowledge of the transition probabilities, Q-learning estimates these action values from sampled experience.
 
-### Learning From Data
+## Learning From Data
 
 Suppose a robot takes actions sampled from an exploration policy $\pi_e(a\vert s)$ and collects a dataset of $n$ trajectories, each with $T$ time steps:
 
@@ -236,7 +236,7 @@ $$
 \end{equation}
 $$
 
-### Exploration
+## Exploration
 
 The quality of $\hat{Q}$ depends heavily on the data used to estimate it. If the exploration policy $\pi_e$ does not visit diverse parts of the state-action space, then $\hat{Q}$ can become a poor approximation of $Q^*$. This problem is not limited to unvisited states. Because Bellman updates propagate information through neighboring states, poor estimates in one region can affect other parts of the value function as well.
 
@@ -268,7 +268,7 @@ where the hyperparameter $T$ is called the temperature. A larger $\epsilon$ in $
 
 Q-learning therefore combines two ideas. The Bellman equation gives a recursive target for long-term reward, while exploration determines whether the agent collects enough varied experience for that target to become meaningful.
 
-## References
+# References
 
 [1] Watkins, C. J., Dayan, P. (1992). Technical Note: Q-learning. Machine learning, 8(3-4), 279-292.
 
