@@ -598,12 +598,12 @@ div.lazy {
     font-weight: 600;
 }
 
-/* Indent nested heading levels */
-.blog-toc-level-2 > .blog-toc-link { padding-left: 1rem; }
-.blog-toc-level-3 > .blog-toc-link { padding-left: 2rem; }
-.blog-toc-level-4 > .blog-toc-link { padding-left: 3rem; }
-.blog-toc-level-5 > .blog-toc-link { padding-left: 4rem; }
-.blog-toc-level-6 > .blog-toc-link { padding-left: 5rem; }
+/* Indent nested heading levels (level-1 uses the base 1rem padding) */
+.blog-toc-level-2 > .blog-toc-link { padding-left: 2rem; }
+.blog-toc-level-3 > .blog-toc-link { padding-left: 3rem; }
+.blog-toc-level-4 > .blog-toc-link { padding-left: 4rem; }
+.blog-toc-level-5 > .blog-toc-link { padding-left: 5rem; }
+.blog-toc-level-6 > .blog-toc-link { padding-left: 6rem; }
 
 /* ===== Theme Toggle Button ===== */
 .theme-toggle {
