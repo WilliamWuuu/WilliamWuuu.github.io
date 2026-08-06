@@ -173,6 +173,157 @@ $$
 
 The Bellman optimality equation is actually a system of equations with $N$ equations and $N$ unknowns. By solving this system of nonlinear equations, we can get $v^*$ and $q^*$, which determine an optimal policy.
 
+# Dynamic Programming
+
+The key idea of RL generally, is the use of value functions to organize and structure the search for good policies. *Dynamic programming (DP)* refers to a collection of algorithms that can be used to compute the value functions defined earlier, given a perfect model of the environment as an MDP.
+
+## Policy Iteration
+
+*Policy iteration* is one of the ways of finding an optimal policy, which mainly consists of two components, evaluation and improvement. Basically, we hope to achieve that through a sequence:
+
+$$
+\pi_0 
+\xrightarrow{E} v_{\pi_0} 
+\xrightarrow{I} \pi_1
+\xrightarrow{E} v_{\pi_1}
+\xrightarrow{I} \pi_2
+\xrightarrow{E} \cdots
+\xrightarrow{I} \pi_*
+\xrightarrow{E} v_{\pi_*},
+$$
+
+where $\xrightarrow{E}$ denotes a *policy evaluation* and $\xrightarrow{I}$ denotes a *policy improvement*.
+
+### Policy Evaluation
+
+Consider how to compute the state-value function $v_\pi$ for an arbitrary policy $\pi$, which is commonly called *policy evaluation*. Recall that the Bellman equation for $v_\pi$ is formed as
+
+$$
+\begin{align*}
+& v_\pi = \sum_{a\in\mathcal{A}(s)} \pi(a\vert s)\sum_{s^\prime\in\mathcal{S}}\sum_{r\in\mathcal{R}} p(s^\prime,r\vert s, a) \left[r + \gamma v_\pi(s^\prime)\right] \\
+\Rightarrow \quad & v_\pi-\gamma\sum_{a\in\mathcal{A}(s)} \pi(a\vert s)\sum_{s^\prime\in\mathcal{S}}\sum_{r\in\mathcal{R}} p(s^\prime,r\vert s, a)\left[v_\pi(s^\prime)\right] = \underbrace{\sum_{a\in\mathcal{A}(s)} \pi(a\vert s)\sum_{s^\prime\in\mathcal{S}}\sum_{r\in\mathcal{R}} p(s^\prime,r\vert s, a)\left[r\right]}_{=:r_\pi}
+\end{align*}
+$$
+
+Since both the policy term $\pi(a\vert s)$ and the environment’s dynamics term $p(s^\prime,r\vert s, a)$ are completely known, this form is actually a system of $\vert\mathcal{S}\vert$ linear equations in $\vert\mathcal{S}\vert$ unknowns ($v_\pi(s),s\in\mathcal{S}$). If we arrange state values, rewards and transition probabilities ​​into matrices:
+
+$$
+\mathbf{v}_\pi=
+\left[
+\begin{matrix}
+v_\pi(s_1) \\
+v_\pi(s_2) \\
+\cdots \\
+v_\pi(s_{\vert\mathcal{S}\vert})
+\end{matrix}
+\right],\,
+\mathbf{r}_\pi=
+\left[
+\begin{matrix}
+r_\pi(s_1) \\
+r_\pi(s_2) \\
+\cdots \\
+r_\pi(s_{\vert\mathcal{S}\vert})
+\end{matrix}
+\right],\,
+P_\pi=
+\left[
+\begin{matrix}
+P(s_1,s_1) & P(s_1,s_2) & \cdots & P(s_1,s_{\vert\mathcal{S}\vert}) \\
+P(s_2,s_1) & P(s_2,s_2) & \cdots & P(s_2,s_{\vert\mathcal{S}\vert}) \\
+\vdots & \vdots & \ddots & \vdots \\
+P(s_{\vert\mathcal{S}\vert},s_1) & P(s_{\vert\mathcal{S}\vert},s_2) & \cdots & P(s_{\vert\mathcal{S}\vert},s_{\vert\mathcal{S}\vert})
+\end{matrix}
+\right]
+$$
+
+the Bellman equation can be written into the matrix form:
+
+$$
+(I-\gamma P_\pi)\mathbf{v}_\pi=\mathbf{r}_\pi.
+$$
+Thus we find the solution as:
+$$
+\mathbf{v}_\pi=(I-\gamma P_\pi)^{-1}\mathbf{r}_\pi.
+$$
+
+Then methods like Gaussian elimination are applied in the linear algebra literature. But RL typically deals with a vast state space ($\vert\mathcal{S}\vert$ is very large) and does not necessarily require an exact solution. So for our purposes, methods like [fixed-point iteration](https://en.wikipedia.org/wiki/Fixed-point_iteration) are most suitable, since the upper equation can be written into a form which is hoped to converge to a fixed-point $\mathbf{v}_\pi$, i.e.
+
+$$
+\mathbf{v}_\pi=T_\pi\mathbf{v}_\pi,
+$$
+
+where $T_\pi$ is the *Bellman expectation operator*.
+
+The detailed iteration algorithm is described as follow:
+
+$$
+\begin{align*}
+&\text{Input }\pi\text{, the policy to be evaluated} \\
+&\text{Initialize an array }V(s)=0\text{, for all }s\in\mathcal{S} \\
+&\text{Repeat} \\
+&\quad \Delta\leftarrow 0 \\
+&\quad \text{For each }s\in\mathcal{S} \\
+&\quad \quad v\leftarrow V(s) \\
+&\quad \quad V(s)\leftarrow \sum_a \pi(a\vert s)\sum_{s^\prime,r} p(s^\prime,r\vert s, a) \left[r + \gamma V(s^\prime)\right] \\
+&\quad \quad \Delta\leftarrow\max(\Delta,\vert v-V(s)\vert) \\
+&\text{until }\Delta<\theta\text{ (a small positive number)} \\
+&\text{Output }V\approx v_\pi
+\end{align*}
+$$
+
+### Policy Improvement
+
+Intuitively, we hope the policy gets better and better through the "trial and error" process. Since we are able to compute $v_\pi$ for a policy $\pi$ through policy evaluation, we are able to tell a new policy $\pi^\prime$ is better if
+
+$$
+v_{\pi^\prime}(s)\geq v_\pi(s),\quad \forall s\in\mathcal{S}
+$$
+
+which is to say, starting from any state, the expected return of executing $\pi^\prime$ is no less than that of executing $\pi$. This means a complete iteration algorithm needs to be performed again. The value of the *policy improvement theorem* lies in the fact that we only need to know $v_\pi$ or $q_\pi$ of the old policy to determine whether a certain modification guarantees a better policy. 
+
+**Policy improvement theorem.** Let $\pi$ and $\pi^\prime$ be any pair of policies such that 
+
+$$
+q_\pi(s,\pi^\prime(s))\geq v_\pi(s),\quad \forall s\in\mathcal{S},
+$$
+
+then the policy $\pi^\prime$ must be as good as, or better than, $\pi$. The proof goes as follow:
+
+$$
+\begin{align*}
+v_\pi(s) 
+& \leq q_\pi(s,\pi^\prime(s)) \\
+& = \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma v_\pi(S_{t+1})\vert S_t=s\right] \\
+& \leq \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma q_\pi(S_{t+1},\pi^\prime(S_{t+1}))\vert S_t=s\right] \\
+& = \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma\mathbb{E}_{\pi^\prime}\left[R_{t+2}+\gamma v_\pi(S_{t+2})\right] \vert S_t=s\right] \\
+& = \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 v_\pi(S_{t+2}) \vert S_t=s\right] \\
+& \leq \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\gamma^3 v_\pi(S_{t+3}) \vert S_t=s\right] \\
+& \dots \\
+& \leq \mathbb{E}_{\pi^\prime}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\cdots\vert S_t=s\right] \\
+& = v_{\pi^\prime}(s).
+\end{align*}
+$$
+
+Within this theorem, we can easily construct a greedy policy $\pi^\prime$ by selecting at each state the action that appears the best:
+
+$$
+\pi^\prime(s)=\underset{a\in\mathcal{A}}{\operatorname{argmax}}q_\pi(s,a),\quad \forall s\in\mathcal{S}.
+$$
+
+In particular, if the new greedy policy $\pi^\prime$ is as good as the old policy $\pi$, then we have
+
+$$
+\begin{align*}
+v_{\pi}=v_{\pi^\prime} 
+& = \max_{a\in\mathcal{A}} q_\pi(s,a) \\
+& = \max_{a\in\mathcal{A}} \mathbb{E}\left[R_{t+1}+\gamma v_\pi(S_{t+1})\vert S_t=s,A_t=a\right] \\
+& = \max_{a\in\mathcal{A}} \sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma v_\pi(s^\prime)\right],
+\end{align*}
+$$
+
+which is exactly the same as the Bellman optimality equation. This indicates that we've already find the optimal policy.
+
 # Q-Learning
 
 ## Action Values
