@@ -2,9 +2,18 @@
     <div class="{% if page.container_class %}{{ page.container_class }}{% else %}container-lg{% endif %}">
         <a class="navbar-brand"><strong>{{site.data.profile.navbar_name}}</strong></a>
         <div class="d-flex align-items-center">
-            <button class="theme-toggle mr-2" id="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-moon"></i>
-            </button>
+            <div class="theme-switcher mr-2" id="theme-switcher" role="radiogroup" aria-label="Color theme">
+                <span class="theme-switcher__thumb" aria-hidden="true"></span>
+                <button class="theme-switcher__option" type="button" role="radio" aria-checked="false" data-theme-mode="light" aria-label="Light theme" title="Light theme">
+                    <i class="fas fa-sun" aria-hidden="true"></i>
+                </button>
+                <button class="theme-switcher__option" type="button" role="radio" aria-checked="false" data-theme-mode="dark" aria-label="Dark theme" title="Dark theme">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+                <button class="theme-switcher__option" type="button" role="radio" aria-checked="false" data-theme-mode="system" aria-label="Follow system theme" title="Follow system theme">
+                    <i class="fas fa-gear" aria-hidden="true"></i>
+                </button>
+            </div>
             <button class="navbar-toggler" style="font-size: 1em; padding: 0.5em;" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-map"></i> Menu
             </button>
