@@ -1,0 +1,79 @@
+{% assign comments_config = site.comments %}
+{% assign giscus = comments_config.giscus %}
+
+{% if comments_config.provider == "giscus" and giscus.repo_id and giscus.repo_id != "" and giscus.category_id and giscus.category_id != "" %}
+<section class="blog-comments bg-white shadow-sm rounded-xl p-4 mb-4" aria-labelledby="comments-title">
+    <h2 class="h4 mb-3" id="comments-title">Comments</h2>
+    <div class="giscus-container"></div>
+    <noscript>
+        <p class="mb-0">
+            JavaScript is required to load comments. You can also join the discussion on
+            <a href="https://github.com/{{ giscus.repo }}/discussions">GitHub Discussions</a>.
+        </p>
+    </noscript>
+</section>
+
+<script>
+    (function () {
+        var container = document.querySelector('.giscus-container');
+        if (!container) return;
+
+        function currentGiscusTheme() {
+            return document.documentElement.getAttribute('data-theme') === 'dark'
+                ? 'dark'
+                : 'light';
+        }
+
+        function syncGiscusTheme() {
+            var frame = document.querySelector('iframe.giscus-frame');
+            if (!frame || !frame.contentWindow) return;
+
+            frame.contentWindow.postMessage({
+                giscus: {
+                    setConfig: {
+                        theme: currentGiscusTheme()
+                    }
+                }
+            }, 'https://giscus.app');
+        }
+
+        var script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        script.setAttribute('data-repo', '{{ giscus.repo }}');
+        script.setAttribute('data-repo-id', '{{ giscus.repo_id }}');
+        script.setAttribute('data-category', '{{ giscus.category }}');
+        script.setAttribute('data-category-id', '{{ giscus.category_id }}');
+        script.setAttribute('data-mapping', '{{ giscus.mapping | default: "pathname" }}');
+        script.setAttribute('data-strict', '{{ giscus.strict | default: "1" }}');
+        script.setAttribute('data-reactions-enabled', '{{ giscus.reactions_enabled | default: "1" }}');
+        script.setAttribute('data-emit-metadata', '0');
+        script.setAttribute('data-input-position', '{{ giscus.input_position | default: "top" }}');
+        script.setAttribute('data-theme', currentGiscusTheme());
+        script.setAttribute('data-lang', '{{ giscus.lang | default: "en" }}');
+        script.setAttribute('data-loading', 'lazy');
+        container.appendChild(script);
+
+        var themeObserver = new MutationObserver(function (mutations) {
+            var themeChanged = mutations.some(function (mutation) {
+                return mutation.attributeName === 'data-theme';
+            });
+            if (themeChanged) syncGiscusTheme();
+        });
+
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+
+        var frameObserver = new MutationObserver(function () {
+            if (document.querySelector('iframe.giscus-frame')) {
+                syncGiscusTheme();
+                frameObserver.disconnect();
+            }
+        });
+        frameObserver.observe(container, { childList: true, subtree: true });
+    })();
+</script>
+{% endif %}

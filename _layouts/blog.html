@@ -46,6 +46,10 @@
                         </div>
                     </article>
 
+                    {% unless page.comments == false %}
+                        {% include comments.html %}
+                    {% endunless %}
+
                     <div class="text-center mb-4">
                         <a href="{{ '/blogs' | relative_url }}" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left"></i> Back to All Blogs

@@ -15,6 +15,21 @@
 # in the templates via {{ site.myvariable }}.
 baseurl: "" # the subpath of your site, e.g. /blog
 
+# Blog comments. Complete the GitHub Discussions setup, then paste the
+# generated giscus category ID below to activate comments on every blog post.
+comments:
+  provider: giscus
+  giscus:
+    repo: WilliamWuuu/WilliamWuuu.github.io
+    repo_id: R_kgDOQVY55w
+    category: Blog Comments
+    category_id: DIC_kwDOQVY5584DDHN9
+    mapping: pathname
+    strict: "1"
+    reactions_enabled: "1"
+    input_position: top
+    lang: en
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
