@@ -17,8 +17,9 @@
     --link-color: #007bff;
     --inline-code-color: #e83e8c;
     --blockquote-color: #6c757d;
-    --proof-bg: #f4f7fb;
-    --proof-bg-hover: #eaf1f8;
+    --proof-body-bg: #fbfcfe;
+    --proof-header-bg: #dce8f4;
+    --proof-header-hover: #d1e0ef;
     --proof-border: #6f8faf;
     --proof-title: #365b7d;
     /* Atom One Light palette */
@@ -48,8 +49,9 @@
     --link-color: #58a6ff;
     --inline-code-color: #ff7b72;
     --blockquote-color: #8b949e;
-    --proof-bg: #151d26;
-    --proof-bg-hover: #1b2733;
+    --proof-body-bg: #111820;
+    --proof-header-bg: #24384b;
+    --proof-header-hover: #2b455d;
     --proof-border: #79a6cf;
     --proof-title: #a9ccec;
     /* Atom One Dark palette */
@@ -323,17 +325,17 @@ body.d-flex.flex-column.h-100 {
 .blog-content details.proof {
     margin: 1.5rem 0;
     overflow: hidden;
-    background-color: var(--proof-bg);
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--proof-border);
-    border-radius: 0.5rem;
+    background-color: var(--proof-body-bg);
+    border: 1px solid var(--proof-border);
+    border-radius: 0.65rem;
+    box-shadow: var(--shadow-sm);
 }
 
 .blog-content details.proof > summary {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
     padding: 0.8rem 1rem;
+    background-color: var(--proof-header-bg);
     color: var(--proof-title);
     font-weight: 600;
     line-height: 1.4;
@@ -347,23 +349,29 @@ body.d-flex.flex-column.h-100 {
     display: none;
 }
 
-.blog-content details.proof > summary::before {
-    content: "";
+.blog-content details.proof > summary::after {
+    content: "+";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: 0 0 auto;
-    width: 0.5rem;
-    height: 0.5rem;
-    border-right: 2px solid currentColor;
-    border-bottom: 2px solid currentColor;
-    transform: rotate(-45deg);
-    transition: transform 0.2s ease;
+    width: 1.65rem;
+    height: 1.65rem;
+    margin-left: auto;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1;
+    opacity: 0.8;
 }
 
-.blog-content details.proof[open] > summary::before {
-    transform: rotate(45deg) translate(-0.1rem, -0.1rem);
+.blog-content details.proof[open] > summary::after {
+    content: "−";
 }
 
 .blog-content details.proof > summary:hover {
-    background-color: var(--proof-bg-hover);
+    background-color: var(--proof-header-hover);
 }
 
 .blog-content details.proof > summary:focus-visible {
@@ -372,7 +380,7 @@ body.d-flex.flex-column.h-100 {
 }
 
 .blog-content details.proof[open] > summary {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--proof-border);
 }
 
 .blog-content details.proof > :not(summary) {
