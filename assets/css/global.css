@@ -388,13 +388,33 @@ body.d-flex.flex-column.h-100 {
     margin-left: 1rem;
 }
 
+.blog-content details.proof > summary + * {
+    margin-top: 1rem;
+}
+
+.blog-content details.proof > p {
+    margin-bottom: 0.75rem;
+}
+
 .blog-content details.proof > :last-child {
     margin-bottom: 1rem;
 }
 
 .blog-content details.proof .katex-display {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.45rem;
+    margin-bottom: 0.45rem;
+    padding-top: 0;
+    padding-bottom: 0;
     overflow-x: auto;
     overflow-y: hidden;
+}
+
+.blog-content details.proof > p:has(> .katex-display) {
+    margin-top: 0.45rem;
+    margin-bottom: 0.45rem;
 }
 
 .blog-content img {
@@ -502,6 +522,7 @@ body.d-flex.flex-column.h-100 {
 .katex-display {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     margin: 1rem 0;
     text-align: center;
     position: relative;
