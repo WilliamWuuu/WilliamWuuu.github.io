@@ -28,7 +28,9 @@
                 {% endif %}
             </div>
             <div class="text-muted">
-                {% if item.excerpt %}
+                {% if item.description %}
+                    {{ item.description | strip_html | truncate: 200 }}
+                {% elsif item.excerpt %}
                     {{ item.excerpt | strip_html | truncate: 200 }}
                 {% else %}
                     {{ item.content | strip_html | truncate: 200 }}
