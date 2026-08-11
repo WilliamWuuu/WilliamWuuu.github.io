@@ -98,6 +98,38 @@
                 el.style.removeProperty('display');
             });
 
+            // Only make genuinely wide proof formulas horizontally scrollable.
+            // A small tolerance avoids scrollbars caused by sub-pixel rounding.
+            function updateProofFormulaOverflow(root) {
+                var scope = root || document;
+                scope.querySelectorAll('.proof .katex-display').forEach(function(formula) {
+                    formula.classList.remove('is-overflowing');
+                    if (formula.scrollWidth - formula.clientWidth > 4) {
+                        formula.classList.add('is-overflowing');
+                    }
+                });
+            }
+
+            updateProofFormulaOverflow();
+
+            document.querySelectorAll('details.proof').forEach(function(proof) {
+                proof.addEventListener('toggle', function() {
+                    if (proof.open) {
+                        window.requestAnimationFrame(function() {
+                            updateProofFormulaOverflow(proof);
+                        });
+                    }
+                });
+            });
+
+            var proofFormulaResizeTimer;
+            window.addEventListener('resize', function() {
+                window.clearTimeout(proofFormulaResizeTimer);
+                proofFormulaResizeTimer = window.setTimeout(function() {
+                    updateProofFormulaOverflow();
+                }, 100);
+            });
+
             // Initialize highlight.js for syntax highlighting
             if (typeof hljs !== 'undefined') {
                 hljs.highlightAll();

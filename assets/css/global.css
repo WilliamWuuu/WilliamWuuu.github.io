@@ -324,6 +324,7 @@ body.d-flex.flex-column.h-100 {
 /* Collapsible mathematical proofs */
 .blog-content details.proof {
     margin: 1.5rem 0;
+    padding: 0 1.5rem;
     overflow: hidden;
     background-color: var(--proof-body-bg);
     border: 1px solid var(--proof-border);
@@ -334,7 +335,9 @@ body.d-flex.flex-column.h-100 {
 .blog-content details.proof > summary {
     display: flex;
     align-items: center;
-    padding: 0.8rem 1rem;
+    margin-right: -1.5rem;
+    margin-left: -1.5rem;
+    padding: 0.9rem 1.25rem;
     background-color: var(--proof-header-bg);
     color: var(--proof-title);
     font-weight: 600;
@@ -380,41 +383,40 @@ body.d-flex.flex-column.h-100 {
 }
 
 .blog-content details.proof[open] > summary {
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--proof-border);
 }
 
-.blog-content details.proof > :not(summary) {
-    margin-right: 1rem;
-    margin-left: 1rem;
-}
-
-.blog-content details.proof > summary + * {
-    margin-top: 1rem;
-}
-
-.blog-content details.proof > p {
-    margin-bottom: 0.75rem;
+.blog-content details.proof[open] {
+    padding-bottom: 1.5rem;
 }
 
 .blog-content details.proof > :last-child {
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .blog-content details.proof .katex-display {
-    width: auto;
     max-width: 100%;
-    box-sizing: border-box;
-    margin-top: 0.45rem;
-    margin-bottom: 0.45rem;
-    padding-top: 0;
-    padding-bottom: 0;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
-.blog-content details.proof > p:has(> .katex-display) {
-    margin-top: 0.45rem;
-    margin-bottom: 0.45rem;
+.blog-content details.proof .katex-display.is-overflowing {
+    overflow-x: auto;
+}
+
+@media (max-width: 576px) {
+    .blog-content details.proof {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .blog-content details.proof > summary {
+        margin-right: -1rem;
+        margin-left: -1rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
 }
 
 .blog-content img {
@@ -542,14 +544,13 @@ body.d-flex.flex-column.h-100 {
 .katex-display > .katex {
     display: inline;
 }
-.katex-display:has(> .tag) {
+.katex-display:has(.tag) {
     padding-right: 3em;
+    padding-left: 3em;
 }
-.katex-display > .tag {
-    position: absolute;
-    right: 0.5em;
+.katex-display .tag {
     font-size: 0.9em;
-    color: #555;
+    color: var(--text-muted);
 }
 
 /* Ensure proper spacing around math formulas */
