@@ -1,81 +1,94 @@
-# academic-homepage
+# Personal Website
 
-![Preview](assets/images/etc/preview.png)
+Source code for [my personal academic website](https://williamwuuu.github.io/), which is built with Jekyll and hosted on GitHub Pages. It began as a fork of [luost26/academic-homepage](https://github.com/luost26/academic-homepage), but has since grown into a substantially customized codebase for publishing my research, notes, and personal writing.
 
-[![pages-build-deployment](https://github.com/luost26/academic-homepage/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/luost26/academic-homepage/actions/workflows/pages/pages-build-deployment)
-[![Hits](https://hits.sh/github.com/luost26/academic-homepage.svg?view=today-total)](https://hits.sh/github.com/luost26/academic-homepage/)
-[![GitHub stars](https://img.shields.io/github/stars/luost26/academic-homepage)](https://github.com/luost26/academic-homepage)
-[![GitHub forks](https://img.shields.io/github/forks/luost26/academic-homepage)](https://github.com/luost26/academic-homepage/forks)
-<!--[![W3C Validation](https://img.shields.io/w3c-validation/html?targetUrl=https%3A%2F%2Fluost26.github.io%2Facademic-homepage)](https://validator.nu/?doc=https%3A%2F%2Fluost26.github.io%2Facademic-homepage)-->
+## Highlights
 
-A GitHub Pages (Jekyll) template for personal academic website. Click [here](https://luost.me/academic-homepage/) to see the demo.
+The academic-homepage foundation provides the profile, news, publication, and showcase components. This repository adds a more complete reading and writing experience on top of that foundation:
 
-## User Community
+- **Light, dark, and system themes** with a persistent, keyboard-accessible theme switcher and theme-aware code highlighting.
+- **A custom blogs navigation page** with clean post tags, descriptions, and category tabs for **Musings** and **Learnings**.
+- **Collapsible proof blocks** with responsive handling for wide mathematical expressions.
+- **Elegant code blocks** with syntax highlighting, line numbers, and a copy button.
+- **GitHub Discussions comments** powered by [Giscus](https://giscus.app).
 
-[🏡](https://luost.me/)
-[:star:](https://cch1999.github.io/)
-[:star:](https://kyrrego.github.io/)
-[:star:](https://ced3-han.github.io/)
-[:star:](https://lihengchen.com/)
-[:star:](https://hpwang-whu.github.io/)
-[:star:](https://zhang-yingyi.github.io/)
-[:star:](https://wby24.github.io/)
-[:star:](https://pengfeixu.com/)
-[:star:](https://boqiuphd.github.io/)
-[:star:](https://www.huabing.li/)
-[:star:](https://xiecuiying.github.io/)
-[:star:](https://hannyang.github.io/)
-[:star:](https://king-play.github.io/)
-[🤖](https://andrewcwlee.github.io)
-[:star:](https://laiyao1.github.io)
-[🌜](https://tmsultan.github.io)
-[🚀](https://zaxguo.github.io)
-[:gemini:](https://hongyang-du.github.io)
-[🇻‍🇳](https://thuanz123.github.io)
-[🧬](https://gdalba.github.io/)
-[🇭🇰](https://yhhan.com/)
-[🌔](https://chen-huaneng.github.io/academic)
+## Running Locally
 
-:hugs: Feel free to tell us if you are using this template for your website by creating an issue [here](https://github.com/luost26/academic-homepage/issues/new?assignees=&labels=&projects=&template=user-report.md&title=I+am+using+this+template%21).
+You will need Ruby, Bundler, and the Jekyll prerequisites for your operating system.
 
-### Acknowledgements
+```bash
+git clone https://github.com/WilliamWuuu/WilliamWuuu.github.io.git
+cd WilliamWuuu.github.io
+bundle install
+bundle exec jekyll serve
+```
 
-The improvements of this template have been inspired by the customizations and feedbacks from the following users:
-- :star: [onethousandwu.com](https://onethousandwu.com/): increased corner radius [[Repo]](https://github.com/oneThousand1000/oneThousand1000.github.io)
-- :star: [shiwonkim.github.io](https://shiwonkim.github.io/): two-column main page layout [[Repo]](https://github.com/shiwonkim/shiwonkim.github.io)
-- :star: [yqxie99.github.io](https://yqxie99.github.io/): blog feature [[Repo]](https://github.com/YQXie99/YQXie99.github.io/tree/feat/add_blog_page)
+## Updating the Site
 
-## Need Help?
+Most routine content changes are data-driven:
 
-If you run into **any** issues while using this template, or have suggestions for improvements, please don't hesitate to create an issue [here](https://github.com/luost26/academic-homepage/issues/new).
+- Edit personal details, social links, education, and the CV link in `_data/profile.yml`.
+- Edit homepage section visibility in `_data/display.yml`.
+- Edit navbar entries in `_data/navigation.yml`.
+- Add publication entries under `_publications/<year>/`.
+- Add news entries under `_news/`.
 
-### FAQs
+### Adding a Blog Post
 
-- [Need blogging feature?](https://github.com/luost26/academic-homepage/issues/13#issuecomment-2646371324)
-- [How to show citation count for papers?](https://github.com/luost26/academic-homepage/issues/29#issuecomment-3222496187)
+Create a post at:
 
+```text
+_blogs/YYYY-MM-DD-slug/YYYY-MM-DD-slug.md
+```
 
-## Getting Started
+A typical front matter block looks like this:
 
-1. First, click the "Use this template" button to create a new repository. The name of the repository should be `<your-github-username>.github.io` (click [here](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#types-of-github-pages-sites) to learn more about naming a GitHub Pages repository).
+```yaml
+---
+layout: blog
+title: "Post title"
+date: YYYY-MM-DD
+description: "A short description used on the blog index."
+permalink: /posts/YYYY/M/slug/
+image_path: /blog-assets/YYYY-MM-DD-slug/img/
+category: notes
+tags:
+  - Topic
+---
+```
 
-### Running Locally (Debug & Preview)
+The two categories currently recognized by the blog index are:
 
-2. Follow the **step 1** and **step 2** of the instruction [here](https://jekyllrb.com/docs/) to install prerequisites and jekyll.
+- `original` — displayed as **Musings**
+- `notes` — displayed as **Learnings**
 
-3. Clone your forked repository to your local machine.
+Place post images in `blog-assets/YYYY-MM-DD-slug/img/` and insert them with the reusable image widget:
 
-4. Run the following command in the root directory of the repository:
+```liquid
+{% include widgets/blog_image.html src="figure.png" caption="Figure caption." %}
+```
 
-   ```bash
-   bundle exec jekyll serve
-   ```
+For an optional collapsible proof, use:
 
-5. Browse to the displayed URL to see the website.
+```html
+<details class="proof" markdown="1">
+<summary>Proof</summary>
 
-### Deploying to GitHub Pages
+Write the proof here. Markdown and KaTeX are supported.
 
-2. Go to the repository settings and enable GitHub Pages. Detailed instructions can be found [here](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site).
+</details>
+```
 
-3. Navigate to your created website, and follow the instructions displayed on the homepage (if any) to finalize the setup.
+Comments are enabled by default for blog posts once Giscus is configured in `_config.yml`. Add `comments: false` to a post's front matter to disable them for that post.
 
+## Deployment
+
+The site is intended for GitHub Pages. Push changes to the publishing branch configured in the repository's Pages settings; GitHub Pages will build and deploy the Jekyll site.
+
+## Acknowledgements
+
+This project was originally based on [luost26/academic-homepage](https://github.com/luost26/academic-homepage). The original project supplied the academic-homepage structure and remains the source of several core components.
+
+## License
+
+The code is available under the [MIT License](LICENSE). The original copyright notice is retained.
