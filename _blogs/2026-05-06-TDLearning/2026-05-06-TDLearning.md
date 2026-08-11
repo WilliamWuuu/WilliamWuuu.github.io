@@ -398,13 +398,10 @@ $$
 <summary>Proof of the almost-sure convergence of first-visit MC method.</summary>
 
 Let $i$-th episode be
-
 $$
 S_0^{(i)},A_0^{(i)},R_1^{(i)},S_1^{(i)},A_1^{(i)},R_2^{(i)},\cdots,S_{T_i}^{(i)},
 $$
-
 where $T_i$ is the time when the episode reaches the terminal state. Define the first-visit time of state $s$ in this episode:
-
 $$
 \begin{equation}
 \tau_s^{(i)}=
@@ -414,19 +411,15 @@ $$
 \end{cases}
 \end{equation}
 $$
-
 If $\tau_s^{(i)}<T$, the accumulated return following the first-visit is formed as:
-
 $$
 \begin{equation}
 G_{\tau_s^{(i)}}^{(i)}=R_{\tau_s^{(i)}+1}^{(i)}+\gamma R_{\tau_s^{(i)}+2}^{(i)}+\gamma^2 R_{\tau_s^{(i)}+3}^{(i)}+\cdots\gamma^{T-\tau_s^{(i)}-1}R_T^{(i)}.
 \end{equation}
 $$
-
 And our goal is to prove that, for all the episodes containing $s$, the sample average of $G_{\tau_s}$ converges to $v_\pi(s)$.
 
 By the definition of $\tau_s$, we can see that $\tau_s$ is a [stopping time](https://en.wikipedia.org/wiki/Stopping_time) in the random process literature. Because a process under a fixed policy satisfies the *strong Markov property*, once state $s$ is reached at stopping time $\tau_s$, the conditional distribution of the future trajectory is the same as that of a new process that "starts directly from state $s$ and follows $\pi$". Define the *filtration* $\mathcal{F}_{\tau_s}$ to be all the information we have up to time $\tau_s$. Thus we have
-
 $$
 \begin{equation}
 \mathbb{E}_\pi\left[G_{\tau_s}\vert\mathcal{F}_{\tau_s}\right]=v_\pi(s).
@@ -434,7 +427,6 @@ $$
 $$
 
 For the $i$-th episode, we define an variable $I^{(i)}$ to indicate whether state $s$ is visited in it, i.e. 
-
 $$
 \begin{equation}
 I^{(i)}=
@@ -444,9 +436,7 @@ I^{(i)}=
 \end{cases}
 \end{equation}
 $$
-
 Thus the $V(s)$ we get from the first-visit MC estimation can be written as:
-
 $$
 \begin{equation}
 V(s) 
@@ -456,7 +446,6 @@ V(s)
 $$
 
 Based on the [law of total expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation), we have
-
 $$
 \begin{equation}
 V(s) 
@@ -465,7 +454,6 @@ V(s)
 = \frac{\mathbb{E}\left[ I^{(i)}\right] v_\pi(s)}{\mathbb{E}\left[ I^{(i)}\right]}.
 \end{equation}
 $$
-
 Since $I^{(i)}$ are i.i.d Bernoulli random variables, as $n\to\infty$, based on the [law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers), $\mathbb{E}\left[I^{(i)}\right]=\sum_{i=1}^n I^{(i)}$ converges to some positive number. Thus the estimator $V(s)$ converges to $v_\pi(s)$ obviously.
 
 </details>
