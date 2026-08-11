@@ -17,6 +17,10 @@
     --link-color: #007bff;
     --inline-code-color: #e83e8c;
     --blockquote-color: #6c757d;
+    --proof-bg: #f4f7fb;
+    --proof-bg-hover: #eaf1f8;
+    --proof-border: #6f8faf;
+    --proof-title: #365b7d;
     /* Atom One Light palette */
     --code-token-comment: #a0a1a7;
     --code-token-keyword: #a626a4;
@@ -44,6 +48,10 @@
     --link-color: #58a6ff;
     --inline-code-color: #ff7b72;
     --blockquote-color: #8b949e;
+    --proof-bg: #151d26;
+    --proof-bg-hover: #1b2733;
+    --proof-border: #79a6cf;
+    --proof-title: #a9ccec;
     /* Atom One Dark palette */
     --code-token-comment: #5c6370;
     --code-token-keyword: #c678dd;
@@ -309,6 +317,76 @@ body.d-flex.flex-column.h-100 {
     margin: 1.5rem 0;
     font-style: italic;
     color: var(--blockquote-color);
+}
+
+/* Collapsible mathematical proofs */
+.blog-content details.proof {
+    margin: 1.5rem 0;
+    overflow: hidden;
+    background-color: var(--proof-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--proof-border);
+    border-radius: 0.5rem;
+}
+
+.blog-content details.proof > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.8rem 1rem;
+    color: var(--proof-title);
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.blog-content details.proof > summary::-webkit-details-marker {
+    display: none;
+}
+
+.blog-content details.proof > summary::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+
+.blog-content details.proof[open] > summary::before {
+    transform: rotate(45deg) translate(-0.1rem, -0.1rem);
+}
+
+.blog-content details.proof > summary:hover {
+    background-color: var(--proof-bg-hover);
+}
+
+.blog-content details.proof > summary:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: -3px;
+}
+
+.blog-content details.proof[open] > summary {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.blog-content details.proof > :not(summary) {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.blog-content details.proof > :last-child {
+    margin-bottom: 1rem;
+}
+
+.blog-content details.proof .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .blog-content img {

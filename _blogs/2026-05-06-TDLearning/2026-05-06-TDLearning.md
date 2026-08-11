@@ -377,7 +377,7 @@ which is exactly the same as the Bellman optimality equation. This indicates tha
 
 Let's consider the policy evaluation problem again. First we define an *episode* as one complete journey or trial where an agent interacts with its environment, starting from an initial state and ending at a terminal state. And we call each occurrence of a certain state s in an episode a *visit* to s.
 
-Assume we already have a set of $n$ episodes obtained by following $\pi$ and passing through $s$. To estimate $v_\pi(s)$, the value of a certain state $s$ under a given policy $\pi$, we can simply average the returns observed after visits to that state. As more returns are observed, the average should converge to the expected value. In particular, we introduce the *first-visit MC method*, which estimates $v_\pi(s)$ as the average of the returns following first visits to $s$. Here is the formal algorithm:
+Assume we already have a set of $n$ episodes obtained by following $\pi$ and passing through $s$. To estimate $v_\pi(s)$, the value of a certain state $s$ under a given policy $\pi$, we can simply average the returns observed after visits to that state. As more returns are observed, the average should converge to the expected value. In particular, we introduce *first-visit MC method*, which estimates $v_\pi(s)$ as the average of the returns following first visits to $s$. Here is the formal algorithm:
 
 $$
 \begin{align*}
@@ -394,7 +394,8 @@ $$
 \end{align*}
 $$
 
-The following is a proof that this algorithm converges to $v_\pi(s)$.
+<details class="proof" markdown="1" open>
+<summary>Proof of the almost-sure convergence of first-visit MC method.</summary>
 
 Let $i$-th episode be
 
@@ -466,6 +467,8 @@ V(s)
 $$
 
 Since $I^{(i)}$ are i.i.d Bernoulli random variables, as $n\to\infty$, based on the [law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers), $\mathbb{E}\left[I^{(i)}\right]=\sum_{i=1}^n I^{(i)}$ converges to some positive number. Thus the estimator $V(s)$ converges to $v_\pi(s)$ obviously.
+
+</details>
 
 The estimation of action values $q_\pi$ is quite similar to state values $v_\pi$, which is particularly useful when the model is unavailable. However, if $\pi$ is a deterministic policy, when using first-visit method, some state-action pairs may never be visited. What's expected is all the actions from each state, so that we can choose among the actions available in each state. A general approach to assuring that all state–action pairs are encountered is to consider only stochastic policies with a nonzero probability of selecting all actions in each state.
 
