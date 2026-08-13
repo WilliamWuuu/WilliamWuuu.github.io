@@ -621,7 +621,7 @@ $$
 \begin{align*}
 Q(s_t^{(i)},a_t^{(i)})
 &\leftarrow Q(s_t^{(i)},a_t^{(i)})-\eta\nabla_{Q(s_t^{(i)},a_t^{(i)})}\ell(Q) \\
-&= (1-\eta)Q(s_t^{(i)},a_t^{(i)})-\eta\left(r(s_t^{(i)},a_t^i)+\gamma\max_{a^\prime}Q(s^{(i)}_{t+1},a^\prime)\right)
+&= (1-\eta)Q(s_t^{(i)},a_t^{(i)})+\eta\left(r(s_t^{(i)},a_t^i)+\gamma\max_{a^\prime}Q(s^{(i)}_{t+1},a^\prime)\right)
 \end{align*}
 \end{equation}
 $$
