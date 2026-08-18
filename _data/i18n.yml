@@ -20,6 +20,7 @@ en:
     experience: Experience
     awards: Honors & Awards
     news: News
+    selected_blogs: Selected Blogs
     selected_publications: Selected Publications
   publications:
     selected_recent: Selected Recent Publications
@@ -41,6 +42,8 @@ en:
     result_count_one: "%s post"
     result_count_many: "%s posts"
     read_more: Read More
+    view_all: view all
+    all_blogs: All blogs
     back_to_all: Back to All Blogs
     table_of_contents: Table of Contents
     tag: Tag
@@ -72,6 +75,8 @@ zh-CN:
   menu: 菜单
   portrait_alt: Yangxin Wu 的照片
   close: 关闭
+  homepage:
+    selected_blogs: 精选博客
   blogs:
     all: 全部
     musings: 随想
@@ -84,6 +89,8 @@ zh-CN:
     result_count_one: "%s 篇文章"
     result_count_many: "%s 篇文章"
     read_more: 阅读全文
+    view_all: 查看全部
+    all_blogs: 所有博客
     back_to_all: 返回全部博客
     table_of_contents: 目录
     tag: 标签

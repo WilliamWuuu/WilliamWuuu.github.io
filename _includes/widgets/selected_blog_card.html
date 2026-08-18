@@ -1,0 +1,17 @@
+{% assign blogs = include.blogs %}
+{% assign lang = page.lang | default: "en" %}
+{% assign t = site.data.i18n[lang] %}
+{% if lang == "zh-CN" %}{% assign blogs_url = "/zh/blogs" %}{% else %}{% assign blogs_url = "/blogs" %}{% endif %}
+
+<div class="my-3 p-0 bg-white shadow-sm rounded-xl">
+    <h6 class="border-bottom border-gray p-3 mb-0">
+        <i class="fas fa-pen-nib"></i> {{ t.homepage.selected_blogs }}
+        <a href="{{ blogs_url | relative_url }}">({{ t.blogs.view_all }} <i class="fas fa-angle-double-right"></i>)</a>
+    </h6>
+    {% for item in blogs limit:include.limit %}
+        {% include widgets/blog_card.html item=item %}
+    {% endfor %}
+    <h6 class="d-block p-3 mt-0 text-right">
+        <a href="{{ blogs_url | relative_url }}">{{ t.blogs.all_blogs }} <i class="fas fa-angle-double-right"></i></a>
+    </h6>
+</div>

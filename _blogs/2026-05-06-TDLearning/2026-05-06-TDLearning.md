@@ -9,6 +9,7 @@ translation_url: /blogs/2026/temporal-difference-learning/zh
 permalink: /blogs/2026/temporal-difference-learning/
 image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes
+selected: true
 tags:
   - Reinforcement Learning
 ---
