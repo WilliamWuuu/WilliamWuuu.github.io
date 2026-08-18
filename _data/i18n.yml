@@ -33,6 +33,13 @@ en:
     all: All
     musings: Musings
     learnings: Learnings
+    search_label: Search blog posts
+    search_placeholder: Search by title, description, or tag...
+    clear_search: Clear search
+    no_results: No matching posts
+    no_results_hint: Try a different keyword or category.
+    result_count_one: "%s post"
+    result_count_many: "%s posts"
     read_more: Read More
     back_to_all: Back to All Blogs
     table_of_contents: Table of Contents
@@ -69,6 +76,13 @@ zh-CN:
     all: 全部
     musings: 随想
     learnings: 学习笔记
+    search_label: 搜索博客文章
+    search_placeholder: 按标题、简介或标签搜索……
+    clear_search: 清除搜索
+    no_results: 没有找到匹配的文章
+    no_results_hint: 请尝试其他关键词或分类。
+    result_count_one: "%s 篇文章"
+    result_count_many: "%s 篇文章"
     read_more: 阅读全文
     back_to_all: 返回全部博客
     table_of_contents: 目录

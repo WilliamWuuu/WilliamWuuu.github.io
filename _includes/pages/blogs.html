@@ -8,6 +8,33 @@
             <button class="blog-category-tab" data-category="notes">{{ t.blogs.learnings }}</button>
         </div>
 
+        <div class="blog-search">
+            <label class="sr-only" for="blog-search-input">{{ t.blogs.search_label }}</label>
+            <div class="blog-search-field">
+                <i class="fas fa-search blog-search-icon" aria-hidden="true"></i>
+                <input class="blog-search-input"
+                       id="blog-search-input"
+                       type="search"
+                       placeholder="{{ t.blogs.search_placeholder }}"
+                       autocomplete="off"
+                       spellcheck="false">
+                <button class="blog-search-clear"
+                        id="blog-search-clear"
+                        type="button"
+                        aria-label="{{ t.blogs.clear_search }}"
+                        title="{{ t.blogs.clear_search }}"
+                        hidden>
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p class="blog-search-status mb-0"
+               id="blog-search-status"
+               role="status"
+               aria-live="polite"
+               data-count-one="{{ t.blogs.result_count_one | escape }}"
+               data-count-many="{{ t.blogs.result_count_many | escape }}"></p>
+        </div>
+
         {% assign localized_blogs = site.blogs | where: "lang", lang %}
         {% assign blogs_by_year = localized_blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
         {% for year in blogs_by_year %}
@@ -20,6 +47,12 @@
             </div>
         </div>
         {% endfor %}
+
+        <div class="blog-empty-state" id="blog-empty-state" hidden>
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <h2>{{ t.blogs.no_results }}</h2>
+            <p>{{ t.blogs.no_results_hint }}</p>
+        </div>
     </div>
 
     <div class="col-2 d-none d-lg-block">
@@ -31,36 +64,4 @@
     </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var tabs = document.querySelectorAll('.blog-category-tab');
-    var cards = document.querySelectorAll('.border-bottom[data-category]');
-    var yearGroups = document.querySelectorAll('.blog-year-group');
-    var yearLinks = document.querySelectorAll('.blog-year-link');
-
-    function filterByCategory(category) {
-        cards.forEach(function(card) {
-            card.style.display = category === 'all' || card.getAttribute('data-category') === category ? '' : 'none';
-        });
-
-        yearGroups.forEach(function(group) {
-            var visibleCards = group.querySelectorAll('[data-category]:not([style*="display: none"])');
-            group.style.display = visibleCards.length > 0 ? '' : 'none';
-        });
-
-        yearLinks.forEach(function(link) {
-            var year = link.getAttribute('data-year');
-            var group = document.querySelector('.blog-year-group[data-year="' + year + '"]');
-            link.style.display = group && group.style.display !== 'none' ? '' : 'none';
-        });
-    }
-
-    tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            tabs.forEach(function(candidate) { candidate.classList.remove('active'); });
-            tab.classList.add('active');
-            filterByCategory(tab.getAttribute('data-category'));
-        });
-    });
-});
-</script>
+<script src="{{ '/assets/js/blog-filter.js' | relative_url }}"></script>
