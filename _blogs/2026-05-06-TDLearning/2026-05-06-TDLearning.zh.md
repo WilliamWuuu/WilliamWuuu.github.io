@@ -10,7 +10,7 @@ permalink: /zh/posts/2026/5/Temporal-Difference-Learning/
 image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes
 tags:
-  - 强化学习
+  - Reinforcement Learning
 ---
 
 第一次认真钻研强化学习（RL）理论时，我觉得把这段学习过程写成博客应该会很有趣——于是就有了这篇文章。
