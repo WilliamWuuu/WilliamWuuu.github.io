@@ -53,9 +53,7 @@
                                 {% if page.tags %}
                                     <span class="ml-3">
                                         <i class="fas fa-tags"></i>
-                                        {% for tag in page.tags %}
-                                            <span class="badge badge-light">{{ tag }}</span>
-                                        {% endfor %}
+                                        {% include widgets/tag_badges.html tags=page.tags lang=lang %}
                                     </span>
                                 {% endif %}
                             </div>

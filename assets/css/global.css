@@ -1115,3 +1115,21 @@ html[lang="zh-CN"] body {
 .blog-category-content.active {
     display: block;
 }
+
+.blog-tag-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.blog-tag-link:hover,
+.blog-tag-link:focus {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+[data-theme="dark"] .blog-tag-link:hover,
+[data-theme="dark"] .blog-tag-link:focus {
+    color: var(--link-color);
+    background-color: #30363d;
+}

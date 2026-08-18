@@ -36,6 +36,10 @@ en:
     read_more: Read More
     back_to_all: Back to All Blogs
     table_of_contents: Table of Contents
+    tag: Tag
+    post: post
+    posts: posts
+    view_tag: "View posts tagged %s"
   comments:
     title: Comments
     noscript_before: JavaScript is required to load comments. You can also join the discussion on
@@ -68,6 +72,10 @@ zh-CN:
     read_more: 阅读全文
     back_to_all: 返回全部博客
     table_of_contents: 目录
+    tag: 标签
+    post: 篇文章
+    posts: 篇文章
+    view_tag: "查看带有“%s”标签的文章"
   comments:
     title: 评论
     noscript_before: 需要启用 JavaScript 才能加载评论。你也可以前往
