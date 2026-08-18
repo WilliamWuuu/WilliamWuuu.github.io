@@ -1203,6 +1203,32 @@ html[lang="zh-CN"] body {
     display: none;
 }
 
+.blog-popular-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.65rem 0.25rem 0;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.blog-popular-tags-label {
+    margin-right: 0.1rem;
+    font-weight: 600;
+}
+
+.blog-popular-tags-list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.blog-popular-tags-list .blog-tag-link {
+    padding: 0.32rem 0.55rem;
+    font-size: 0.8rem;
+}
+
 .blog-search-status {
     min-height: 1.35rem;
     padding: 0.45rem 0.25rem 0;

@@ -27,6 +27,12 @@
                     <i class="fas fa-times" aria-hidden="true"></i>
                 </button>
             </div>
+            <div class="blog-popular-tags">
+                <span class="blog-popular-tags-label">{{ t.blogs.popular_tags }}</span>
+                <span class="blog-popular-tags-list">
+                    {% include widgets/tag_badges.html tags=site.data.popular_blog_tags lang=lang %}
+                </span>
+            </div>
             <p class="blog-search-status mb-0"
                id="blog-search-status"
                role="status"
