@@ -268,8 +268,29 @@ body.d-flex.flex-column.h-100 {
 }
 
 /* Blog content styling */
+.blog-post-title {
+    font-family: "Lora", "Songti SC", "STSong", serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
 .blog-content {
     line-height: 1.7;
+}
+
+html[lang="zh-CN"] .blog-post-title,
+html[lang="zh-CN"] .blog-content h1,
+html[lang="zh-CN"] .blog-content h2,
+html[lang="zh-CN"] .blog-content h3,
+html[lang="zh-CN"] .blog-content h4,
+html[lang="zh-CN"] .blog-content h5,
+html[lang="zh-CN"] .blog-content h6 {
+    font-family: "Noto Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html[lang="zh-CN"] .blog-content {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+    font-weight: 400;
 }
 
 .blog-content h1,
