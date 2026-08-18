@@ -9,9 +9,6 @@
         <a href="{{ blogs_url | relative_url }}">({{ t.blogs.view_all }} <i class="fas fa-angle-double-right"></i>)</a>
     </h6>
     {% for item in blogs limit:include.limit %}
-        {% include widgets/blog_card.html item=item %}
+        {% include widgets/blog_card.html item=item hide_bottom_border=forloop.last %}
     {% endfor %}
-    <h6 class="d-block p-3 mt-0 text-right">
-        <a href="{{ blogs_url | relative_url }}">{{ t.blogs.all_blogs }} <i class="fas fa-angle-double-right"></i></a>
-    </h6>
 </div>

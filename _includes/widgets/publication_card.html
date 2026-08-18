@@ -8,9 +8,6 @@
         <a href="{{ publications_url | relative_url }}">({{ t.publications.view_all }} <i class="fas fa-angle-double-right"></i>)</a>
     </h6>
     {% for item in publications limit:include.limit %}
-        {% include widgets/publication_item.html item=item first=false last=false %}    
+        {% include widgets/publication_item.html item=item first=forloop.first last=forloop.last hide_bottom_border=forloop.last %}
     {% endfor %}
-    <h6 class="d-block p-3 mt-0 text-right">
-        <a href="{{ publications_url | relative_url }}">{{ t.publications.all }} <i class="fas fa-angle-double-right"></i></a>
-    </h6>
 </div>
