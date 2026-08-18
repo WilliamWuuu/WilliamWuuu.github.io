@@ -36,7 +36,6 @@ en:
     search_label: Search blog posts
     search_placeholder: Search by title, description, or tag...
     clear_search: Clear search
-    popular_tags: "Popular tags:"
     no_results: No matching posts
     no_results_hint: Try a different keyword or category.
     result_count_one: "%s post"
@@ -80,7 +79,6 @@ zh-CN:
     search_label: 搜索博客文章
     search_placeholder: 按标题、简介或标签搜索……
     clear_search: 清除搜索
-    popular_tags: "热门标签："
     no_results: 没有找到匹配的文章
     no_results_hint: 请尝试其他关键词或分类。
     result_count_one: "%s 篇文章"
