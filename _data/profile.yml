@@ -1,13 +1,10 @@
 primary_name: "Yangxin Wu"
 secondary_name: "William"
 navbar_name: "Home"
-navbar_name_zh: "主页"
 
 positions:
 - name: Undergraduate Student
-  name_zh: 本科生
 - name: Harbin Institute of Technology, Shenzhen
-  name_zh: 哈尔滨工业大学（深圳）
   logo: /assets/images/badges/HIT_blue.jpg  # Logo is optional
 
 
@@ -26,21 +23,6 @@ short_bio_text_justify: false
 short_bio: >-
   <p>
     I'm currently a junior at <a href="http://en.hitsz.edu.cn/" target="_blank">Harbin Institute of Technology, Shenzhen</a> working with <a href="https://xiucheng.org/" target="_blank">Xiucheng Li</a>.
-  </p>
-short_bio_zh: >-
-  <p>
-    我目前就读于<a href="http://www.hitsz.edu.cn/" target="_blank">哈尔滨工业大学（深圳）</a>，本科三年级，在<a href="https://xiucheng.org/" target="_blank">Xiucheng Li 老师</a>的指导下开展研究。
-  </p>
-  <p>
-    我的研究方向是机器学习算法，尤其关注生成建模及其与数学、科学的结合（“AI for Science”）。
-  </p>
-  <p>
-    <ol>
-      <li>🔭 目前专注于神经偏微分方程求解器。</li>
-      <li>🌱 正在学习前沿强化学习架构。</li>
-      <li>🤔 对用于自主科学发现的智能体 AI 感兴趣。</li>
-      <li>🛠️ 技术栈：Python、PyTorch。</li>
-    </ol>
   </p>
   <p>
     I work on machine learning algorithms, in particular generative modeling, as well connections to mathematics and science ("AI for science").
@@ -66,12 +48,9 @@ portrait_url: /assets/images/photos/portrait.png
 
 education:
 - name: Harbin Institute of Technology, Shenzhen
-  name_zh: 哈尔滨工业大学（深圳）
   logo: /assets/images/badges/HIT_blue.jpg
   position: B.E. in Computer Science
-  position_zh: 计算机科学与技术工学学士
   date: Sep. 2023 - Jul. 2027
-  date_zh: 2023年9月－2027年7月
 
 
 # awards:

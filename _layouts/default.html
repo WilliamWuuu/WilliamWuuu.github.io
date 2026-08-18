@@ -36,17 +36,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
-    {% if page.language_redirect and page.translation_url %}
-    <script>
-        try {
-            if (window.localStorage.getItem('language') === 'zh-CN') {
-                window.location.replace('{{ page.translation_url | relative_url }}');
-            }
-        } catch (error) {}
-    </script>
-    {% endif %}
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    {% if page.navbar_key == "blogs" or page.collection == "blogs" %}
     <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
+    {% endif %}
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
     {% include navbar.html %}

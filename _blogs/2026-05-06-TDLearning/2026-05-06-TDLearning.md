@@ -1,12 +1,11 @@
 ---
 layout: blog
 title: 'My Bizarre Adventure in RL: Temporal-Difference Learning'
-title_zh: '我的强化学习奇妙冒险：时序差分学习'
 date: 2026-05-06
 description: 'A journey from Markov decision process to temporal-difference learning.'
-description_zh: '从马尔可夫决策过程到时序差分学习的一段旅程。'
 lang: en
 translation_key: temporal-difference-learning
+translation_url: /zh/posts/2026/5/Temporal-Difference-Learning/
 permalink: /posts/2026/5/Temporal-Difference-Learning/
 image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes

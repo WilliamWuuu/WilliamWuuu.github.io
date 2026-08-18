@@ -1,5 +1,9 @@
 {% assign lang = page.lang | default: "en" %}
 {% assign t = site.data.i18n[lang] %}
+{% assign show_language_switcher = false %}
+{% if page.navbar_key == "blogs" or page.collection == "blogs" %}
+    {% assign show_language_switcher = true %}
+{% endif %}
 {% if lang == "zh-CN" %}
     {% assign english_url = page.translation_url %}
     {% assign chinese_url = page.url %}
@@ -9,13 +13,15 @@
 {% endif %}
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top mb-5 shadow-sm" aria-label="{{ t.menu }}">
     <div class="{% if page.container_class %}{{ page.container_class }}{% else %}container-lg{% endif %}">
-        <a class="navbar-brand" href="{% if lang == 'zh-CN' %}{{ '/zh/' | relative_url }}{% else %}{{ '/' | relative_url }}{% endif %}"><strong>{% if lang == "zh-CN" %}{{ site.data.profile.navbar_name_zh }}{% else %}{{ site.data.profile.navbar_name }}{% endif %}</strong></a>
+        <a class="navbar-brand" href="{{ '/' | relative_url }}"><strong>{{ site.data.profile.navbar_name }}</strong></a>
         <div class="d-flex align-items-center site-preference-controls">
+            {% if show_language_switcher %}
             <div class="language-switcher mr-2" id="language-switcher" role="radiogroup" aria-label="{{ t.language_switcher }}" data-language="{{ lang }}">
                 <span class="language-switcher__thumb" aria-hidden="true"></span>
                 <button class="language-switcher__option" type="button" role="radio" aria-checked="{% if lang == 'en' %}true{% else %}false{% endif %}" data-language-code="en" data-language-url="{{ english_url | relative_url }}" lang="en" aria-label="{{ t.english }}" title="{{ t.english }}">EN</button>
                 <button class="language-switcher__option" type="button" role="radio" aria-checked="{% if lang == 'zh-CN' %}true{% else %}false{% endif %}" data-language-code="zh-CN" {% if chinese_url %}data-language-url="{{ chinese_url | relative_url }}"{% else %}aria-disabled="true"{% endif %} lang="zh-CN" aria-label="{% if chinese_url %}{{ t.chinese }}{% else %}{{ t.unavailable_translation }}{% endif %}" title="{% if chinese_url %}{{ t.chinese }}{% else %}{{ t.unavailable_translation }}{% endif %}">中</button>
             </div>
+            {% endif %}
 
             <div class="theme-switcher mr-2" id="theme-switcher" role="radiogroup" aria-label="{{ t.theme_switcher }}">
                 <span class="theme-switcher__thumb" aria-hidden="true"></span>
@@ -38,7 +44,7 @@
             <ul class="navbar-nav ml-auto">
                 {% for item in site.data.navigation.pages %}
                 <li class="nav-item {% if item.key == page.navbar_key or item.key == 'blogs' and page.collection == 'blogs' %}active{% endif %}">
-                    <a class="nav-link" href="{% if lang == 'zh-CN' %}{{ item.url_zh | relative_url }}{% else %}{{ item.url | relative_url }}{% endif %}">{% if lang == "zh-CN" %}{{ item.name_zh }}{% else %}{{ item.name }}{% endif %}</a>
+                    <a class="nav-link" href="{% if lang == 'zh-CN' and item.key == 'blogs' %}{{ item.url_zh | relative_url }}{% else %}{{ item.url | relative_url }}{% endif %}">{{ item.name }}</a>
                 </li>
                 {% endfor %}
             </ul>

@@ -34,7 +34,6 @@ en:
     musings: Musings
     learnings: Learnings
     read_more: Read More
-    english_only: Article in English
     back_to_all: Back to All Blogs
     table_of_contents: Table of Contents
   comments:
@@ -62,28 +61,11 @@ zh-CN:
   menu: 菜单
   portrait_alt: Yangxin Wu 的照片
   close: 关闭
-  homepage:
-    about_me: 关于我
-    download_cv: 下载简历
-    education: 教育经历
-    experience: 工作经历
-    awards: 荣誉与奖项
-    news: 近期动态
-    selected_publications: 代表论文
-  publications:
-    selected_recent: 近期代表论文
-    view_all: 查看全部
-    all: 全部论文
-    paper: 论文
-    code: 代码
-    equal_contribution: 共同一作
-    corresponding_author: 通讯作者
   blogs:
     all: 全部
     musings: 随想
     learnings: 学习笔记
     read_more: 阅读全文
-    english_only: 正文为英文
     back_to_all: 返回全部博客
     table_of_contents: 目录
   comments:

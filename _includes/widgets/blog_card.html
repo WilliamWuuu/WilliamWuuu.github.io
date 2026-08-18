@@ -21,7 +21,6 @@
                 {% elsif item.category == 'notes' %}
                     <span class="badge badge-info mr-2">{{ t.blogs.learnings }}</span>
                 {% endif %}
-                {% if lang == "zh-CN" %}<span class="badge badge-light mr-2">{{ t.blogs.english_only }}</span>{% endif %}
                 <i class="fas fa-calendar-alt"></i> {% if lang == "zh-CN" %}{{ item.date | date: "%Y年%-m月%-d日" }}{% else %}{{ item.date | date: "%B %d, %Y" }}{% endif %}
                 {% if item.tags %}
                     <span class="ml-3">

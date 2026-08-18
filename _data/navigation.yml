@@ -1,18 +1,13 @@
 pages:
-# `key` matches `navbar_key` in page front matter; localized labels and URLs live together.
+# `key` matches `navbar_key` in page front matter. Only the blog has a localized URL.
 - key: about
   name: About
-  name_zh: 关于
   url: /
-  url_zh: /zh/
 - key: publications
   name: Publications
-  name_zh: 论文
   url: /publications
-  url_zh: /zh/publications
 - key: blogs
   name: Blogs
-  name_zh: 博客
   url: /blogs
   url_zh: /zh/blogs
 # - name: Showcase

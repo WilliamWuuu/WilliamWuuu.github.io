@@ -8,7 +8,8 @@
             <button class="blog-category-tab" data-category="notes">{{ t.blogs.learnings }}</button>
         </div>
 
-        {% assign blogs_by_year = site.blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
+        {% assign localized_blogs = site.blogs | where: "lang", lang %}
+        {% assign blogs_by_year = localized_blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
         {% for year in blogs_by_year %}
         <div class="blog-year-group" data-year="{{ year.name }}">
             <h2 class="pt-4" id="year-{{ year.name }}">{{ year.name }}</h2>
