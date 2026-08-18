@@ -6,7 +6,7 @@ description: 'A journey from Markov decision process to temporal-difference lear
 lang: en
 translation_key: temporal-difference-learning
 translation_url: /blogs/2026/temporal-difference-learning/zh
-permalink: /posts/2026/5/Temporal-Difference-Learning/
+permalink: /blogs/2026/temporal-difference-learning/
 image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes
 tags:

@@ -84,12 +84,12 @@ Comments are enabled by default for blog posts once Giscus is configured in `_co
 
 ### Bilingual Content
 
-The homepage, publication page, and blog index remain English-only. Bilingual support is intentionally limited to individual posts, where it directly improves the reading experience. English post URLs stay unchanged, while each Simplified Chinese version uses `/blogs/<year>/<slug>/zh`.
+The homepage, publication page, and blog index remain English-only. Bilingual support is intentionally limited to individual posts, where it directly improves the reading experience. English posts use `/blogs/<year>/<slug>/`, while each Simplified Chinese version appends `/zh`.
 
 - Add blog-interface copy to both language sections in `_data/i18n.yml`.
 - Give every English post `lang: en` and every Chinese post `lang: zh-CN`.
 - Pair the two posts with the same `translation_key` and reciprocal `translation_url` values.
-- Give the Chinese post its own `/blogs/<year>/<slug>/zh` permalink. It may reuse the English post's images through the same `image_path`.
+- Give the English post a `/blogs/<year>/<slug>/` permalink and the Chinese post `/blogs/<year>/<slug>/zh`. The translated post may reuse the same `image_path`.
 
 The English blog index filters the collection by `lang: en`, so translated copies do not appear as duplicate cards. The language switch appears only on individual article pages.
 
