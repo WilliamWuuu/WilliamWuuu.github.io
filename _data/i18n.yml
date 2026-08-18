@@ -1,0 +1,97 @@
+en:
+  language_code: en
+  language_name: English
+  site_description: Personal academic homepage of Yangxin Wu, featuring research, publications, notes, and personal writing.
+  language_switcher: Language
+  english: English
+  chinese: Simplified Chinese
+  unavailable_translation: This page is not available in Simplified Chinese yet
+  theme_switcher: Color theme
+  light_theme: Light theme
+  dark_theme: Dark theme
+  system_theme: Follow system theme
+  menu: Menu
+  portrait_alt: Portrait of Yangxin Wu
+  close: Close
+  homepage:
+    about_me: About Me
+    download_cv: Download CV
+    education: Education
+    experience: Experience
+    awards: Honors & Awards
+    news: News
+    selected_publications: Selected Publications
+  publications:
+    selected_recent: Selected Recent Publications
+    view_all: view all
+    all: All publications
+    paper: Paper
+    code: Code
+    equal_contribution: equal contribution
+    corresponding_author: corresponding author
+  blogs:
+    all: All
+    musings: Musings
+    learnings: Learnings
+    read_more: Read More
+    english_only: Article in English
+    back_to_all: Back to All Blogs
+    table_of_contents: Table of Contents
+  comments:
+    title: Comments
+    noscript_before: JavaScript is required to load comments. You can also join the discussion on
+    noscript_link: GitHub Discussions
+  actions:
+    copy: Copy
+    copied: Copied!
+  footer:
+    last_updated: "Last updated:"
+
+zh-CN:
+  language_code: zh-CN
+  language_name: 简体中文
+  site_description: Yangxin Wu 的个人学术主页，介绍研究方向、论文、学习笔记与个人写作。
+  language_switcher: 语言
+  english: 英文
+  chinese: 简体中文
+  unavailable_translation: 此页面的简体中文版本尚未完成
+  theme_switcher: 颜色主题
+  light_theme: 浅色主题
+  dark_theme: 深色主题
+  system_theme: 跟随系统主题
+  menu: 菜单
+  portrait_alt: Yangxin Wu 的照片
+  close: 关闭
+  homepage:
+    about_me: 关于我
+    download_cv: 下载简历
+    education: 教育经历
+    experience: 工作经历
+    awards: 荣誉与奖项
+    news: 近期动态
+    selected_publications: 代表论文
+  publications:
+    selected_recent: 近期代表论文
+    view_all: 查看全部
+    all: 全部论文
+    paper: 论文
+    code: 代码
+    equal_contribution: 共同一作
+    corresponding_author: 通讯作者
+  blogs:
+    all: 全部
+    musings: 随想
+    learnings: 学习笔记
+    read_more: 阅读全文
+    english_only: 正文为英文
+    back_to_all: 返回全部博客
+    table_of_contents: 目录
+  comments:
+    title: 评论
+    noscript_before: 需要启用 JavaScript 才能加载评论。你也可以前往
+    noscript_link: GitHub Discussions
+  actions:
+    copy: 复制
+    copied: 已复制！
+  footer:
+    last_updated: "最近更新："

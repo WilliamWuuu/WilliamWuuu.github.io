@@ -1,11 +1,30 @@
+{% assign lang = page.lang | default: "en" -%}
+{% assign t = site.data.i18n[lang] -%}
+{% if lang == "zh-CN" and page.description_zh %}{% assign meta_description = page.description_zh %}{% else %}{% assign meta_description = page.description | default: t.site_description %}{% endif -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="color-scheme" content="light dark">
-    <title>{{ page.title }} - {{ site.data.profile.navbar_name }}</title>
+    <title>{% if lang == "zh-CN" and page.title_zh %}{{ page.title_zh }}{% else %}{{ page.title }}{% endif %} - {{ site.data.profile.primary_name }}</title>
+    <meta name="description" content="{{ meta_description | strip_html | escape }}">
+    <meta property="og:title" content="{% if lang == 'zh-CN' and page.title_zh %}{{ page.title_zh | escape }}{% else %}{{ page.title | escape }}{% endif %} - {{ site.data.profile.primary_name }}">
+    <meta property="og:description" content="{{ meta_description | strip_html | escape }}">
+    <meta property="og:locale" content="{% if lang == 'zh-CN' %}zh_CN{% else %}en_US{% endif %}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    {% if page.translation_url %}
+        {% if lang == "zh-CN" %}
+    <link rel="alternate" hreflang="en" href="{{ page.translation_url | absolute_url }}">
+    <link rel="alternate" hreflang="zh-CN" href="{{ page.url | absolute_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ page.translation_url | absolute_url }}">
+        {% else %}
+    <link rel="alternate" hreflang="en" href="{{ page.url | absolute_url }}">
+    <link rel="alternate" hreflang="zh-CN" href="{{ page.translation_url | absolute_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+        {% endif %}
+    {% endif %}
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -18,6 +37,7 @@
     <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
     {% include navbar.html %}
@@ -27,9 +47,9 @@
                 <div class="col-12 col-xl-9">
                     <article class="bg-white shadow-sm rounded-xl p-4 mb-4">
                         <header class="mb-4">
-                            <h1 class="display-4 mb-3">{{ page.title }}</h1>
+                            <h1 class="display-4 mb-3">{% if lang == "zh-CN" and page.title_zh %}{{ page.title_zh }}{% else %}{{ page.title }}{% endif %}</h1>
                             <div class="text-muted mb-3">
-                                <i class="fas fa-calendar-alt"></i> {{ page.date | date: "%B %d, %Y" }}
+                                <i class="fas fa-calendar-alt"></i> {% if lang == "zh-CN" %}{{ page.date | date: "%Y年%-m月%-d日" }}{% else %}{{ page.date | date: "%B %d, %Y" }}{% endif %}
                                 {% if page.tags %}
                                     <span class="ml-3">
                                         <i class="fas fa-tags"></i>
@@ -51,15 +71,15 @@
                     {% endunless %}
 
                     <div class="text-center mb-4">
-                        <a href="{{ '/blogs' | relative_url }}" class="btn btn-outline-primary">
-                            <i class="fas fa-arrow-left"></i> Back to All Blogs
+                        <a href="{% if lang == 'zh-CN' %}{{ '/zh/blogs' | relative_url }}{% else %}{{ '/blogs' | relative_url }}{% endif %}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left"></i> {{ t.blogs.back_to_all }}
                         </a>
                     </div>
                 </div>
                 <!-- Table of Contents sidebar -->
                 <div class="col-xl-3 d-none d-xl-block">
                     <nav class="blog-toc sticky-top" id="blog-toc">
-                        <h6 class="blog-toc-title">Table of Contents</h6>
+                        <h6 class="blog-toc-title">{{ t.blogs.table_of_contents }}</h6>
                         <ul class="blog-toc-list" id="blog-toc-list"></ul>
                     </nav>
                 </div>
@@ -82,6 +102,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            var copyLabel = {{ t.actions.copy | jsonify }};
+            var copiedLabel = {{ t.actions.copied | jsonify }};
             // Initialize KaTeX for math rendering with equation auto-numbering
             if (typeof renderMathInElement !== 'undefined') {
                 renderMathInElement(document.body, {
@@ -152,15 +174,15 @@
             document.querySelectorAll('.highlighter-rouge, .blog-content pre').forEach(function(block) {
                 var btn = document.createElement('button');
                 btn.className = 'code-copy-btn';
-                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                btn.innerHTML = '<i class="fas fa-copy"></i> ' + copyLabel;
                 btn.addEventListener('click', function() {
                     var code = block.querySelector('code');
                     var text = code ? code.textContent : block.textContent;
                     navigator.clipboard.writeText(text).then(function() {
-                        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        btn.innerHTML = '<i class="fas fa-check"></i> ' + copiedLabel;
                         btn.classList.add('copied');
                         setTimeout(function() {
-                            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                            btn.innerHTML = '<i class="fas fa-copy"></i> ' + copyLabel;
                             btn.classList.remove('copied');
                         }, 2000);
                     });

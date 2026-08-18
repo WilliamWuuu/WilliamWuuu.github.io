@@ -1,35 +1,38 @@
 {% assign item = include.item %}
 {% assign hide_bottom_border = include.hide_bottom_border %}
-{% assign first = include.first %}
-{% assign last = include.last %}
+{% assign lang = page.lang | default: "en" %}
+{% assign t = site.data.i18n[lang] %}
+{% assign display_title = item.title %}
+{% assign display_description = item.description %}
+{% if lang == "zh-CN" %}
+    {% if item.title_zh %}{% assign display_title = item.title_zh %}{% endif %}
+    {% if item.description_zh %}{% assign display_description = item.description_zh %}{% endif %}
+{% endif %}
 
 <div class="border-bottom border-gray p-3 {% if hide_bottom_border %}border-0{% endif %}" data-category="{{ item.category }}">
     <div class="row">
         <div class="col-12">
             <h5 class="mb-2">
-                <a href="{{ item.url | relative_url }}" class="text-dark text-decoration-none">
-                    {{ item.title }}
-                </a>
+                <a href="{{ item.url | relative_url }}" class="text-dark text-decoration-none">{{ display_title }}</a>
             </h5>
             <div class="text-muted small mb-2">
                 {% if item.category == 'original' %}
-                    <span class="badge badge-warning mr-2">Musings</span>
+                    <span class="badge badge-warning mr-2">{{ t.blogs.musings }}</span>
                 {% elsif item.category == 'notes' %}
-                    <span class="badge badge-info mr-2">Learnings</span>
+                    <span class="badge badge-info mr-2">{{ t.blogs.learnings }}</span>
                 {% endif %}
-                <i class="fas fa-calendar-alt"></i> {{ item.date | date: "%B %d, %Y" }}
+                {% if lang == "zh-CN" %}<span class="badge badge-light mr-2">{{ t.blogs.english_only }}</span>{% endif %}
+                <i class="fas fa-calendar-alt"></i> {% if lang == "zh-CN" %}{{ item.date | date: "%Y年%-m月%-d日" }}{% else %}{{ item.date | date: "%B %d, %Y" }}{% endif %}
                 {% if item.tags %}
                     <span class="ml-3">
                         <i class="fas fa-tags"></i>
-                        {% for tag in item.tags %}
-                            <span class="badge badge-light">{{ tag }}</span>
-                        {% endfor %}
+                        {% for tag in item.tags %}<span class="badge badge-light">{{ tag }}</span>{% endfor %}
                     </span>
                 {% endif %}
             </div>
             <div class="text-muted">
-                {% if item.description %}
-                    {{ item.description | strip_html | truncate: 200 }}
+                {% if display_description %}
+                    {{ display_description | strip_html | truncate: 200 }}
                 {% elsif item.excerpt %}
                     {{ item.excerpt | strip_html | truncate: 200 }}
                 {% else %}
@@ -38,7 +41,7 @@
             </div>
             <div class="mt-2">
                 <a href="{{ item.url | relative_url }}" class="btn btn-outline-primary btn-sm">
-                    Read More <i class="fas fa-arrow-right"></i>
+                    {{ t.blogs.read_more }} <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>

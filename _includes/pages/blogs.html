@@ -1,0 +1,65 @@
+{% assign lang = page.lang | default: "en" %}
+{% assign t = site.data.i18n[lang] %}
+<div class="row">
+    <div class="col-12 col-lg-10">
+        <div class="blog-category-tabs" id="category-tabs">
+            <button class="blog-category-tab active" data-category="all">{{ t.blogs.all }}</button>
+            <button class="blog-category-tab" data-category="original">{{ t.blogs.musings }}</button>
+            <button class="blog-category-tab" data-category="notes">{{ t.blogs.learnings }}</button>
+        </div>
+
+        {% assign blogs_by_year = site.blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
+        {% for year in blogs_by_year %}
+        <div class="blog-year-group" data-year="{{ year.name }}">
+            <h2 class="pt-4" id="year-{{ year.name }}">{{ year.name }}</h2>
+            <div class="my-0 p-0 bg-white shadow-sm rounded-xl">
+                {% for item in year.items %}
+                    {% include widgets/blog_card.html item=item hide_bottom_border=forloop.last first=forloop.first last=forloop.last %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-2 d-none d-lg-block">
+        <div id="navbar-year" class="nav nav-pills flex-column sticky-top" style="top: 80px">
+            {% for year in blogs_by_year %}
+            <a class="nav-link d-block blog-year-link" href="#year-{{ year.name }}" data-year="{{ year.name }}">{{ year.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var tabs = document.querySelectorAll('.blog-category-tab');
+    var cards = document.querySelectorAll('.border-bottom[data-category]');
+    var yearGroups = document.querySelectorAll('.blog-year-group');
+    var yearLinks = document.querySelectorAll('.blog-year-link');
+
+    function filterByCategory(category) {
+        cards.forEach(function(card) {
+            card.style.display = category === 'all' || card.getAttribute('data-category') === category ? '' : 'none';
+        });
+
+        yearGroups.forEach(function(group) {
+            var visibleCards = group.querySelectorAll('[data-category]:not([style*="display: none"])');
+            group.style.display = visibleCards.length > 0 ? '' : 'none';
+        });
+
+        yearLinks.forEach(function(link) {
+            var year = link.getAttribute('data-year');
+            var group = document.querySelector('.blog-year-group[data-year="' + year + '"]');
+            link.style.display = group && group.style.display !== 'none' ? '' : 'none';
+        });
+    }
+
+    tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            tabs.forEach(function(candidate) { candidate.classList.remove('active'); });
+            tab.classList.add('active');
+            filterByCategory(tab.getAttribute('data-category'));
+        });
+    });
+});
+</script>

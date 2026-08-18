@@ -30,6 +30,7 @@ Most routine content changes are data-driven:
 - Edit personal details, social links, education, and the CV link in `_data/profile.yml`.
 - Edit homepage section visibility in `_data/display.yml`.
 - Edit navbar entries in `_data/navigation.yml`.
+- Edit shared interface translations in `_data/i18n.yml`.
 - Add publication entries under `_publications/<year>/`.
 - Add news entries under `_news/`.
 
@@ -80,6 +81,17 @@ Write the proof here. Markdown and KaTeX are supported.
 ```
 
 Comments are enabled by default for blog posts once Giscus is configured in `_config.yml`. Add `comments: false` to a post's front matter to disable them for that post.
+
+### Bilingual Content
+
+The English site keeps its existing URLs, while Simplified Chinese pages live under `/zh/`. Shared page markup is stored in `_includes/pages/`, so the two languages do not need separate page templates.
+
+- Add short interface copy to both language sections in `_data/i18n.yml`.
+- Add `_zh` fields for localized profile, news, publication, and blog-list metadata.
+- Pair a fully translated page with `lang` and `translation_url` in its front matter.
+- Keep `translation_key` identical across language versions of the same blog post.
+
+If a blog post has no translated counterpart, the Chinese blog index labels its body as English and the article's language switch remains unavailable.
 
 ## Deployment
 

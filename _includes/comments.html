@@ -1,14 +1,16 @@
 {% assign comments_config = site.comments %}
 {% assign giscus = comments_config.giscus %}
+{% assign lang = page.lang | default: "en" %}
+{% assign t = site.data.i18n[lang] %}
 
 {% if comments_config.provider == "giscus" and giscus.repo_id and giscus.repo_id != "" and giscus.category_id and giscus.category_id != "" %}
 <section class="blog-comments bg-white shadow-sm rounded-xl p-4 mb-4" aria-labelledby="comments-title">
-    <h2 class="h4 mb-3" id="comments-title">Comments</h2>
+    <h2 class="h4 mb-3" id="comments-title">{{ t.comments.title }}</h2>
     <div class="giscus-container"></div>
     <noscript>
         <p class="mb-0">
-            JavaScript is required to load comments. You can also join the discussion on
-            <a href="https://github.com/{{ giscus.repo }}/discussions">GitHub Discussions</a>.
+            {{ t.comments.noscript_before }}
+            <a href="https://github.com/{{ giscus.repo }}/discussions">{{ t.comments.noscript_link }}</a>.
         </p>
     </noscript>
 </section>
@@ -51,7 +53,7 @@
         script.setAttribute('data-emit-metadata', '0');
         script.setAttribute('data-input-position', '{{ giscus.input_position | default: "top" }}');
         script.setAttribute('data-theme', currentGiscusTheme());
-        script.setAttribute('data-lang', '{{ giscus.lang | default: "en" }}');
+        script.setAttribute('data-lang', '{{ t.language_code | default: giscus.lang | default: "en" }}');
         script.setAttribute('data-loading', 'lazy');
         container.appendChild(script);
 

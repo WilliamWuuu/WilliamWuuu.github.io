@@ -1,3 +1,5 @@
+{% assign lang = page.lang | default: "en" %}
+{% assign t = site.data.i18n[lang] %}
 <div class="row sticky-top" style="top: 80px">
     <div class="col">
         <div class="card border-0 shadow-sm bg-white">
@@ -12,10 +14,11 @@
                                 class="figure-img img-fluid" 
                                 data-toggle="tooltip" 
                                 data-placement="top" 
-                                title="{{ site.data.profile.portrait_caption }}">
+                                title="{{ site.data.profile.portrait_caption }}"
+                                alt="{{ t.portrait_alt }}">
                         </div>
                         <div class="mb-3 d-md-none text-center">
-                            <img src="{{ site.data.profile.portrait_url | relative_url }}" class="rounded-circle" style="max-width: 50%;" alt="Portrait">
+                            <img src="{{ site.data.profile.portrait_url | relative_url }}" class="rounded-circle" style="max-width: 50%;" alt="{{ t.portrait_alt }}">
                         </div>
                         {% endif %}
                     </div>
@@ -29,7 +32,7 @@
                 <div class="row small">
                     <div class="col text-center">
                         {% for position in site.data.profile.positions %}
-                        {{ position.name }}<br/>
+                        {% if lang == "zh-CN" and position.name_zh %}{{ position.name_zh }}{% else %}{{ position.name }}{% endif %}<br/>
                         {% endfor %}
                     </div>
                 </div>
@@ -105,7 +108,7 @@
             </div>
             {% endif %}
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">{{ t.close }}</button>
             </div>
         </div>
     </div>

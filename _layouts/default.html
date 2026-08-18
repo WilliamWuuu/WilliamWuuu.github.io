@@ -1,11 +1,30 @@
+{% assign lang = page.lang | default: "en" -%}
+{% assign t = site.data.i18n[lang] -%}
+{% assign meta_description = page.description | default: t.site_description -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="color-scheme" content="light dark">
-    <title>{{ page.title }} - {{ site.data.profile.navbar_name }}</title>
+    <title>{{ page.title }} - {{ site.data.profile.primary_name }}</title>
+    <meta name="description" content="{{ meta_description | strip_html | escape }}">
+    <meta property="og:title" content="{{ page.title | escape }} - {{ site.data.profile.primary_name }}">
+    <meta property="og:description" content="{{ meta_description | strip_html | escape }}">
+    <meta property="og:locale" content="{% if lang == 'zh-CN' %}zh_CN{% else %}en_US{% endif %}">
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+    {% if page.translation_url %}
+        {% if lang == "zh-CN" %}
+    <link rel="alternate" hreflang="en" href="{{ page.translation_url | absolute_url }}">
+    <link rel="alternate" hreflang="zh-CN" href="{{ page.url | absolute_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ page.translation_url | absolute_url }}">
+        {% else %}
+    <link rel="alternate" hreflang="en" href="{{ page.url | absolute_url }}">
+    <link rel="alternate" hreflang="zh-CN" href="{{ page.translation_url | absolute_url }}">
+    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
+        {% endif %}
+    {% endif %}
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -17,7 +36,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
+    {% if page.language_redirect and page.translation_url %}
+    <script>
+        try {
+            if (window.localStorage.getItem('language') === 'zh-CN') {
+                window.location.replace('{{ page.translation_url | relative_url }}');
+            }
+        } catch (error) {}
+    </script>
+    {% endif %}
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
     {% include navbar.html %}
@@ -42,6 +71,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            var copyLabel = {{ t.actions.copy | jsonify }};
+            var copiedLabel = {{ t.actions.copied | jsonify }};
             renderMathInElement(document.body, {
               delimiters: [
                   {left: '$$', right: '$$', display: true},
@@ -59,15 +90,15 @@
             document.querySelectorAll('.highlighter-rouge, .blog-content pre').forEach(function(block) {
                 var btn = document.createElement('button');
                 btn.className = 'code-copy-btn';
-                btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                btn.innerHTML = '<i class="fas fa-copy"></i> ' + copyLabel;
                 btn.addEventListener('click', function() {
                     var code = block.querySelector('code');
                     var text = code ? code.textContent : block.textContent;
                     navigator.clipboard.writeText(text).then(function() {
-                        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        btn.innerHTML = '<i class="fas fa-check"></i> ' + copiedLabel;
                         btn.classList.add('copied');
                         setTimeout(function() {
-                            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                            btn.innerHTML = '<i class="fas fa-copy"></i> ' + copyLabel;
                             btn.classList.remove('copied');
                         }, 2000);
                     });

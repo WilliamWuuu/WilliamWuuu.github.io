@@ -14,6 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://williamwuuu.github.io"
 
 # Blog comments. Complete the GitHub Discussions setup, then paste the
 # generated giscus category ID below to activate comments on every blog post.
