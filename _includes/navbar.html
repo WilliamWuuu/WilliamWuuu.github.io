@@ -1,7 +1,7 @@
 {% assign lang = page.lang | default: "en" %}
 {% assign t = site.data.i18n[lang] %}
 {% assign show_language_switcher = false %}
-{% if page.navbar_key == "blogs" or page.collection == "blogs" %}
+{% if page.collection == "blogs" %}
     {% assign show_language_switcher = true %}
 {% endif %}
 {% if lang == "zh-CN" %}
@@ -44,7 +44,7 @@
             <ul class="navbar-nav ml-auto">
                 {% for item in site.data.navigation.pages %}
                 <li class="nav-item {% if item.key == page.navbar_key or item.key == 'blogs' and page.collection == 'blogs' %}active{% endif %}">
-                    <a class="nav-link" href="{% if lang == 'zh-CN' and item.key == 'blogs' %}{{ item.url_zh | relative_url }}{% else %}{{ item.url | relative_url }}{% endif %}">{{ item.name }}</a>
+                    <a class="nav-link" href="{{ item.url | relative_url }}">{{ item.name }}</a>
                 </li>
                 {% endfor %}
             </ul>

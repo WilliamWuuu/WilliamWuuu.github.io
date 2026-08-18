@@ -69,7 +69,7 @@
                     {% endunless %}
 
                     <div class="text-center mb-4">
-                        <a href="{% if lang == 'zh-CN' %}{{ '/zh/blogs' | relative_url }}{% else %}{{ '/blogs' | relative_url }}{% endif %}" class="btn btn-outline-primary">
+                        <a href="{{ '/blogs' | relative_url }}" class="btn btn-outline-primary">
                             <i class="fas fa-arrow-left"></i> {{ t.blogs.back_to_all }}
                         </a>
                     </div>

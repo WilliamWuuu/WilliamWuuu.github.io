@@ -1,5 +1,5 @@
 pages:
-# `key` matches `navbar_key` in page front matter. Only the blog has a localized URL.
+# `key` matches `navbar_key` in page front matter.
 - key: about
   name: About
   url: /
@@ -9,6 +9,5 @@ pages:
 - key: blogs
   name: Blogs
   url: /blogs
-  url_zh: /zh/blogs
 # - name: Showcase
 #   url: /showcase

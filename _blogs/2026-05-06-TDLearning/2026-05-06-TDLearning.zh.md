@@ -6,7 +6,7 @@ description: '从马尔可夫决策过程出发，经由动态规划与蒙特卡
 lang: zh-CN
 translation_key: temporal-difference-learning
 translation_url: /posts/2026/5/Temporal-Difference-Learning/
-permalink: /zh/posts/2026/5/Temporal-Difference-Learning/
+permalink: /blogs/2026/temporal-difference-learning/zh
 image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes
 tags:
