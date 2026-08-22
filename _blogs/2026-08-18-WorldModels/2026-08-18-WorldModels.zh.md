@@ -1,6 +1,6 @@
 ---
 layout: blog
-title: 'World Models: Neo Vintage'
+title: '世界模型：推陈出新'
 date: 2026-08-18
 description: 'TODO.'
 lang: zh-CN
@@ -13,4 +13,4 @@ tags:
   - World Models
 ---
 
-
+To be finished.

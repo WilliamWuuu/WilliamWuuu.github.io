@@ -76,13 +76,14 @@ Now let's deduce how Dyna-PI originates from policy iteration.
 
 
 
-
 ## Dyna-Q
 
-
+To be finished.
 
 # Where should machines imagine?
 
+To be finished.
+
 # What should machines imagine?
 
-
+To be finished.
