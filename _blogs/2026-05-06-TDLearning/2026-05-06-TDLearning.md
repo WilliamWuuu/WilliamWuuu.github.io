@@ -11,6 +11,10 @@ image_path: /blog-assets/2026-05-06-TDLearning/img/
 category: notes
 tags:
   - Reinforcement Learning
+  - Stochastic Process
+  - Markov Decision Process
+  - Dynamic Programming
+  - Monte Carlo Methods
 ---
 
 I think blogging about my first time digging into reinforcement learning (RL) theory would be fun.
@@ -284,9 +288,9 @@ $$
 \begin{align*}
 (T_\pi v_\pi)(s)
 &= r_\pi(s)+\gamma\sum_{s^\prime}P(s,s^\prime)v_\pi(s^\prime) \\
-&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r\right] + \gamma\sum_{s^\prime}\left[\left(\sum_{a}\pi(a\vert s)\sum_{r} p(s,r\vert s,a)\right) v_\pi(s^\prime)\right] \\
-&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r\right] + \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[v_\pi(s^\prime)\right] \\
-&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r+v_\pi(s^\prime)\right] \\
+&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r\right] + \gamma\sum_{s^\prime}\left[\left(\sum_{a}\pi(a\vert s)\sum_{r} p(s^\prime,r\vert s,a)\right) v_\pi(s^\prime)\right] \\
+&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r\right] + \gamma\sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[v_\pi(s^\prime)\right] \\
+&= \sum_{a} \pi(a\vert s)\sum_{s^\prime}\sum_{r} p(s^\prime,r\vert s, a)\left[r+\gamma v_\pi(s^\prime)\right] \\
 &= v_\pi(s).
 \end{align*}
 \end{equation}
