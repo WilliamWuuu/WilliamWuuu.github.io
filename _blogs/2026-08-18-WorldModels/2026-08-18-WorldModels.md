@@ -54,7 +54,7 @@ $$
 
 where $\xrightarrow{E}$ denotes a *policy evaluation* and $\xrightarrow{I}$ denotes a *policy improvement*.
 
-{% include widgets/blog_image.html src="Dyna-PI.png" caption="Picture 1: Overview of the proposed Dyna-PI architecture from the paper. The module in the lower left corner is like a single pole, double throw switch. With the "WORLD" in place as shown we have reinforcement learning; with the "WORLD MODEL" in place as shown we have planning." %}
+{% include widgets/blog_image.html src="Dyna-PI.png" caption="Picture 1: Overview of the proposed Dyna-PI architecture from the paper. The module in the lower left corner is like a single pole, double throw switch. With the 'WORLD' in place as shown we have reinforcement learning; with the 'WORLD MODEL' in place as shown we have planning." %}
 
 The detailed algorithm of Dyna-PI:
 
