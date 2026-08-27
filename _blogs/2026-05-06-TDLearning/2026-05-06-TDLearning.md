@@ -377,6 +377,37 @@ $$
 
 which is exactly the same as the Bellman optimality equation. This indicates that we've already find the optimal policy.
 
+## Value Iteration
+
+In essence, policy evaluation is just repeatedly applying Bellman expectation operator to the estimated state-value until convergence, i.e.
+
+$$
+\begin{equation}
+V \longrightarrow T_{\pi}V \longrightarrow T_{\pi}^2 V \longrightarrow \dots \longrightarrow T_{\pi}^m V,
+\end{equation}
+$$
+
+where $m$ tends towards infinity. This process introduces most of the cost during policy iteration. And in fact, it's possible to truncate the evaluation process.
+
+Policy improvement does not require high precision for every state-value. Consider two possible actions at a certain state. Even if the value estimation is still biased, as long as the judgment that one action is better than the other remains unchanged, continuing to calculate $V$ more accurately will not change the next strategy improvement. Therefore, we can pre-set an $m$, thus only performing a limited number of evaluations. And *value iteration* is a special case of policy iteration that $m$ is set to be $1$, cutting off policy evaluation to only one round.
+
+We can write the detailed algorithm as follow:
+
+$$
+\begin{align*}
+&\text{Initialize an array }V(s)=0\text{, for all }s\in\mathcal{S} \\
+& \text{Repeat} \\
+& \quad \Delta \leftarrow 0 \\
+&\quad \text{For each }s\in\mathcal{S} \\
+&\quad \quad v\leftarrow V(s) \\
+&\quad \quad V(s)\leftarrow \max_a\sum_{s^\prime,r} p(s^\prime,r\vert s, a) \left[r + \gamma V(s^\prime)\right] \\
+&\quad \quad \Delta\leftarrow\max(\Delta,\vert v-V(s)\vert) \\
+&\text{until }\Delta<\theta\text{ (a small positive number)} \\
+& \text{Output a deterministic policy, }\pi\text{, such that} \\
+& \quad \pi(s)=\underset{a}{\operatorname{argmax}}\sum_{s^\prime,r}p(s^\prime,r\vert s,a)[r+\gamma V(s^\prime)]
+\end{align*}
+$$
+
 # Monte Carlo Methods
 
 *Monte Carlo methods* are ways of solving the reinforcement learning problem based on averaging sample returns. Unlike DP, where we assume complete knowledge of the environment, Monte Carlo methods require only *experience* (sample sequences of states, actions, and rewards from actual or simulated interaction with an environment).
