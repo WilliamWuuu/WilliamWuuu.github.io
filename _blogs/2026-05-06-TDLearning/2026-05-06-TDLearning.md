@@ -358,20 +358,20 @@ Within this theorem, we can easily construct a greedy policy $\pi^\prime$ by sel
 
 $$
 \begin{equation}
-\pi^\prime(s)=\underset{a\in\mathcal{A}}{\operatorname{argmax}}q_\pi(s,a),\quad \forall s\in\mathcal{S}.
+\begin{align*}
+\pi^\prime(s)
+& = \underset{a\in\mathcal{A}}{\operatorname{argmax}}\, q_\pi(s,a) \\
+& = \underset{a\in\mathcal{A}}{\operatorname{argmax}}\, \mathbb{E}\left[R_{t+1}+\gamma v_\pi(S_{t+1})\vert S_t=s,A_t=a\right] \\
+& = \underset{a\in\mathcal{A}}{\operatorname{argmax}} \sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma v_\pi(s^\prime)\right],
+\end{align*}
 \end{equation}
 $$
 
-In particular, if the new greedy policy $\pi^\prime$ is as good as the old policy $\pi$, then we have
+which is also known as *one-step lookahead*. In particular, if the new greedy policy $\pi^\prime$ is as good as the old policy $\pi$, then we have
 
 $$
 \begin{equation}
-\begin{align*}
-v_{\pi}=v_{\pi^\prime} 
-& = \max_{a\in\mathcal{A}} q_\pi(s,a) \\
-& = \max_{a\in\mathcal{A}} \mathbb{E}\left[R_{t+1}+\gamma v_\pi(S_{t+1})\vert S_t=s,A_t=a\right] \\
-& = \max_{a\in\mathcal{A}} \sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma v_\pi(s^\prime)\right],
-\end{align*}
+v_{\pi}=v_{\pi^\prime} = \max_{a\in\mathcal{A}} \sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma v_\pi(s^\prime)\right],
 \end{equation}
 $$
 

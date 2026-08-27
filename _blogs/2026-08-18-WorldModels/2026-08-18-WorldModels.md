@@ -72,9 +72,76 @@ $$
 \end{align*}
 $$
 
-Now let's deduce how Dyna-PI originates from policy iteration.
+Now let's deduce how Dyna-PI originates from policy iteration. We will use the mathematical notation from the previous reinforcement learning blog.
 
+Assume the state at current time $t$ is $S_t=s$. We denote the action sampled from the policy as $A_t\sim \pi(\cdot\vert s)$. By performing the action, we can get a feedback from the world as $(S_{t+1},R_{t+1}) \sim p(\cdot, \cdot \vert s,A_t)$. The TD-error in the evaluation function is then defined as:
 
+$$
+\delta_t = R_{t+1}+\gamma V(S_{t+1})-V(S_t).
+$$
+
+We can calculate the expectation of it conditioned on the current state:
+
+$$
+\begin{align*}
+\mathbb{E}_\pi \left[\delta_t \vert S_t=s\right] 
+& = \sum_{a}\pi(a\vert s)\sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma V(s^\prime)-V(s)\right] \\
+& = \sum_{a}\pi(a\vert s)\sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma V(s^\prime)\right] - V(s) \\
+& = (T_\pi V)(s) - V(s) \\
+\end{align*}
+$$
+
+where $T_\pi$ is the *Bellman expectation operator*. Thus the update:
+
+$$
+V(S_t)\leftarrow V(S_t) + \beta \delta_t
+$$
+
+is a single-sample approximation of the value iteration.
+
+In particular if $V=v_\pi$, the expectation of TD-error conditioned on the current state and a certain action can be written as:
+
+$$
+\begin{align*}
+\mathbb{E}\left[\delta_t\vert S_t=s,A_t=a\right]
+& = \mathbb{E}\left[r+\gamma v_\pi(s^\prime)-v_\pi(s)\vert s,a\right] \\
+& = \mathbb{E}\left[r+\gamma v_\pi(s^\prime)\vert s,a\right] - v_\pi(s) \\
+& = q_\pi(s,a)-v_\pi(s) \\
+& =: A_\pi(s,a),
+\end{align*}
+$$
+
+where $A_\pi$ is called the advantage function, indicating how much better is the action $a$ chosen in state $s$ than the average performance of the current policy. Thus TD-error is also a single-sample approximation of the advantage function.
+
+Assume the policy uses a Boltzmann distribution:
+
+$$
+\pi_w(a\vert s)=\frac{\exp(w(s,a))}{\sum_b\exp(w(s,b))},
+$$
+
+where $w(s,a)$ is a preference parameter for every state-action pair. We can form the policy update as:
+
+$$
+w(S_t,A_t)\leftarrow w(S_t,A_t)+\alpha\delta_t.
+$$
+
+At this point, we have derived a model-free incremental algorithm from the precise policy iteration:
+
+$$
+\begin{cases}
+\delta_t = R_{t+1}+\gamma V(S_{t+1})-V(S_t) & \leftarrow\text{TD-error}\\
+V(S_t)\leftarrow V(S_t) + \beta \delta_t & \leftarrow\text{policy evaluation} \\
+w(S_t,A_t)\leftarrow w(S_t,A_t)+\alpha\delta_t & \leftarrow\text{policy improvement}
+\end{cases}
+$$
+
+So where is the world model? Reinforcement learning gets real experiences from the real world, and the world model is expected to provide experiences close to reality, thus reduce the cost spended on agent-world iteractions. Formally, we want to model the transition probabilities as
+
+$$
+\hat{p}_t(S_{t+1},R_{t+1} \vert S_t,A_t).
+$$
+
+We can use the real experience $(s,a,s^\prime,r)$ to update this model.
 
 ## Dyna-Q
 
