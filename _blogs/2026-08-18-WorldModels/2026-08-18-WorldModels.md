@@ -61,18 +61,42 @@ The detailed algorithm of Dyna-PI:
 $$
 \begin{align*}
 & \text{1. Decide if this will be a real experience or a hypothetical one;} \\
-& \text{2. Pick a state } x \text{. If this is a real experience, use the current state;} \\
-& \text{3. Choose an action: } a\leftarrow\operatorname{Policy}(x)\text{;} \\
-& \text{4. Do action } a \text{; obtain next state } y \text{ and reward } r \text{ from world or world model;} \\
-& \text{5. If this is a real experience, update world model from } x \text{, } a \text{, } y \text{ and } r\text{;} \\
-& \text{6. Update evaluation function so that } e(x) \text{ is more like } r+\gamma e(y)\text{;} \\
-& \text{7. Update policy - strengthen or weaken the tendency to perform action } a \text{ in state } x \\
-& \quad\,\text{according to the error in the evaluation function: } r+\gamma e(y)-e(x)\text{;} \\
+& \text{2. Pick a state } s \text{. If this is a real experience, use the current state;} \\
+& \text{3. Choose an action: } a\sim\pi(\cdot\vert s)\text{;} \\
+& \text{4. Perform action } a \text{; obtain next state } s^\prime \text{ and reward } r \text{ from world or world model;} \\
+& \text{5. If this is a real experience, update world model } \widehat{\mathcal M} \text{ with } (s,a,s^\prime,r)\text{;} \\
+& \text{6. Update evaluation function so that } e(s) \text{ is more like } r+\gamma e(s^\prime)\text{;} \\
+& \text{7. Update policy - strengthen or weaken the tendency to perform action } a \text{ in state } s \\
+& \quad\,\text{according to the error in the evaluation function: } r+\gamma e(s^\prime)-e(s)\text{;} \\
 & \text{8. Go to Step 1.}
 \end{align*}
 $$
 
-Now let's deduce how Dyna-PI originates from policy iteration. We will use the mathematical notation from the previous reinforcement learning blog.
+Now let's deduce how Dyna-PI originates from policy iteration. To avoid confusion, we will uniformly adopt a finite discount Markov decision process (MDP):
+
+$$
+\mathcal M=(\mathcal{S},\mathcal{A},\mathcal{P},\mathcal{R},\gamma),\quad 0\leq \gamma<1.
+$$
+
+Recall that the Bellman expectation operator is defined as:
+
+$$
+(T_\pi V)(s) =
+\sum_{a\in\mathcal A}
+\pi(a|s)
+\sum_{s^\prime\in\mathcal S} \sum_{r\in\mathcal{R}}
+p(s^\prime,r\vert s,a)
+\left[ r + \gamma V(s^\prime)\right].
+$$
+
+Like we've talked about, policy evaluation can be seen as repeatedly applying Bellman expectation operator to the estimated state-value until convergence. And policy improvement is simply choosing a greedy action with respect to estimated state-value for each state. *Policy improvement theorem* gaurantees that accurate evaluation and greedy improvement will eventually lead to an optimal policy.
+
+However, this process imposes two strict requirements on online agents: 
+
+- They must sum over all successor states; 
+- They must know the complete environment model. 
+
+Dyna-PI can be understood as the result of successively relaxing these three requirements.
 
 Assume the state at current time $t$ is $S_t=s$. We denote the action sampled from the policy as $A_t\sim \pi(\cdot\vert s)$. By performing the action, we can get a feedback from the world as $(S_{t+1},R_{t+1}) \sim p(\cdot, \cdot \vert s,A_t)$. The TD-error in the evaluation function is then defined as:
 
@@ -87,17 +111,25 @@ $$
 \mathbb{E}_\pi \left[\delta_t \vert S_t=s\right] 
 & = \sum_{a}\pi(a\vert s)\sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma V(s^\prime)-V(s)\right] \\
 & = \sum_{a}\pi(a\vert s)\sum_{s^\prime,r}p(s^\prime,r\vert s,a)\left[r+\gamma V(s^\prime)\right] - V(s) \\
-& = (T_\pi V)(s) - V(s) \\
+& = (T_\pi V)(s) - V(s).
 \end{align*}
 $$
 
-where $T_\pi$ is the *Bellman expectation operator*. Thus the update:
+Thus the update
 
 $$
 V(S_t)\leftarrow V(S_t) + \beta \delta_t
 $$
 
-is a single-sample approximation of the value iteration.
+is a single-sample stochastic approximation of 
+
+$$
+V(S_t)\leftarrow (T_\pi V)(S_t).
+$$
+
+It does not require explicitly enumerating all actions and successor states, and only require one transition sample.
+
+
 
 In particular if $V=v_\pi$, the expectation of TD-error conditioned on the current state and a certain action can be written as:
 
@@ -125,6 +157,8 @@ $$
 w(S_t,A_t)\leftarrow w(S_t,A_t)+\alpha\delta_t.
 $$
 
+If an action produces a better action-value than the current estimated state-value (i.e., $\delta>0$), the preference for that action will increase; if $\delta<0$, the preference will then decrease.
+
 At this point, we have derived a model-free incremental algorithm from the precise policy iteration:
 
 $$
@@ -135,13 +169,13 @@ w(S_t,A_t)\leftarrow w(S_t,A_t)+\alpha\delta_t & \leftarrow\text{policy improvem
 \end{cases}
 $$
 
-So where is the world model? Reinforcement learning gets real experiences from the real world, and the world model is expected to provide experiences close to reality, thus reduce the cost spended on agent-world iteractions. Formally, we want to model the transition probabilities as
+So where is the world model? Reinforcement learning gets real experiences from the real world, and the world model is expected to provide experiences close to reality, thus reduce the cost spended on agent-world iteractions. 
+
+Formally, we can update the world model $\widehat{\mathcal{M}}$ with real experiences, like $(s,a,s^\prime,r)$. Then we can use the model to generate a one-step hypothetical experience
 
 $$
-\hat{p}_t(S_{t+1},R_{t+1} \vert S_t,A_t).
+(\tilde{s}^\prime,\tilde{r}) \sim \widehat{\mathcal{M}}_t(\cdot,\cdot|s,a).
 $$
-
-We can use the real experience $(s,a,s^\prime,r)$ to update this model.
 
 ## Dyna-Q
 
