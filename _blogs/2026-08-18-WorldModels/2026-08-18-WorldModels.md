@@ -458,7 +458,7 @@ $$
 
 Obviously it's similar to the single-negative-sample case mentioned earlier.
 
-A problem of contrastive methods is that Second, when $y$ is in a high-dimensional space, it may require a very large number of contrastive samples to ensure that the energy is higher in all dimensions unoccupied by the local data distribution.
+A problem of contrastive methods is that when $y$ is in a high-dimensional space, it may require a very large number of contrastive samples to ensure that the energy is higher in all dimensions unoccupied by the local data distribution.
 
 </details>
 
@@ -466,305 +466,24 @@ A problem of contrastive methods is that Second, when $y$ is in a high-dimension
 
 Even if we somehow knew that the car would turn left, there would still be countless details that are difficult or impossible to predict exactly: the movement of leaves, subtle lighting changes, the precise texture appearing on the road, or the exact configuration of distant objects. However, this is the wrong burden to place on a world model. A world model intended for intelligent behavior may not need to know what every leaf will look like one second later. It may only need to know that there is a tree over there, while allocating much more capacity to something like the vehicle ahead may enter my lane.
 
-In other words, part of intelligence may consist not only in predicting the future, but also in learning which parts of the future are worth predicting. This suggests a different objective. Instead of predicting $y$, perhaps the system should predict an abstract representation of $y$, denoted as $s_y$.
+In other words, part of intelligence may consist not only in predicting the future, but also in learning which parts of the future are worth predicting. This suggests a different objective. Instead of predicting $y$, perhaps the system should predict an abstract representation of $y$, denoted as $s_y$, in which important aspects of the world remain, while irrelevant and unpredictable details disappear?
 
-The question then becomes:
-
-> Can we learn a representation in which important aspects of the world remain, while irrelevant and unpredictable details disappear?
-
-This is the basic motivation behind *Joint Embedding Predictive Architecture (JEPA)*, the architecture proposed in the paper *A Path Towards Autonomous Machine Intelligence*.
+This is the basic motivation behind *Joint Embedding Predictive Architecture (JEPA)*.
 
 {% include widgets/blog_image.html src="JEPA.png" caption="Picture 3: A diagram of JEPA." %}
 
-A generic JEPA contains three important pieces. First, instead of operating directly on $x$ and $y$, it encodes both of them:
+A generic JEPA contains three important pieces. 
 
-$$
-s_x=\operatorname{Enc}_x(x),\qquad s_y=\operatorname{Enc}_y(y).
-$$
+1. Firstly, the two variables $x$ and $y$ are fed to two distinct encoders, producing two latent presentations $s_x$ and $s_y$. Since the two encoders are not necessarily identical, $x$ and $y$ may represent different types of information (e.g. video and audio);
+2. Then a predictor tries to predict the representation of $y$ from the representation of $x$ and optionaly a latent variable $z$;
+3. Finally, the prediction is evaluated by comparing representations: $E_\theta(x,y,z)=D\left(s_y,\operatorname{Pred}(s_x,z)\right)$, where $D$ measures the discrepancy between the actual representation and its predicted representation. 
 
-The two encoders do not even have to be identical. In principle, $x$ and $y$ may represent different types of information. Then a predictor tries to predict the representation of $y$ from the representation of $x$:
+Since JEPA performs predictions in reperesentation space, the two encoders are free to discard information that is not useful for prediction, e.g. irrelevant details. 
 
-$$
-\operatorname{Pred}(s_x,z),
-$$
+# References
 
-where $z$ is an optional latent variable that we will discuss shortly. Finally, the prediction is evaluated not by comparing generated observations, but by comparing representations:
+[1] Richard S. Sutton. Integrated Architectures for Learning, Planning, and Reacting Based on Approximating Dynamic Programming. Machine Learning Proceedings 1990, 216-224 (1990).
 
-$$
-D
-\left(
-s_y,
-\operatorname{Pred}(s_x,z)
-\right).
-$$
+[2] Ha, David and Schmidhuber, Jürgen. World Models. Zenodo (2018). https://doi.org/10.5281/zenodo.1207631
 
-Here $D$ measures the discrepancy between the actual representation $s_y$ and its predicted representation $\tilde{s}_y$. In the language of the paper, this discrepancy can be interpreted as an energy: compatible pairs of $x$ and $y$ should have low energy, while incompatible pairs should have high energy. 
-
-The architectural difference may initially appear small.
-
-A generative model performs something like
-
-$$
-x\rightarrow y.
-$$
-
-JEPA performs
-
-$$
-\operatorname{Enc}(x)
-\rightarrow
-\operatorname{Enc}(y).
-$$
-
-But the consequence is significant.
-
-Because the target $s_y$ is itself learned, the encoder is free to discard information about $y$ that is not useful for prediction.
-
-Suppose two possible futures differ only in the precise movement of leaves on a tree. A generative model must somehow account for the difference between the two images. A JEPA may simply learn
-
-$$
-\operatorname{Enc}(y_1)
-\approx
-\operatorname{Enc}(y_2),
-$$
-
-if that difference is irrelevant to the abstract structure being represented. The uncertainty has disappeared from representation space. Not because the model has successfully predicted the movement of every leaf, but because it has learned that those movements do not need to be represented in the first place.
-
-## What Should Be Ignored, and What Should Remain Uncertain?
-
-Of course, not every unpredictable event can simply be discarded. Return to the car approaching a fork. Whether it turns left or right may be uncertain from the current observation, but it clearly matters. If our encoder mapped both futures to exactly the same representation,
-
-$$
-s_{\mathrm{right}},
-$$
-
-the representation would be predictable, but useless for navigation.
-
-JEPA therefore distinguishes, at least conceptually, between two kinds of uncertainty. One kind can be removed by invariance. If differences between two possible observations are irrelevant, their encoder representations can become similar. The precise leaf configuration changes, but:
-
-$$
-\operatorname{Enc}
-(\text{tree with leaves in configuration A})
-\approx
-\operatorname{Enc}
-(\text{tree with leaves in configuration B}).
-$$
-
-The other kind of uncertainty must remain represented. If the future genuinely contains several distinct possibilities that matter, the predictor may use the latent variable (z):
-
-$$
-\operatorname{Pred}(s_x,z).
-$$
-
-Different values of (z) can correspond to different compatible futures. For example,
-
-$$
-z=z_{\mathrm{left}}
-$$
-
-may produce a representation corresponding to a left turn, while
-
-$$
-z=z_{\mathrm{right}}
-$$
-
-produces a representation corresponding to a right turn.
-
-The paper therefore gives JEPA two ways of handling a world with many possible futures: ignore variations that should not matter through representation invariance; represent meaningful uncertainty through the latent variable (z). This is subtly different from asking a generative model to reproduce every possible version of the future. The goal is not to explain all uncertainty. It is to separate uncertainty that matters from uncertainty that does not. 
-
-## Predictable, but Not Empty
-
-At this point, however, JEPA appears to have an embarrassingly simple solution.
-
-If the goal is to make $s_y$ easy to predict from $s_x$, why not let both encoders output exactly the same constant vector for every input? For example,
-
-$$
-\operatorname{Enc}_x(x)=0,
-$$
-
-and
-
-$$
-\operatorname{Enc}_y(y)=0.
-$$
-
-Then the predictor simply outputs
-
-$$
-\tilde{s}_y=0,
-$$
-
-and achieves perfect prediction. The world has become completely predictable. Unfortunately, the representation contains absolutely no information about the world. This is known as representational collapse. It reveals the real difficulty of learning abstractions. We do not simply want predictable representations. We want representations that are simultaneously:
-
-$$
-\boxed{\text{informative}}
-$$
-
-and
-
-$$
-\boxed{\text{predictable}}.
-$$
-
-These two objectives pull the model in opposite directions. If we preserve every detail of an observation, the representation is highly informative but much of it becomes difficult to predict. If we remove everything, prediction becomes trivial but the representation becomes useless.
-
-JEPA therefore needs to find a point somewhere between these two extremes. The paper describes this using four broad training criteria:
-
-- $s_x$ should retain substantial information about $x$;
-- $s_y$ should retain substantial information about $y$;
-- $s_y$ should be predictable from $s_x$;
-- the latent variable $z$ should contain as little information as necessary.
-
-The first two criteria prevent the encoders from collapsing into uninformative constant representations. The third encourages the model to discover predictable structure. The fourth prevents another trivial solution: simply storing the entire target $y$ inside $z$, allowing the predictor to reconstruct $s_y$ without learning anything from $x$. So the representation is placed under two opposing pressures:
-
-$$
-\text{preserve information}
-\quad\leftrightarrow\quad
-\text{discard unpredictability}.
-$$
-
-The result, ideally, is an abstraction containing as much information as possible about the world while excluding details that prevent useful prediction. This gives us a more precise answer to our original question. A machine should not imagine everything. It should imagine the largest part of the world that can be represented meaningfully and predicted reliably.
-
-## From Compression to Abstraction
-
-This gives us an interesting point of comparison with World Models.
-
-The Vision Model in World Models also maps observations into latent representations:
-
-$$
-x\rightarrow z.
-$$
-
-JEPA similarly maps observations into representations:
-
-$$
-x\rightarrow s_x.
-$$
-
-So superficially, both approaches seem to say the same thing: Do not model the world directly in pixel space. Compress it first.
-
-But there is an important conceptual difference in what shapes the representation. In World Models, the VAE is trained to make (z) useful for reconstructing (x). The basic pressure is:
-
-$$
-z
-\quad\text{should preserve enough information to recover }x.
-$$
-
-JEPA instead asks that the representation become useful for predicting another representation. Its pressure is closer to:
-
-$$
-s_x
-\quad\text{should preserve information that helps predict }s_y.
-$$
-
-This turns compression into abstraction. Compression asks:
-
-> How can I describe this observation using fewer numbers?
-
-Abstraction asks:
-
-> Which distinctions in this observation should matter at all?
-
-The difference is fundamental. A compressed representation of a photograph may still preserve texture, color and lighting because those features help reconstruct the image. An abstract predictive representation is allowed to decide that many of those distinctions are irrelevant. The internal world is therefore not merely a lower-resolution version of reality. It can have a different ontology. Two observations that look very different in pixel space may correspond to essentially the same state in the agent's internal world. And two observations differing by only a few pixels may correspond to very different states if those few pixels signal something important for future behavior. This is perhaps the deepest answer JEPA provides to the question:
-
-> What should machines imagine?
-
-Not an accurate copy of everything they see. Rather, an abstract world in which the distinctions preserved are those needed to make the future predictable.
-
-## Different Futures Require Different Levels of Abstraction
-
-There is one more problem. Even if we know that the world should be represented abstractly, there may not be a single correct level of abstraction. Imagine planning how to travel from home to another country. At a short time scale, very detailed information matters: move the steering wheel slightly to the left. At an intermediate scale: drive to the airport. At a longer time scale: fly to Singapore. When planning the entire journey, it would be absurd to predict the exact angle of the steering wheel several hours into the future. Those details matter locally, but they are meaningless for long-term prediction.
-
-This suggests that abstraction should increase with prediction horizon. At low levels, representations can preserve relatively detailed information and support short-term prediction. At higher levels, they should discard more details and represent slower, more abstract changes. The paper therefore proposes extending JEPA into a Hierarchical JEPA, or H-JEPA.
-
-Conceptually,
-
-$$
-\text{JEPA}_1
-$$
-
-operates on relatively detailed representations and predicts over short time scales. Its representations are then fed into
-
-$$
-\text{JEPA}_2,
-$$
-
-which produces a more abstract representation and predicts farther into the future. More levels can, in principle, continue this process:
-
-$$
-\text{detailed state}
-\rightarrow
-\text{abstract state}
-\rightarrow
-\text{more abstract state}
-\rightarrow
-\cdots
-$$
-
-As the level increases, details that are difficult to predict over long horizons can progressively disappear. The paper summarizes the intuition clearly: low-level representations may contain enough detail for short-term prediction, while higher-level representations sacrifice detail in exchange for predictions over longer time scales. This creates an internal world with not one, but multiple temporal resolutions.
-
-A machine may imagine:
-
-$$
-\text{where my hand will be in 0.2 seconds}
-$$
-
-using a detailed representation, while imagining:
-
-$$
-\text{whether I will have completed cooking dinner in 20 minutes}
-$$
-
-using a much more abstract one. Both predictions refer to the same world. They simply describe it at different levels.
-
-## From Hierarchical Prediction to Hierarchical Planning
-
-This hierarchy also provides a possible answer to a problem that appeared at the very beginning of this blog. Planning over long action sequences is extremely difficult. Suppose we want a robot to prepare a cup of coffee. At the highest level, a useful plan might look like:
-
-$$
-\text{get cup}
-\rightarrow
-\text{make coffee}
-\rightarrow
-\text{serve coffee}.
-$$
-
-But each of these operations must eventually be decomposed. For example,
-
-$$
-\text{get cup}
-$$
-
-may become
-
-$$
-\text{walk to cabinet}
-\rightarrow
-\text{open cabinet}
-\rightarrow
-\text{grasp cup}.
-$$
-
-And grasping itself eventually becomes a sequence of low-level motor commands. Trying to optimize all of these motor commands simultaneously over the full time horizon would create an enormous search problem.
-
-With a hierarchical world model, the agent could instead first plan in a highly abstract space. The actor proposes a sequence of abstract actions. The world model predicts their abstract consequences. A cost module evaluates whether the predicted future is desirable.
-
-Once a high-level plan is selected, each abstract action can be passed downward and decomposed into increasingly concrete subgoals, until the lowest level produces executable actions.
-
-This is one of the broader ambitions of *A Path Towards Autonomous Machine Intelligence*: not merely to learn representations, but to use hierarchical predictive world models as the basis of planning across multiple time scales. 
-
-The architecture therefore closes a loop:
-
-$$
-\text{Perception}
-\rightarrow
-\text{Abstract State}
-\rightarrow
-\text{Predict Future States}
-\rightarrow
-\text{Evaluate Futures}
-\rightarrow
-\text{Choose Actions}.
-$$
-
-This brings us back remarkably close to Dyna.
+[3] Yann LeCun and Courant. A Path Towards Autonomous Machine Intelligence. (2022).
