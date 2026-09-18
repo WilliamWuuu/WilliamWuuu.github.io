@@ -605,7 +605,91 @@ $$
 
 The proof of the convergence relies on stochastic approximation theory and contraction mapping properties, which is too long for this blog and therefore omitted.
 
-## Q-Learning: Off-Policy TD Control
+## Off-policy Learning & On-policy Learning
+
+The methods introduced so far basically estimate the value function $v_\pi$ based on an assumption that, we're given an infinite supply of episodes generated using some given policy $\pi$. Suppose now that the policy $\pi$ is not available, and all we have are episodes generated from a different policy $\mu$, where $\mu\neq\pi$. Then the problem becomes, how do we estimate $v_\pi$, which is the target of the learning process, using episodes following another policy $\mu$. 
+
+In this sense, $\pi$ and $\mu$ are respectively called *target policy* and *behavior policy*. And there are two possible situations: 
+
+- The problem when $\mu=\pi$, just as we have been discussing all along, is called *on-policy learning*, where the behavior policy and the target policy are the same thing;
+- The problem when $\mu\neq\pi$, is called *oﬀ-policy learning* because it is learning about a policy given only experience “oﬀ” (not following) that policy.
+
+Off-policy algorithms can reuse past training samples, making them more popular.
+
+### Sarsa: On-Policy TD Control
+
+Now let's reconsider our ultimate goal, i.e., the control problem, which is to find the optimal policy. As usual, we follow the pattern of generalized policy iteration, only this time using TD prediction for the policy evaluation part.
+
+Same as learning the state-value $v_\pi$, we can also use TD(0) as described above to learn the action-value $q_\pi$:
+
+$$
+\begin{equation}
+Q(S_t,A_t)\leftarrow Q(S_t,A_t)+\alpha\left[R_{t+1}+\gamma Q(S_{t+1},A_{t+1})-Q(S_t,A_t)\right].
+\end{equation}
+$$
+
+This update leverages every element of the quintuple of events:
+
+$$
+\begin{equation}
+(S_t,A_t,R_{t+1},S_{t+1},A_{t+1}),
+\end{equation}
+$$
+
+giving rise to the name *Sarsa* (State-Action-Reward-State-Action) for the algorithm.
+
+Just like all on-policy methods, we continually estimate $q_\pi$ for the behavior policy $\pi$, and at the same time change π toward greediness with respect to $q_\pi$. The detailed algorithm is given as follow:
+
+$$
+\begin{align*}
+& \text{Initialize }Q(s,a)\text{, }\forall s\in\mathcal{S}\text{, }a\in\mathcal{A}(s)\text{, arbitrarily, and }Q(s_\text{terminal},\cdot) = 0 \\
+& \text{Repeat (for each episode): }\\
+& \quad \text{Initialize }S \\
+& \quad \text{Choose }A\text{ from }S\text{ using policy derived from }Q\text{ (e.g., }\epsilon\text{-greedy)} \\
+& \quad \text{Repeat (for each step of episode):} \\ 
+& \quad\quad \text{Take action }A\text{, observe }R, S^\prime \\
+& \quad\quad \text{Choose }A^\prime\text{ from }S^\prime\text{ using policy derived from }Q\text{ (e.g., }\epsilon\text{-greedy)} \\
+& \quad\quad Q(S,A) \leftarrow Q(S,A) + \alpha\left[R+ \gamma Q(S^\prime,A^\prime)−Q(S,A)\right]\\
+& \quad \quad S \leftarrow S^\prime;\,A\leftarrow A^\prime; \\
+& \quad \text{until }S\text{ is terminal} \\
+\end{align*}
+$$
+
+A possible implementation:
+
+```python
+class Sarsa:
+    """Implementation of Sarsa algorithm."""
+    def __init__(self, ncol, nrow, epsilon, alpha, gamma, n_action=4):
+        self.Q_table = np.zeros([nrow * ncol, n_action])  # value table of the Q-function
+        self.n_action = n_action  # size of the action space
+        self.alpha = alpha  # learning rate 
+        self.gamma = gamma  # discount factor
+        self.epsilon = epsilon  # epsilon-greedy policy
+	
+    def take_action(self, state): 
+        """Choose the next action."""
+        if np.random.random() < self.epsilon:
+            action = np.random.randint(self.n_action)
+        else:
+            action = np.argmax(self.Q_table[state])
+        return action
+	
+    def best_action(self, state): 
+        Q_max = np.max(self.Q_table[state])
+        a = [0 for _ in range(self.n_action)]
+        
+        for i in range(self.n_action): 
+            if self.Q_table[state, i] == Q_max:
+                a[i] = 1
+        return a
+	
+    def update(self, s0, a0, r, s1, a1):
+        td_error = r + self.gamma * self.Q_table[s1, a1] - self.Q_table[s0, a0]
+        self.Q_table[s0, a0] += self.alpha * td_error
+```
+
+### Q-Learning: Off-Policy TD Control
 
 The simplest form of *Q-learning*, *one-step Q-learning*, is defined by
 
@@ -674,31 +758,91 @@ $$
 \end{equation}
 $$
 
-### Exploration
+A possible implementation:
 
-If the policy $\pi_e$ does not reach diverse parts of the state-action space, then it is easy to imagine our estimate $\hat{Q}$ will be a poor approximation of the optimal $Q^*$. It is also important to note that in such a situation, the estimate of $\hat{Q}$ at all states $s\in\mathcal{S}$ will be bad, not just the ones visited by $\pi_e$. We can mitigate this concern by picking a completely random $\pi_e$ that samples actions uniformly randomly from $\mathcal{A}$. Such a policy would visit all states, but it will take a large number of trajectories before it does so. 
+```python
+class QLearning:
+    """Implementation of Q-learning algorithm."""
+    def __init__(self, ncol, nrow, epsilon, alpha, gamma, n_action=4):
+        self.Q_table = np.zeros([nrow * ncol, n_action]) 
+        self.n_action = n_action 
+        self.alpha = alpha 
+        self.gamma = gamma 
+        self.epsilon = epsilon 
+	
+    def take_action(self, state): 
+        if np.random.random() < self.epsilon:
+            action = np.random.randint(self.n_action)
+        else:
+            action = np.argmax(self.Q_table[state])
+        return action
+	
+    def best_action(self, state): 
+        Q_max = np.max(self.Q_table[state])
+        a = [0 for _ in range(self.n_action)]
+        
+        for i in range(self.n_action):
+            if self.Q_table[state, i] == Q_max:
+                a[i] = 1
+        return a
+	
+    def update(self, s0, a0, r, s1):
+        td_error = r + self.gamma * self.Q_table[s1].max() - self.Q_table[s0, a0]
+        self.Q_table[s0, a0] += self.alpha * td_error
+```
 
-Typically implementations of Q-Learning tie together the current estimate of $Q$ and the exploration policy $\pi_e$ to set
+### Coding Practice: The Cliff Walking Example
 
-$$
-\begin{equation}
-\pi_e(a\vert s)=
-\begin{cases}
-\arg\max_{a^\prime}\hat{Q}(s,a^\prime) & \text{with prob. }1-\epsilon \\
-\mathrm{uniform}(\mathcal{A}) & \text{with prob. }\epsilon
-\end{cases}
-\end{equation}
-$$
+Consider the grid world shown in the following figure with start and goal states marked as "S" and "G", and the cliff within it is filled with grey. 
 
-where $\epsilon$ is called the exploration parameter. This particular $\pi_e$ is called an **$\epsilon$-greedy exploration policy**, which chooses the optimal action with $1-\epsilon$ but explores randomly $\epsilon$. We can also use the softmax exploration policy
+{% include widgets/blog_image.html src="cliff_walking.png" caption="Picture 2: The cliﬀ-walking task." %}
 
-$$
-\begin{equation}
-\pi_e(a\vert s)=\frac{e^{\hat{Q}(s,a)/T}}{\sum_{a^\prime}e^{\hat{Q}(s,a)/T}}
-\end{equation}
-$$
+The action space consists of 4 movement: up, down, right, and left. Reward is $−1$ on all transitions except stepping into the the cliff region, which incurs a reward of $−100$ and sends the agent instantly back to the start.
 
-where the hyper-parameter $T$ is called temperature. A large value of $\epsilon$ in $\epsilon$-greedy policy functions similarly to large value of temperature $T$ for the softmax policy.
+A possible implementation:
+
+```python
+class CliffWalkingEnv:
+    def __init__(self, ncol, nrow):
+        self.nrow = nrow
+        self.ncol = ncol
+        
+        # At the initial state S.
+        self.x = 0 
+        self.y = self.nrow - 1 
+	
+    def step(self, action): 
+		"""One step the agent can take."""
+        # change[0]:up, change[1]:down, change[2]:left, change[3]:right
+        change = [[0, -1], [0, 1], [-1, 0], [1, 0]]
+        
+        # position after taking the action
+        self.x = min(self.ncol - 1, max(0, self.x + change[action][0]))
+        self.y = min(self.nrow - 1, max(0, self.y + change[action][1]))
+        
+        # flatterned serial number of the current state
+        next_state = self.y * self.ncol + self.x
+        reward = -1
+        done = False
+        
+        # current location is at the cliff or the target
+        if self.y == self.nrow - 1 and self.x > 0:  
+            done = True
+            # current location is at the cliff
+            if self.x != self.ncol - 1:
+                reward = -100
+        
+        return next_state, reward, done
+	
+    def reset(self): 
+	    """Return to the initial state."""
+        self.x = 0
+        self.y = self.nrow - 1
+        return self.y * self.ncol + self.x
+```
+
+Experiments are conducted in [Google Colab](https://colab.research.google.com/drive/1YaZj9DVwgtc1pczfsdTVWHFH0hg2iO9W?usp=sharing).
+
 
 # References
 

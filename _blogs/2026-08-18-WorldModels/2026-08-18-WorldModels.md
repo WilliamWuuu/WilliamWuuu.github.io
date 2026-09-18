@@ -480,6 +480,10 @@ A generic JEPA contains three important pieces.
 
 Since JEPA performs predictions in reperesentation space, the two encoders are free to discard information that is not useful for prediction, e.g. irrelevant details. 
 
+### The Training of JEPA
+
+As we've talked about, we use two separate encoders to get latent representations $s_x$ and $s_y$, which offers great flexibility, but also gives rise to the *collapse* problem. 
+
 # References
 
 [1] Richard S. Sutton. Integrated Architectures for Learning, Planning, and Reacting Based on Approximating Dynamic Programming. Machine Learning Proceedings 1990, 216-224 (1990).
