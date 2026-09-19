@@ -37,6 +37,9 @@ highlighter: rouge
 kramdown:
   input: GFM
   hard_wrap: false
+  # KaTeX handles only \(...\) and \[...\] in protected HTML containers.
+  # Do not turn legacy dollar-delimited math into those delimiters.
+  math_engine: null
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     css_class: 'highlight'

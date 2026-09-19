@@ -82,6 +82,32 @@ Write the proof here. Markdown and KaTeX are supported.
 
 Comments are enabled by default for blog posts once Giscus is configured in `_config.yml`. Add `comments: false` to a post's front matter to disable them for that post.
 
+### Writing Math
+
+Use `\(...\)` for inline math and `\[...\]` for display math. Dollar delimiters are no longer rendered as math.
+
+Protect each formula from Markdown with `markdown="0"`. This keeps backslashes, subscripts, and stars intact and works with the existing GitHub Pages build, including inside proof blocks:
+
+```html
+The values <span class="math-source" markdown="0">\(v^*\)</span> and <span class="math-source" markdown="0">\(q^*\)</span> determine the optimal policy.
+
+<div class="math-source" markdown="0">
+\[
+v^*(s)=\max_a q^*(s,a)
+\]
+</div>
+```
+
+Write a single backslash in these containers; do not double it for Markdown. Since the content is raw HTML, write `&amp;`, `&lt;`, and `&gt;` for literal `&`, `<`, and `>` (including alignment markers). The browser decodes these before KaTeX sees the formula. Keep blank lines around display containers.
+
+Bare math delimiters in Markdown are not sufficient: kramdown can consume their backslashes and interpret formula characters as emphasis. Keep the protective containers when adding or editing formulas. Normal Markdown outside the containers, and math examples inside code blocks, work as usual.
+
+Run the math regression checks with:
+
+```bash
+bundle exec ruby _tests/math_rendering_test.rb
+```
+
 ### Bilingual Content
 
 The homepage, publication page, and blog index remain English-only. Bilingual support is intentionally limited to individual posts, where it directly improves the reading experience. English posts use `/blogs/<year>/<slug>/`, while each Simplified Chinese version appends `/zh`.
