@@ -795,7 +795,7 @@ class QLearning:
 
 Consider the grid world shown in the following figure with start and goal states marked as "S" and "G", and the cliff within it is filled with grey. 
 
-{% include widgets/blog_image.html src="cliff_walking.png" caption="Picture 2: The cliﬀ-walking task." %}
+{% include widgets/blog_image.html src="cliff-walking.png" caption="Picture 2: The cliﬀ-walking task." %}
 
 The action space consists of 4 movement: up, down, right, and left. Reward is $−1$ on all transitions except stepping into the the cliff region, which incurs a reward of $−100$ and sends the agent instantly back to the start.
 
