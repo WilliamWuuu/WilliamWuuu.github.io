@@ -1,5 +1,4 @@
-{% assign lang = page.lang | default: "en" %}
-{% assign t = site.data.i18n[lang] %}
+{% assign t = site.data.ui %}
 <div class="row mt-3">
     <div class="col">
         <div class="card border-0 shadow-sm bg-white">
@@ -12,13 +11,13 @@
                             <ul class="list-unstyled mb-1">
                                 {% for item in site.data.profile.education %}
                                 <li class="media mb-1">
-                                    <img src="{{ item.logo | relative_url }}" alt="{% if lang == 'zh-CN' and item.name_zh %}{{ item.name_zh }}{% else %}{{ item.name }}{% endif %}" style="width: 18px;" class="mr-1 mt-1">
+                                    <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: 18px;" class="mr-1 mt-1">
                                     <div class="media-body">
-                                        <div>{% if lang == "zh-CN" and item.name_zh %}{{ item.name_zh }}{% else %}{{ item.name }}{% endif %}</div>
-                                        <div class="small">{% if lang == "zh-CN" and item.dept_zh %}{{ item.dept_zh }}{% else %}{{ item.dept }}{% endif %}</div>
+                                        <div>{{ item.name }}</div>
+                                        <div class="small">{{ item.dept }}</div>
                                         <div class="small d-flex">
-                                            <div>{% if lang == "zh-CN" and item.position_zh %}{{ item.position_zh }}{% else %}{{ item.position }}{% endif %}</div>
-                                            <div class="mt-auto ml-auto no-break"><em>{% if lang == "zh-CN" and item.date_zh %}{{ item.date_zh }}{% else %}{{ item.date }}{% endif %}</em></div>
+                                            <div>{{ item.position }}</div>
+                                            <div class="mt-auto ml-auto no-break"><em>{{ item.date }}</em></div>
                                         </div>
                                     </div>
                                 </li>
@@ -37,11 +36,11 @@
                                 <li class="media mb-1">
                                     <img src="{{ item.logo | relative_url }}" alt="{{ item.name }}" style="width: 18px;" class="mr-1 mt-1">
                                     <div class="media-body">
-                                        <div>{% if lang == "zh-CN" and item.name_zh %}{{ item.name_zh }}{% else %}{{ item.name }}{% endif %}</div>
-                                        <div class="small">{% if lang == "zh-CN" and item.dept_zh %}{{ item.dept_zh }}{% else %}{{ item.dept }}{% endif %}</div>
+                                        <div>{{ item.name }}</div>
+                                        <div class="small">{{ item.dept }}</div>
                                         <div class="small d-flex">
-                                            <div>{% if lang == "zh-CN" and item.position_zh %}{{ item.position_zh }}{% else %}{{ item.position }}{% endif %}</div>
-                                            <div class="mt-auto ml-auto no-break"><em>{% if lang == "zh-CN" and item.date_zh %}{{ item.date_zh }}{% else %}{{ item.date }}{% endif %}</em></div>
+                                            <div>{{ item.position }}</div>
+                                            <div class="mt-auto ml-auto no-break"><em>{{ item.date }}</em></div>
                                         </div>
                                     </div>
                                 </li>
@@ -59,7 +58,7 @@
                                 {% for item in site.data.profile.awards %}
                                 <li>
                                     <div class="d-flex">
-                                        <div>{% if lang == "zh-CN" and item.name_zh %}{{ item.name_zh }}{% else %}{{ item.name }}{% endif %}</div>
+                                        <div>{{ item.name }}</div>
                                         <div class="ml-auto mt-auto no-break"><em>{{ item.date }}</em></div>
                                     </div>
                                 </li>

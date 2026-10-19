@@ -1,0 +1,54 @@
+site_description: Personal academic homepage of Yangxin Wu, featuring research, publications, notes, and personal writing.
+theme_switcher: Color theme
+light_theme: Light theme
+dark_theme: Dark theme
+system_theme: Follow system theme
+menu: Menu
+portrait_alt: Portrait of Yangxin Wu
+close: Close
+homepage:
+  about_me: About Me
+  download_cv: Download CV
+  education: Education
+  experience: Experience
+  awards: Honors & Awards
+  news: News
+  selected_blogs: Selected Blogs
+  selected_publications: Selected Publications
+publications:
+  selected_recent: Selected Recent Publications
+  view_all: view all
+  all: All publications
+  paper: Paper
+  code: Code
+  equal_contribution: equal contribution
+  corresponding_author: corresponding author
+blogs:
+  all: All
+  musings: Musings
+  learnings: Learnings
+  search_label: Search blog posts
+  search_placeholder: Search by title, description, or tag...
+  clear_search: Clear search
+  no_results: No matching posts
+  no_results_hint: Try a different keyword or category.
+  result_count_one: "%s post"
+  result_count_many: "%s posts"
+  read_more: Read More
+  view_all: view all
+  all_blogs: All blogs
+  back_to_all: Back to All Blogs
+  table_of_contents: Table of Contents
+  tag: Tag
+  post: post
+  posts: posts
+  view_tag: "View posts tagged %s"
+comments:
+  title: Comments
+  noscript_before: JavaScript is required to load comments. You can also join the discussion on
+  noscript_link: GitHub Discussions
+actions:
+  copy: Copy
+  copied: Copied!
+footer:
+  last_updated: "Last updated:"

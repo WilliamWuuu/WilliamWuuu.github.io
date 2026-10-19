@@ -1,5 +1,4 @@
-{% assign lang = page.lang | default: "en" %}
-{% assign t = site.data.i18n[lang] %}
+{% assign t = site.data.ui %}
 <div class="row">
     <div class="col-12 col-lg-10">
         <div class="blog-category-tabs" id="category-tabs">
@@ -28,7 +27,7 @@
                 </button>
             </div>
             <div class="blog-popular-tags">
-                {% include widgets/tag_badges.html tags=site.data.popular_blog_tags lang=lang %}
+                {% include widgets/tag_badges.html tags=site.data.popular_blog_tags %}
             </div>
             <p class="blog-search-status mb-0"
                id="blog-search-status"
@@ -38,8 +37,7 @@
                data-count-many="{{ t.blogs.result_count_many | escape }}"></p>
         </div>
 
-        {% assign localized_blogs = site.blogs | where: "lang", lang %}
-        {% assign blogs_by_year = localized_blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
+        {% assign blogs_by_year = site.blogs | sort: "date" | reverse | group_by_exp: "item", "item.date | date: '%Y'" %}
         {% for year in blogs_by_year %}
         <div class="blog-year-group" data-year="{{ year.name }}">
             <h2 class="pt-4" id="year-{{ year.name }}">{{ year.name }}</h2>

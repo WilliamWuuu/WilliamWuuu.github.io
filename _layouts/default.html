@@ -1,8 +1,7 @@
-{% assign lang = page.lang | default: "en" -%}
-{% assign t = site.data.i18n[lang] -%}
+{% assign t = site.data.ui -%}
 {% assign meta_description = page.description | default: t.site_description -%}
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="en">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
@@ -12,19 +11,8 @@
     <meta name="description" content="{{ meta_description | strip_html | escape }}">
     <meta property="og:title" content="{{ page.title | escape }} - {{ site.data.profile.primary_name }}">
     <meta property="og:description" content="{{ meta_description | strip_html | escape }}">
-    <meta property="og:locale" content="{% if lang == 'zh-CN' %}zh_CN{% else %}en_US{% endif %}">
+    <meta property="og:locale" content="en_US">
     <link rel="canonical" href="{{ page.url | absolute_url }}">
-    {% if page.translation_url %}
-        {% if lang == "zh-CN" %}
-    <link rel="alternate" hreflang="en" href="{{ page.translation_url | absolute_url }}">
-    <link rel="alternate" hreflang="zh-CN" href="{{ page.url | absolute_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ page.translation_url | absolute_url }}">
-        {% else %}
-    <link rel="alternate" hreflang="en" href="{{ page.url | absolute_url }}">
-    <link rel="alternate" hreflang="zh-CN" href="{{ page.translation_url | absolute_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
-        {% endif %}
-    {% endif %}
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -37,9 +25,6 @@
     <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
-    {% if page.collection == "blogs" %}
-    <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
-    {% endif %}
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
     {% include navbar.html %}

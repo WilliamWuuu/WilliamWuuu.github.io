@@ -1,13 +1,8 @@
 {% assign item = include.item %}
 {% assign hide_bottom_border = include.hide_bottom_border %}
-{% assign lang = page.lang | default: "en" %}
-{% assign t = site.data.i18n[lang] %}
+{% assign t = site.data.ui %}
 {% assign display_title = item.title %}
 {% assign display_description = item.description %}
-{% if lang == "zh-CN" %}
-    {% if item.title_zh %}{% assign display_title = item.title_zh %}{% endif %}
-    {% if item.description_zh %}{% assign display_description = item.description_zh %}{% endif %}
-{% endif %}
 {% assign display_summary = display_description %}
 {% unless display_summary %}
     {% if item.excerpt %}
@@ -37,11 +32,11 @@
                 {% elsif item.category == 'notes' %}
                     <span class="badge badge-info mr-2">{{ t.blogs.learnings }}</span>
                 {% endif %}
-                <i class="fas fa-calendar-alt"></i> {% if lang == "zh-CN" %}{{ item.date | date: "%Y年%-m月%-d日" }}{% else %}{{ item.date | date: "%B %d, %Y" }}{% endif %}
+                <i class="fas fa-calendar-alt"></i> {{ item.date | date: "%B %d, %Y" }}
                 {% if item.tags %}
                     <span class="ml-3">
                         <i class="fas fa-tags"></i>
-                        {% include widgets/tag_badges.html tags=item.tags lang=lang %}
+                        {% include widgets/tag_badges.html tags=item.tags %}
                     </span>
                 {% endif %}
             </div>

@@ -30,7 +30,7 @@ Most routine content changes are data-driven:
 - Edit personal details, social links, education, and the CV link in `_data/profile.yml`.
 - Edit homepage section visibility in `_data/display.yml`.
 - Edit navbar entries in `_data/navigation.yml`.
-- Edit shared interface translations in `_data/i18n.yml`.
+- Edit shared interface copy in `_data/ui.yml`.
 - Add publication entries under `_publications/<year>/`.
 - Add news entries under `_news/`.
 
@@ -50,7 +50,7 @@ layout: blog
 title: "Post title"
 date: YYYY-MM-DD
 description: "A short description used on the blog index."
-permalink: /posts/YYYY/M/slug/
+permalink: /blogs/YYYY/slug/
 image_path: /blog-assets/YYYY-MM-DD-slug/img/
 category: notes
 tags:
@@ -107,17 +107,6 @@ Run the math regression checks with:
 ```bash
 bundle exec ruby _tests/math_rendering_test.rb
 ```
-
-### Bilingual Content
-
-The homepage, publication page, and blog index remain English-only. Bilingual support is intentionally limited to individual posts, where it directly improves the reading experience. English posts use `/blogs/<year>/<slug>/`, while each Simplified Chinese version appends `/zh`.
-
-- Add blog-interface copy to both language sections in `_data/i18n.yml`.
-- Give every English post `lang: en` and every Chinese post `lang: zh-CN`.
-- Pair the two posts with the same `translation_key` and reciprocal `translation_url` values.
-- Give the English post a `/blogs/<year>/<slug>/` permalink and the Chinese post `/blogs/<year>/<slug>/zh`. The translated post may reuse the same `image_path`.
-
-The English blog index filters the collection by `lang: en`, so translated copies do not appear as duplicate cards. The language switch appears only on individual article pages.
 
 ## Deployment
 

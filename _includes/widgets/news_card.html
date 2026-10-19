@@ -1,6 +1,5 @@
 {% assign news_by_year = site.news | sort: "date" | reverse | slice: 0, include.limit | group_by_exp: "item", "item.date | date: '%Y'" -%}
-{% assign lang = page.lang | default: "en" -%}
-{% assign t = site.data.i18n[lang] -%}
+{% assign t = site.data.ui -%}
 
 <div class="my-3 bg-white shadow-sm rounded-xl">
     <h6 class="p-3 mb-0 border-bottom border-gray"><i class="fas fa-rss"></i> {{ t.homepage.news }}</h6>
@@ -12,8 +11,8 @@
             <div class="media-body">
                 {% for item in year.items %}
                 <div class="my-1 d-flex">
-                    <div>{% if lang == "zh-CN" and item.title_zh %}{{ item.title_zh }}{% else %}{{ item.title }}{% endif %}</div>
-                    <div class="ml-auto mt-auto text-muted no-break"><i>{% if lang == "zh-CN" %}{{ item.date | date: "%-m月%-d日" }}{% else %}{{ item.date | date: "%b %d" }}{% endif %}</i></div>
+                    <div>{{ item.title }}</div>
+                    <div class="ml-auto mt-auto text-muted no-break"><i>{{ item.date | date: "%b %d" }}</i></div>
                 </div>
                 {% endfor %}
             </div>

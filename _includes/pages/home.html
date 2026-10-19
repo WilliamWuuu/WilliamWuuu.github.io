@@ -1,5 +1,4 @@
-{% assign lang = page.lang | default: "en" %}
-{% assign t = site.data.i18n[lang] %}
+{% assign t = site.data.ui %}
 <div class="row">
     <div class="col-lg-3 col-md-4">
         {% include widgets/profile_card_mini.html %}
@@ -7,11 +6,8 @@
     <div class="col-lg-9 col-md-8">
         {% include widgets/profile_card_bio_only.html %}
 
-        {% if lang == "en" %}
-        <!-- Debugging widgets are only relevant to the canonical English homepage. -->
         {% include widgets/debug_repo_name.html %}
         {% include widgets/debug_url.html %}
-        {% endif %}
 
         {% if site.data.display.homepage.show_experience %}
             {% include widgets/experience_card.html %}
@@ -25,7 +21,7 @@
         {% endif %}
 
         {% if site.data.display.homepage.show_selected_blogs %}
-        {% assign selected_blogs = site.blogs | where: "lang", lang | where: "selected", true | sort: "date" | reverse %}
+        {% assign selected_blogs = site.blogs | where: "selected", true | sort: "date" | reverse %}
         {% assign count_selected_blogs = selected_blogs | size %}
         {% if count_selected_blogs > 0 %}
         {% include widgets/selected_blog_card.html blogs=selected_blogs %}

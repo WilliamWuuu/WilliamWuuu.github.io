@@ -1,30 +1,18 @@
-{% assign lang = page.lang | default: "en" -%}
-{% assign t = site.data.i18n[lang] -%}
-{% if lang == "zh-CN" and page.description_zh %}{% assign meta_description = page.description_zh %}{% else %}{% assign meta_description = page.description | default: t.site_description %}{% endif -%}
+{% assign t = site.data.ui -%}
+{% assign meta_description = page.description | default: t.site_description -%}
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="en">
 <!-- Template: https://github.com/luost26/academic-homepage -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="color-scheme" content="light dark">
-    <title>{% if lang == "zh-CN" and page.title_zh %}{{ page.title_zh }}{% else %}{{ page.title }}{% endif %} - {{ site.data.profile.primary_name }}</title>
+    <title>{{ page.title }} - {{ site.data.profile.primary_name }}</title>
     <meta name="description" content="{{ meta_description | strip_html | escape }}">
-    <meta property="og:title" content="{% if lang == 'zh-CN' and page.title_zh %}{{ page.title_zh | escape }}{% else %}{{ page.title | escape }}{% endif %} - {{ site.data.profile.primary_name }}">
+    <meta property="og:title" content="{{ page.title | escape }} - {{ site.data.profile.primary_name }}">
     <meta property="og:description" content="{{ meta_description | strip_html | escape }}">
-    <meta property="og:locale" content="{% if lang == 'zh-CN' %}zh_CN{% else %}en_US{% endif %}">
+    <meta property="og:locale" content="en_US">
     <link rel="canonical" href="{{ page.url | absolute_url }}">
-    {% if page.translation_url %}
-        {% if lang == "zh-CN" %}
-    <link rel="alternate" hreflang="en" href="{{ page.translation_url | absolute_url }}">
-    <link rel="alternate" hreflang="zh-CN" href="{{ page.url | absolute_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ page.translation_url | absolute_url }}">
-        {% else %}
-    <link rel="alternate" hreflang="en" href="{{ page.url | absolute_url }}">
-    <link rel="alternate" hreflang="zh-CN" href="{{ page.translation_url | absolute_url }}">
-    <link rel="alternate" hreflang="x-default" href="{{ page.url | absolute_url }}">
-        {% endif %}
-    {% endif %}
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous" />
@@ -32,12 +20,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.1/css/academicons.min.css" integrity="sha512-b1ASx0WHgVFL5ZQhTgiPWX+68KjS38Jk87jg7pe+qC7q9YkEtFq0z7xCglv7qGIs/68d3mAp+StfC8WKC5SSAg==" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lora:wght@700&family=Noto+Sans+SC:wght@600;700&family=Noto+Serif+SC:wght@400;600;700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lora:wght@700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
     <link id="hljs-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
     <link rel="stylesheet" href="{{ '/assets/css/global.css' | relative_url }}">
     <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/language.js' | relative_url }}"></script>
 </head>
 <body class="bg-light d-flex flex-column min-vh-100" {{ page.body_attr }}>
     {% include navbar.html %}
@@ -47,13 +34,13 @@
                 <div class="col-12 col-xl-9">
                     <article class="bg-white shadow-sm rounded-xl p-4 mb-4">
                         <header class="mb-4">
-                            <h1 class="blog-post-title display-4 mb-3">{% if lang == "zh-CN" and page.title_zh %}{{ page.title_zh }}{% else %}{{ page.title }}{% endif %}</h1>
+                            <h1 class="blog-post-title display-4 mb-3">{{ page.title }}</h1>
                             <div class="text-muted mb-3">
-                                <i class="fas fa-calendar-alt"></i> {% if lang == "zh-CN" %}{{ page.date | date: "%Y年%-m月%-d日" }}{% else %}{{ page.date | date: "%B %d, %Y" }}{% endif %}
+                                <i class="fas fa-calendar-alt"></i> {{ page.date | date: "%B %d, %Y" }}
                                 {% if page.tags %}
                                     <span class="ml-3">
                                         <i class="fas fa-tags"></i>
-                                        {% include widgets/tag_badges.html tags=page.tags lang=lang %}
+                                        {% include widgets/tag_badges.html tags=page.tags %}
                                     </span>
                                 {% endif %}
                             </div>
